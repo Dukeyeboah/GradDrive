@@ -6,26 +6,27 @@ import { User, Mail, Calendar } from "lucide-react"
 
 export default function AccountPage() {
   return (
-    <div className="container py-12 space-y-8 max-w-3xl">
-      <div className="space-y-2">
-        <h1 className="font-bold text-3xl md:text-4xl text-balance">My Account</h1>
-        <p className="text-lg text-muted-foreground text-balance">Manage your profile and access information</p>
-      </div>
+    <div className="flex flex-col justify-center items-center w-full py-12">
+      <div className="container max-w-3xl space-y-8">
+        <div className="space-y-2 text-center">
+          <h1 className="font-bold text-3xl md:text-4xl text-balance">My Account</h1>
+          <p className="text-lg text-muted-foreground text-balance">Manage your profile and access information</p>
+        </div>
 
-      {/* Profile Card */}
-      <Card className="border-border bg-card shadow-sm">
-        <CardHeader>
-          <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
-              <User className="h-8 w-8 text-accent" />
+        {/* Profile Card */}
+        <Card className="border-border bg-card shadow-sm">
+          <CardHeader>
+            <div className="flex items-center gap-4">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600">
+                <User className="h-8 w-8 text-white" />
+              </div>
+              <div>
+                <CardTitle>Profile Information</CardTitle>
+                <CardDescription>Update your personal details</CardDescription>
+              </div>
             </div>
-            <div>
-              <CardTitle>Profile Information</CardTitle>
-              <CardDescription>Update your personal details</CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
+          </CardHeader>
+          <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
             <Input id="name" placeholder="John Doe" defaultValue="John Doe" />
@@ -43,14 +44,16 @@ export default function AccountPage() {
             <Input id="graduation" placeholder="2024" />
           </div>
           <Button>Save Changes</Button>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      {/* Account Stats */}
-      <div className="grid gap-6 md:grid-cols-2">
+        {/* Account Stats */}
+        <div className="grid gap-6 md:grid-cols-2">
         <Card className="border-border bg-card shadow-sm">
           <CardHeader>
-            <Mail className="h-8 w-8 text-accent mb-2" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 mb-2">
+              <Mail className="h-5 w-5 text-white" />
+            </div>
             <CardTitle className="text-lg">Member Since</CardTitle>
             <CardDescription>January 2024</CardDescription>
           </CardHeader>
@@ -58,15 +61,17 @@ export default function AccountPage() {
 
         <Card className="border-border bg-card shadow-sm">
           <CardHeader>
-            <Calendar className="h-8 w-8 text-accent mb-2" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 to-pink-600 mb-2">
+              <Calendar className="h-5 w-5 text-white" />
+            </div>
             <CardTitle className="text-lg">Account Status</CardTitle>
             <CardDescription>Active Member</CardDescription>
           </CardHeader>
         </Card>
-      </div>
+        </div>
 
-      {/* Access Information */}
-      <Card className="border-border bg-card shadow-sm">
+        {/* Access Information */}
+        <Card className="border-border bg-card shadow-sm">
         <CardHeader>
           <CardTitle>Access Summary</CardTitle>
           <CardDescription>Your available perks and resources</CardDescription>

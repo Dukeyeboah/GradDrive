@@ -1,6 +1,5 @@
 import type React from "react"
 import { UserNav } from "@/components/user-nav"
-import { PublicFooter } from "@/components/public-footer"
 
 export default function DashboardLayout({
   children,
@@ -10,8 +9,7 @@ export default function DashboardLayout({
   return (
     <>
       <UserNav />
-      <main className="flex-1">{children}</main>
-      <PublicFooter />
+      <main className="flex-1 flex justify-center items-center min-h-[calc(100vh-4rem)]">{children}</main>
     </>
   )
 }

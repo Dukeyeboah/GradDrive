@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { LayoutDashboard, Users, Camera, FileImage, BookOpen, Award, Palette, Settings } from "lucide-react"
 
 const navItems = [
-  { href: "/admin", label: "Overview", icon: LayoutDashboard },
+  { href: "/admin/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/users", label: "Users", icon: Users },
   { href: "/admin/photographers", label: "Photographers", icon: Camera },
   { href: "/admin/posters", label: "Posters", icon: FileImage },
@@ -22,7 +22,7 @@ export function AdminSidebar() {
   return (
     <aside className="hidden md:flex w-64 flex-col border-r border-border bg-card">
       <div className="p-6 border-b border-border">
-        <Link href="/admin" className="flex items-center gap-2">
+        <Link href="/admin/dashboard" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
             <span className="font-bold text-primary-foreground text-lg">GD</span>
           </div>

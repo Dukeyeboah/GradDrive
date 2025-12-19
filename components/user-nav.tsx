@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { User, Menu } from "lucide-react"
+import { User, Menu, ArrowLeft, GraduationCap, BookOpen, Camera, Award, Gift, Ticket } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,14 +13,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { useMobile } from "@/hooks/use-mobile"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export function UserNav() {
-  const isMobile = useMobile()
+  const isMobile = useIsMobile()
+  const pathname = usePathname()
+  const router = useRouter()
+  const isDashboard = pathname === "/dashboard"
+  const showBackButton = !isDashboard && pathname.startsWith("/dashboard")
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
+    <nav className="flex justify-center items-center sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-6">
           <Link href="/dashboard" className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
@@ -28,24 +33,16 @@ export function UserNav() {
             <span className="font-bold text-xl text-foreground">Grad Drive</span>
           </Link>
 
-          {!isMobile && (
-            <div className="hidden md:flex items-center gap-1">
-              <Link href="/dashboard">
-                <Button variant="ghost" size="sm">
-                  Dashboard
-                </Button>
-              </Link>
-              <Link href="/dashboard/grad-drive">
-                <Button variant="ghost" size="sm">
-                  Digital Assets
-                </Button>
-              </Link>
-              <Link href="/dashboard/photographers">
-                <Button variant="ghost" size="sm">
-                  Photographers
-                </Button>
-              </Link>
-            </div>
+          {showBackButton && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => router.push("/dashboard")}
+              className="gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Dashboard
+            </Button>
           )}
         </div>
 
@@ -106,8 +103,46 @@ export function UserNav() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>Navigation</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard" className="flex items-center gap-2">
+                  <GraduationCap className="h-4 w-4" />
+                  Dashboard
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/grad-drive" className="flex items-center gap-2">
+                  <GraduationCap className="h-4 w-4" />
+                  Digital Assets
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/ebooks" className="flex items-center gap-2">
+                  <BookOpen className="h-4 w-4" />
+                  E-books
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/photographers" className="flex items-center gap-2">
+                  <Camera className="h-4 w-4" />
+                  Photographers
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/scholarship" className="flex items-center gap-2">
+                  <Award className="h-4 w-4" />
+                  Scholarship
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/discounts" className="flex items-center gap-2">
+                  <Gift className="h-4 w-4" />
+                  Discounts
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel>Account</DropdownMenuLabel>
               <DropdownMenuItem asChild>
                 <Link href="/dashboard/account">Profile</Link>
               </DropdownMenuItem>
