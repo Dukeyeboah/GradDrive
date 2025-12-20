@@ -1,0 +1,46 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return isAuthenticated() && 
+             exists(/databases/(default)/documents/users/$(request.auth.uid)) &&
+             firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Photographers folder - only admins can upload/delete
+    match /photographers/{allPaths=**} {
+      allow read: if true; // Everyone can view photographer images
+      allow write: if isAdmin(); // Only admins can upload/delete
+    }
+
+    // Posters folder - only admins can upload/delete
+    match /posters/{allPaths=**} {
+      allow read: if true; // Everyone can view posters
+      allow write: if isAdmin(); // Only admins can upload/delete
+    }
+
+    // Ebooks folder - only admins can upload/delete
+    match /ebooks/{allPaths=**} {
+      allow read: if true; // Everyone can view ebook thumbnails and files
+      allow write: if isAdmin(); // Only admins can upload/delete
+    }
+
+    // User uploads folder - users can manage their own files
+    match /users/{userId}/{allPaths=**} {
+      allow read: if true; // Everyone can read user uploads
+      allow write: if isAuthenticated() && request.auth.uid == userId; // Users can only write to their own folder
+    }
+
+    // Default deny all other paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

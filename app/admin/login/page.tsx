@@ -1,5 +1,9 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+"use client"
+
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -7,14 +11,136 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Mail, Chrome } from 'lucide-react';
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Chrome, Loader2 } from 'lucide-react'
+import { signInEmailPassword, signInWithGoogle } from '@/lib/firebase/auth'
+import { getUserRole, setUserRole } from '@/lib/firebase/firestore'
+import { AdminPasskeyModal } from '@/components/admin-passkey-modal'
+import { useToast } from '@/hooks/use-toast'
 
 export default function AdminLoginPage() {
+  const router = useRouter()
+  const { toast } = useToast()
+  const [loading, setLoading] = useState(false)
+  const [passkeyVerified, setPasskeyVerified] = useState(false)
+  const [showPasskeyModal, setShowPasskeyModal] = useState(true)
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  })
+
+  useEffect(() => {
+    // Check if passkey was verified in this session
+    if (typeof window !== "undefined") {
+      const verified = sessionStorage.getItem("adminPasskeyVerified")
+      if (verified === "true") {
+        setPasskeyVerified(true)
+        setShowPasskeyModal(false)
+      }
+    }
+  }, [])
+
+  const handleEmailAuth = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!passkeyVerified) {
+      setShowPasskeyModal(true)
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const { user, error } = await signInEmailPassword(formData.email, formData.password)
+      if (error) {
+        toast({
+          title: 'Error',
+          description: error,
+          variant: 'destructive',
+        })
+        setLoading(false)
+        return
+      }
+      
+      if (user) {
+        // Check if user is admin, if not, set them as admin
+        const role = await getUserRole(user.uid)
+        if (role !== 'admin') {
+          await setUserRole(user.uid, 'admin')
+        }
+        toast({
+          title: 'Success',
+          description: 'Signed in successfully!',
+        })
+        router.push('/admin/dashboard')
+        router.refresh()
+      }
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: error.message || 'An error occurred',
+        variant: 'destructive',
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleGoogleAuth = async () => {
+    if (!passkeyVerified) {
+      setShowPasskeyModal(true)
+      return
+    }
+
+    setLoading(true)
+    try {
+      const { user, error } = await signInWithGoogle('admin')
+      if (error) {
+        toast({
+          title: 'Sign-in Error',
+          description: error,
+          variant: 'destructive',
+        })
+        setLoading(false)
+        return
+      }
+      
+      if (user) {
+        toast({
+          title: 'Success',
+          description: 'Signed in with Google successfully!',
+        })
+        router.push('/admin/dashboard')
+        router.refresh()
+      }
+    } catch (error: any) {
+      console.error("Google auth error:", error)
+      toast({
+        title: 'Error',
+        description: error.message || 'An unexpected error occurred. Please try again.',
+        variant: 'destructive',
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handlePasskeyVerified = () => {
+    setPasskeyVerified(true)
+    setShowPasskeyModal(false)
+  }
+
   return (
-    <main className='flex-col flex justify-center items-center min-h-screen bg-muted/30'>
+    <>
+      <AdminPasskeyModal
+        open={showPasskeyModal}
+        onOpenChange={setShowPasskeyModal}
+        onVerified={handlePasskeyVerified}
+        mode="login"
+      />
+      <main className='flex-col flex justify-center items-center min-h-screen bg-muted/30'>
       <div className='container py-20'>
         <div className='mx-auto max-w-md'>
           <Card className='border-border bg-card shadow-sm'>
@@ -22,31 +148,61 @@ export default function AdminLoginPage() {
               <CardTitle className='text-2xl font-bold'>Admin Sign In</CardTitle>
               <CardDescription>Sign in to your admin account</CardDescription>
             </CardHeader>
-            <CardContent className='space-y-4'>
-              <div className='space-y-2'>
-                <Label htmlFor='email'>Email</Label>
-                <Input id='email' type='email' placeholder='admin@example.com' />
-              </div>
-              <div className='space-y-2'>
-                <Label htmlFor='password'>Password</Label>
-                <Input id='password' type='password' placeholder='••••••••' />
-              </div>
-              <Button className='w-full' size='lg'>
-                Sign In
-              </Button>
-              <div className='relative'>
-                <div className='absolute inset-0 flex items-center'>
-                  <span className='w-full border-t' />
+            <form onSubmit={handleEmailAuth}>
+              <CardContent className='space-y-4'>
+                <div className='space-y-2'>
+                  <Label htmlFor='email'>Email</Label>
+                  <Input
+                    id='email'
+                    type='email'
+                    placeholder='admin@example.com'
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    required
+                  />
                 </div>
-                <div className='relative flex justify-center text-xs uppercase'>
-                  <span className='bg-card px-2 text-muted-foreground'>Or continue with</span>
+                <div className='space-y-2'>
+                  <Label htmlFor='password'>Password</Label>
+                  <Input
+                    id='password'
+                    type='password'
+                    placeholder='••••••••'
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    required
+                  />
                 </div>
-              </div>
-              <Button className='w-full' size='lg' variant='outline'>
-                <Chrome className='mr-2 h-4 w-4' />
-                Sign in with Google
-              </Button>
-            </CardContent>
+                <Button className='w-full' size='lg' type='submit' disabled={loading}>
+                  {loading ? (
+                    <>
+                      <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                      Signing in...
+                    </>
+                  ) : (
+                    'Sign In'
+                  )}
+                </Button>
+                <div className='relative'>
+                  <div className='absolute inset-0 flex items-center'>
+                    <span className='w-full border-t' />
+                  </div>
+                  <div className='relative flex justify-center text-xs uppercase'>
+                    <span className='bg-card px-2 text-muted-foreground'>Or continue with</span>
+                  </div>
+                </div>
+                <Button
+                  className='w-full'
+                  size='lg'
+                  variant='outline'
+                  type='button'
+                  onClick={handleGoogleAuth}
+                  disabled={loading}
+                >
+                  <Chrome className='mr-2 h-4 w-4' />
+                  Sign in with Google
+                </Button>
+              </CardContent>
+            </form>
             <CardFooter className='flex flex-col space-y-4'>
               <div className='text-sm text-muted-foreground text-center'>
                 Don't have an admin account?{' '}
@@ -64,6 +220,7 @@ export default function AdminLoginPage() {
         </div>
       </div>
     </main>
-  );
+    </>
+  )
 }
 
