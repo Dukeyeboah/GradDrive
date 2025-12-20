@@ -97,6 +97,7 @@ export default function AccountPage() {
           </ul>
         </CardContent>
       </Card>
+      </div>
     </div>
   )
 }
