@@ -1,6 +1,6 @@
 var R=require("../../../chunks/ssr/[turbopack]_runtime.js")("server/app/dashboard/scholarship/page.js")
-R.c("server/chunks/ssr/d9014_next_dist_97ccd5fd._.js")
-R.c("server/chunks/ssr/[root-of-the-server]__31c8e38b._.js")
+R.c("server/chunks/ssr/node_modules__pnpm_69ce7819._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__9d3b53eb._.js")
 R.c("server/chunks/ssr/d9014_next_dist_12e06a73._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__7f148858._.js")
 R.c("server/chunks/ssr/d9014_next_dist_client_components_builtin_global-error_60a6b319.js")

@@ -1,4 +1,17 @@
 {
+  "/admin/customizer/page": "app/admin/customizer/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/admin/ebooks/page": "app/admin/ebooks/page.js",
+  "/admin/login/page": "app/admin/login/page.js",
+  "/admin/logs/page": "app/admin/logs/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/photographers/page": "app/admin/photographers/page.js",
+  "/admin/posters/page": "app/admin/posters/page.js",
+  "/admin/scholarship/page": "app/admin/scholarship/page.js",
+  "/admin/settings/page": "app/admin/settings/page.js",
+  "/admin/users/page": "app/admin/users/page.js",
   "/dashboard/discounts/page": "app/dashboard/discounts/page.js",
-  "/dashboard/page": "app/dashboard/page.js"
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/photographers/page": "app/dashboard/photographers/page.js",
+  "/dashboard/scholarship/page": "app/dashboard/scholarship/page.js"
 }

@@ -7,3 +7,217 @@
 [00:00:14.662] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/discounts color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/discounts","o":"http://localhost:3003/dashboard/discounts","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766184330973}
 [00:00:18.625] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766184334936}
 [00:00:57.503] Server  LOG      ✓ Compiled in 136ms
+[00:07:00.236] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/photographers","o":"http://localhost:3003/dashboard/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766184736545}
+[00:07:10.324] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766184746633}
+[00:07:12.981] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/scholarship color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/scholarship","o":"http://localhost:3003/dashboard/scholarship","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766184749290}
+[00:07:15.252] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766184751561}
+[09:20:13.991] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[09:20:13.991] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin","route":"/admin"}
+[09:20:13.991] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin color: rgb(120, 120, 120) color: inherit {"dp":"/admin","o":"http://localhost:3003/admin","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766217930490}
+[09:20:14.922] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[09:20:31.677] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/login color: rgb(120, 120, 120) color: inherit {"dp":"/admin/login","o":"http://localhost:3003/admin/login","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766217948175}
+[09:20:41.419] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin color: rgb(120, 120, 120) color: inherit {"dp":"/admin","o":"http://localhost:3003/admin","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766217957914}
+[09:22:16.687] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[09:22:16.687] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/dashboard","route":"/admin/dashboard"}
+[09:22:16.687] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218053184}
+[09:22:17.347] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[09:22:42.749] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/users color: rgb(120, 120, 120) color: inherit {"dp":"/admin/users","o":"http://localhost:3003/admin/users","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218079240}
+[09:22:46.749] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/admin/photographers","o":"http://localhost:3003/admin/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218083246}
+[09:22:50.690] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/posters color: rgb(120, 120, 120) color: inherit {"dp":"/admin/posters","o":"http://localhost:3003/admin/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218087188}
+[09:22:54.890] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/admin/ebooks","o":"http://localhost:3003/admin/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218091374}
+[09:22:57.097] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/scholarship color: rgb(120, 120, 120) color: inherit {"dp":"/admin/scholarship","o":"http://localhost:3003/admin/scholarship","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218093595}
+[09:23:00.215] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/customizer color: rgb(120, 120, 120) color: inherit {"dp":"/admin/customizer","o":"http://localhost:3003/admin/customizer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218096713}
+[09:23:02.523] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/settings color: rgb(120, 120, 120) color: inherit {"dp":"/admin/settings","o":"http://localhost:3003/admin/settings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218099017}
+[09:23:07.220] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/users color: rgb(120, 120, 120) color: inherit {"dp":"/admin/users","o":"http://localhost:3003/admin/users","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218103719}
+[09:23:09.802] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/admin/photographers","o":"http://localhost:3003/admin/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218106302}
+[09:24:44.885] Server  LOG      ✓ Compiled in 425ms
+[09:25:02.742] Server  LOG      ✓ Compiled in 245ms
+[09:25:03.819] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <div className="flex h-screen">
+      ...
+        <MenuProvider scope={{Menu:[...], ...}} onClose={function Menu.useCallback} isUsingKeyboardRef={{current:false}} ...>
+          <DropdownMenuTrigger asChild={true}>
+            <DropdownMenuTrigger data-slot="dropdown-m..." asChild={true}>
+              <MenuAnchor asChild={true} __scopeMenu={{Menu:[...], ...}}>
+                <PopperAnchor __scopePopper={{Menu:[...], ...}} asChild={true} ref={null}>
+                  <Primitive.div asChild={true} ref={function}>
+                    <Slot ref={function}>
+                      <SlotClone ref={function}>
+                        <Primitive.button type="button" id="radix-_R_3..." aria-haspopup="menu" aria-expanded={false} ...>
+                          <Slot type="button" id="radix-_R_3..." aria-haspopup="menu" aria-expanded={false} ...>
+                            <SlotClone type="button" id="radix-_R_3..." aria-haspopup="menu" aria-expanded={false} ...>
+                              <Button variant="ghost" className="w-full jus..." type="button" id="radix-_R_3..." ...>
+                                <button
+                                  data-slot="dropdown-menu-trigger"
+                                  className={"inline-flex items-center whitespace-nowrap rounded-md text-sm font-medi..."}
+                                  type="button"
++                                 id="radix-_R_3cndlb_"
+-                                 id="radix-_R_dkndlb_"
+                                  aria-haspopup="menu"
+                                  aria-expanded={false}
+                                  aria-controls={undefined}
+                                  data-state="closed"
+                                  data-disabled={undefined}
+                                  disabled={false}
+                                  onPointerDown={function handleEvent}
+                                  onKeyDown={function handleEvent}
+                                  ref={function}
+                                >
+          ...
+      <div className="flex-1 fle...">
+        <AdminHeader>
+          <header className="sticky top...">
+            <div className="flex h-16 ...">
+              <Sheet>
+                <Dialog data-slot="sheet">
+                  <DialogProvider scope={undefined} triggerRef={{current:null}} contentRef={{current:null}} ...>
+                    <SheetTrigger asChild={true}>
+                      <DialogTrigger data-slot="sheet-trigger" asChild={true}>
+                        <Primitive.button type="button" aria-haspopup="dialog" aria-expanded={false} ...>
+                          <Slot type="button" aria-haspopup="dialog" aria-expanded={false} aria-controls="radix-_R_5..." ...>
+                            <SlotClone type="button" aria-haspopup="dialog" aria-expanded={false} ...>
+                              <Button variant="ghost" size="icon" className="md:hidden" type="button" ...>
+                                <button
+                                  data-slot="sheet-trigger"
+                                  className={"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded..."}
+                                  type="button"
+                                  aria-haspopup="dialog"
+                                  aria-expanded={false}
++                                 aria-controls="radix-_R_5kndlb_"
+-                                 aria-controls="radix-_R_mkndlb_"
+                                  data-state="closed"
+                                  onClick={function handleEvent}
+                                  ref={function}
+                                >
+                    ...
+              <div>
+              ...
+                <MenuAnchor asChild={true} __scopeMenu={{Menu:[...], ...}}>
+                  <PopperAnchor __scopePopper={{Menu:[...], ...}} asChild={true} ref={null}>
+                    <Primitive.div asChild={true} ref={function}>
+                      <Slot ref={function}>
+                        <SlotClone ref={function}>
+                          <Primitive.button type="button" id="radix-_R_d..." aria-haspopup="menu" aria-expanded={false} ...>
+                            <Slot type="button" id="radix-_R_d..." aria-haspopup="menu" aria-expanded={false} ...>
+                              <SlotClone type="button" id="radix-_R_d..." aria-haspopup="menu" aria-expanded={false} ...>
+                                <Button variant="ghost" size="icon" className="rounded-full" type="button" ...>
+                                  <button
+                                    data-slot="dropdown-menu-trigger"
+                                    className={"inline-flex items-center justify-center gap-2 whitespace-nowrap text-..."}
+                                    type="button"
++                                   id="radix-_R_dkndlb_"
+-                                   id="radix-_R_1mkndlb_"
+                                    aria-haspopup="menu"
+                                    aria-expanded={false}
+                                    aria-controls={undefined}
+                                    data-state="closed"
+                                    data-disabled={undefined}
+                                    disabled={false}
+                                    onPointerDown={function handleEvent}
+                                    onKeyDown={function handleEvent}
+                                    ref={function}
+                                  >
+        ...
+
+[09:25:04.008] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[09:25:04.008] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/photographers","route":"/admin/photographers"}
+[09:25:04.008] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/admin/photographers","o":"http://localhost:3003/admin/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766218220504}
+[09:25:04.752] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[09:25:06.949] Server  LOG      ✓ Compiled in 167ms
+[09:42:17.193] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/users color: rgb(120, 120, 120) color: inherit {"dp":"/admin/users","o":"http://localhost:3003/admin/users","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766219253758}
+[09:42:18.307] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766219254876}
+[09:49:10.000] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/users color: rgb(120, 120, 120) color: inherit {"dp":"/admin/users","o":"http://localhost:3003/admin/users","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766219666586}
+[09:49:17.688] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/admin/photographers","o":"http://localhost:3003/admin/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766219674276}
+[09:51:50.228] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/posters color: rgb(120, 120, 120) color: inherit {"dp":"/admin/posters","o":"http://localhost:3003/admin/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766219826817}
+[09:51:59.029] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/admin/ebooks","o":"http://localhost:3003/admin/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766219835617}
+[09:52:02.750] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/scholarship color: rgb(120, 120, 120) color: inherit {"dp":"/admin/scholarship","o":"http://localhost:3003/admin/scholarship","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766219839339}
+[09:52:10.358] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/customizer color: rgb(120, 120, 120) color: inherit {"dp":"/admin/customizer","o":"http://localhost:3003/admin/customizer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766219846946}
+[09:54:53.514] Server  LOG      ✓ Compiled in 784ms
+[09:54:54.174] Server  LOG      ✓ Compiled in 20ms
+[09:54:55.287] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[09:54:55.287] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/customizer","route":"/admin/customizer"}
+[09:54:55.287] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/customizer color: rgb(120, 120, 120) color: inherit {"dp":"/admin/customizer","o":"http://localhost:3003/admin/customizer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766220011879}
+[09:54:56.066] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[09:54:59.754] Server  LOG      ✓ Compiled in 291ms
+[09:54:59.863] Browser ERROR   ./components/admin-sidebar.tsx:125:1
+Parsing ecmascript source code failed
+  123 |     </aside>
+  124 |   )
+> 125 | }
+      | ^
+  126 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./components/admin-sidebar.tsx [Client Component Browser]
+    ./app/admin/layout.tsx [Client Component Browser]
+    ./app/admin/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/admin-sidebar.tsx [Client Component SSR]
+    ./app/admin/layout.tsx [Client Component SSR]
+    ./app/admin/layout.tsx [Server Component]
+[09:55:15.172] Server  LOG      ✓ Compiled in 103ms
+[09:57:13.437] Server  LOG      ✓ Compiled in 488ms
+[10:01:16.315] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/admin/photographers","o":"http://localhost:3003/admin/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766220392903}
+[10:01:30.185] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/posters color: rgb(120, 120, 120) color: inherit {"dp":"/admin/posters","o":"http://localhost:3003/admin/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766220406782}
+[10:01:37.152] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/admin/ebooks","o":"http://localhost:3003/admin/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766220413743}
+[10:01:42.159] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/posters color: rgb(120, 120, 120) color: inherit {"dp":"/admin/posters","o":"http://localhost:3003/admin/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766220418756}
+[10:05:28.532] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/scholarship color: rgb(120, 120, 120) color: inherit {"dp":"/admin/scholarship","o":"http://localhost:3003/admin/scholarship","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766220645134}
+[10:05:32.350] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/logs color: rgb(120, 120, 120) color: inherit {"dp":"/admin/logs","o":"http://localhost:3003/admin/logs","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766220648950}
+[10:06:54.483] Server  LOG      ✓ Compiled in 226ms
+[10:06:56.328] Server  LOG      ✓ Compiled in 84ms
+[10:08:03.771] Server  LOG      ✓ Compiled in 251ms
+[10:09:21.339] Server  LOG      ✓ Compiled in 328ms
+[10:09:52.606] Server  LOG      ✓ Compiled in 175ms
+[10:10:38.224] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/admin/photographers","o":"http://localhost:3003/admin/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766220954704}
+[10:10:39.105] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/posters color: rgb(120, 120, 120) color: inherit {"dp":"/admin/posters","o":"http://localhost:3003/admin/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766220955666}
+[10:10:46.537] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/admin/ebooks","o":"http://localhost:3003/admin/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766220963115}
+[10:13:06.454] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/posters color: rgb(120, 120, 120) color: inherit {"dp":"/admin/posters","o":"http://localhost:3003/admin/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766221103031}
+[10:15:49.241] Server  LOG      ✓ Compiled in 224ms
+[10:15:50.862] Server  LOG      ✓ Compiled in 96ms
+[10:15:53.787] Server  LOG      ✓ Compiled in 85ms
+[10:15:55.619] Server  LOG      ✓ Compiled in 86ms
+[10:15:58.745] Server  LOG      ✓ Compiled in 80ms
+[10:16:01.019] Server  LOG      ✓ Compiled in 102ms
+[10:16:04.365] Server  LOG      ✓ Compiled in 210ms
+[10:16:06.390] Server  LOG      ✓ Compiled in 135ms
+[10:16:13.463] Server  LOG      ✓ Compiled in 184ms
+[10:16:15.913] Server  LOG      ✓ Compiled in 201ms
+[10:16:19.085] Server  LOG      ✓ Compiled in 137ms
+[10:16:22.633] Server  LOG      ✓ Compiled in 108ms
+[10:16:42.212] Server  LOG      ✓ Compiled in 115ms
+[10:16:44.961] Server  LOG      ✓ Compiled in 128ms
+[10:16:47.945] Server  LOG      ✓ Compiled in 56ms
+[10:16:51.004] Server  LOG      ✓ Compiled in 117ms
+[10:16:53.814] Server  LOG      ✓ Compiled in 72ms
+[10:16:56.631] Server  LOG      ✓ Compiled in 106ms
+[10:17:08.349] Server  LOG      ✓ Compiled in 96ms
+[10:17:12.519] Server  LOG      ✓ Compiled in 153ms
+[10:17:16.684] Server  LOG      ✓ Compiled in 148ms
+[10:17:21.008] Server  LOG      ✓ Compiled in 146ms
+[10:41:53.802] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/admin/photographers","o":"http://localhost:3003/admin/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766222830372}
+[10:42:00.529] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/posters color: rgb(120, 120, 120) color: inherit {"dp":"/admin/posters","o":"http://localhost:3003/admin/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766222837112}
+[10:42:02.727] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/admin/ebooks","o":"http://localhost:3003/admin/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766222839310}
+[10:44:32.531] Server  LOG      ✓ Compiled in 694ms
+[10:44:37.748] Server  LOG      ✓ Compiled in 301ms
+[10:44:42.187] Server  LOG      ✓ Compiled in 154ms
+[10:45:04.524] Server  LOG      ✓ Compiled in 105ms
+[10:45:10.532] Server  LOG      ✓ Compiled in 110ms
+[10:45:11.972] Server  LOG      ✓ Compiled in 122ms
+[10:45:14.645] Server  LOG      ✓ Compiled in 159ms
+[10:45:20.052] Server  LOG      ✓ Compiled in 143ms

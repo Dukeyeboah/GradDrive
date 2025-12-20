@@ -1,9 +1,14 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Chrome } from 'lucide-react';
+"use client"
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Mail, Chrome } from 'lucide-react'
 
 export function AdminWelcomeScreen() {
+  const [isSignIn, setIsSignIn] = useState(true)
+
   return (
     <main className='flex-col flex justify-center items-center min-h-screen bg-muted/30'>
       <div className='container py-20'>
@@ -16,50 +21,52 @@ export function AdminWelcomeScreen() {
               <span className='font-bold text-2xl text-foreground'>Grad Drive</span>
             </div>
             <h1 className='font-bold text-3xl md:text-4xl text-balance text-foreground'>
-              Admin Login
+              Admin {isSignIn ? 'Login' : 'Sign Up'}
             </h1>
             <p className='text-muted-foreground text-balance'>
-              Access the admin panel to manage your Grad Drive platform
+              {isSignIn 
+                ? 'Access the admin panel to manage your Grad Drive platform'
+                : 'Create an admin account to get started'}
             </p>
           </div>
 
           <Card className='border-border bg-card shadow-sm'>
             <CardHeader className='space-y-1'>
-              <CardTitle className='text-xl font-bold'>Sign In Options</CardTitle>
-              <CardDescription>Choose your preferred sign-in method</CardDescription>
+              <div className='flex items-center gap-2 mb-2'>
+                <Button
+                  variant={isSignIn ? 'default' : 'ghost'}
+                  size='sm'
+                  onClick={() => setIsSignIn(true)}
+                  className='flex-1'
+                >
+                  Sign In
+                </Button>
+                <Button
+                  variant={!isSignIn ? 'default' : 'ghost'}
+                  size='sm'
+                  onClick={() => setIsSignIn(false)}
+                  className='flex-1'
+                >
+                  Sign Up
+                </Button>
+              </div>
+              <CardDescription>
+                {isSignIn 
+                  ? 'Choose your preferred sign-in method'
+                  : 'Create your admin account'}
+              </CardDescription>
             </CardHeader>
             <CardContent className='space-y-4'>
-              <Link href='/admin/login'>
+              <Link href={isSignIn ? '/admin/login' : '/admin/signup'}>
                 <Button className='w-full' size='lg' variant='outline'>
                   <Mail className='mr-2 h-4 w-4' />
-                  Sign in with Email
+                  {isSignIn ? 'Sign in' : 'Sign up'} with Email
                 </Button>
               </Link>
-              <Link href='/admin/login'>
+              <Link href={isSignIn ? '/admin/login' : '/admin/signup'}>
                 <Button className='w-full' size='lg' variant='outline'>
                   <Chrome className='mr-2 h-4 w-4' />
-                  Sign in with Google
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-
-          <Card className='border-border bg-card shadow-sm'>
-            <CardHeader className='space-y-1'>
-              <CardTitle className='text-xl font-bold'>Create Admin Account</CardTitle>
-              <CardDescription>New to the admin panel? Sign up here</CardDescription>
-            </CardHeader>
-            <CardContent className='space-y-4'>
-              <Link href='/admin/signup'>
-                <Button className='w-full' size='lg' variant='outline'>
-                  <Mail className='mr-2 h-4 w-4' />
-                  Sign up with Email
-                </Button>
-              </Link>
-              <Link href='/admin/signup'>
-                <Button className='w-full' size='lg' variant='outline'>
-                  <Chrome className='mr-2 h-4 w-4' />
-                  Sign up with Google
+                  {isSignIn ? 'Sign in' : 'Sign up'} with Google
                 </Button>
               </Link>
             </CardContent>
@@ -73,6 +80,6 @@ export function AdminWelcomeScreen() {
         </div>
       </div>
     </main>
-  );
+  )
 }
 

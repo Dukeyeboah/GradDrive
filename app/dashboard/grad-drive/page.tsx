@@ -10,6 +10,7 @@ export default function GradDrivePage() {
       description: "Beautiful graduation celebration poster design",
       type: "Poster",
       format: "PNG",
+      imageUrl: undefined,
     },
     {
       id: 2,
@@ -60,11 +61,21 @@ export default function GradDrivePage() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {assets.map((asset) => (
-            <Card key={asset.id} className="border-border bg-card shadow-sm hover:shadow-md transition-shadow">
-              <CardHeader>
-                <div className="flex h-32 w-full items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 mb-2">
-                  <FileImage className="h-12 w-12 text-white" />
+            <Card key={asset.id} className="border-border bg-card shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+              {asset.imageUrl ? (
+                <div className="w-full h-64 relative overflow-hidden">
+                  <img 
+                    src={asset.imageUrl} 
+                    alt={asset.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
+              ) : (
+                <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-600">
+                  <FileImage className="h-16 w-16 text-white/50" />
+                </div>
+              )}
+              <CardHeader>
                 <CardTitle className="text-lg">{asset.title}</CardTitle>
                 <CardDescription>{asset.description}</CardDescription>
               </CardHeader>

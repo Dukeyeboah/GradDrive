@@ -13,6 +13,7 @@ export default function EbooksPage() {
         "Complete guide to navigating life after graduation, including career planning, financial tips, and personal development strategies.",
       pages: 120,
       available: true,
+      thumbnailUrl: undefined,
     },
     {
       id: 2,
@@ -46,12 +47,22 @@ export default function EbooksPage() {
           {ebooks.map((ebook) => (
             <Card
               key={ebook.id}
-              className="border-border bg-card shadow-sm hover:shadow-md transition-shadow flex flex-col"
+              className="border-border bg-card shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden"
             >
-              <CardHeader>
-                <div className="flex h-48 w-full items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 mb-2">
-                  <BookOpen className="h-16 w-16 text-white" />
+              {ebook.thumbnailUrl ? (
+                <div className="w-full h-64 relative overflow-hidden">
+                  <img 
+                    src={ebook.thumbnailUrl} 
+                    alt={ebook.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
+              ) : (
+                <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-600">
+                  <BookOpen className="h-16 w-16 text-white/50" />
+                </div>
+              )}
+              <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg">{ebook.title}</CardTitle>
                   {ebook.available ? (
