@@ -29,7 +29,9 @@ export async function GET(request: NextRequest) {
     return new NextResponse(blob, {
       headers: {
         'Content-Type': blob.type || 'application/octet-stream',
-        'Content-Disposition': `attachment; filename="${filename || 'download'}"`,
+        'Content-Disposition': `attachment; filename="${
+          filename || 'download'
+        }"`,
         'Content-Length': blob.size.toString(),
       },
     });
@@ -41,4 +43,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-

@@ -68,7 +68,7 @@ export function UserNav() {
               className='gap-2'
             >
               <ArrowLeft className='h-4 w-4' />
-              Back 
+              Back
             </Button>
           )}
         </div>
@@ -125,31 +125,52 @@ export function UserNav() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant='ghost' size='icon' className='rounded-full h-10 w-10 p-0 overflow-hidden relative'>
+              <Button
+                variant='ghost'
+                size='icon'
+                className='rounded-full h-10 w-10 p-0 overflow-hidden relative'
+              >
                 {userData?.photoURL ? (
                   <>
                     <img
                       src={userData.photoURL}
                       alt={userData.displayName || 'User'}
-                      className='h-10 w-10 rounded-full object-cover'
-                      crossOrigin='anonymous'
+                      className='h-full w-full rounded-full object-cover'
+                      style={{ display: 'block' }}
                       onError={(e) => {
-                        // Hide broken image and show fallback
-                        const img = e.currentTarget;
-                        img.style.display = 'none';
-                        const fallback = img.nextElementSibling as HTMLElement;
-                        if (fallback) {
-                          fallback.style.display = 'flex';
+                        // If image fails, hide it and show fallback
+                        e.currentTarget.style.display = 'none';
+                        const parent = e.currentTarget.parentElement;
+                        if (parent) {
+                          // Check if fallback already exists
+                          const existingFallback = parent.querySelector('.avatar-fallback');
+                          if (!existingFallback) {
+                            const fallback = document.createElement('div');
+                            fallback.className = 'avatar-fallback h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm absolute inset-0';
+                            fallback.textContent = getInitial();
+                            parent.appendChild(fallback);
+                          } else {
+                            existingFallback.classList.remove('hidden');
+                          }
                         }
                       }}
                     />
-                    <div className='h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm absolute inset-0 hidden'>
-                      {getInitial()}
+                    {/* Fallback - hidden by default, shown if image fails */}
+                    <div className='avatar-fallback h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm absolute inset-0 hidden'>
+                      {userData?.displayName || userData?.email ? (
+                        getInitial()
+                      ) : (
+                        <User className='h-5 w-5' />
+                      )}
                     </div>
                   </>
-                ) : (
+                ) : userData?.displayName || userData?.email ? (
                   <div className='h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm'>
                     {getInitial()}
+                  </div>
+                ) : (
+                  <div className='h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white'>
+                    <User className='h-5 w-5' />
                   </div>
                 )}
               </Button>
@@ -211,10 +232,7 @@ export function UserNav() {
               <DropdownMenuSeparator />
               <DropdownMenuLabel>Account</DropdownMenuLabel>
               <DropdownMenuItem asChild>
-                <Link href='/dashboard/account'>Profile</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href='/dashboard/account'>Settings</Link>
+                <Link href='/dashboard/account'>Account</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Sign Out</DropdownMenuItem>

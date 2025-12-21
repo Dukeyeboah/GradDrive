@@ -1,73 +1,142 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { User, Mail, Calendar } from "lucide-react"
+'use client';
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { User, Mail, Calendar } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function AccountPage() {
+  const { userData } = useAuth();
+
+  // Format date for display
+  const getMemberSince = () => {
+    if (userData?.createdAt) {
+      const date = userData.createdAt.toDate
+        ? userData.createdAt.toDate()
+        : new Date(userData.createdAt);
+      return date.toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+      });
+    }
+    return 'N/A';
+  };
+
+  // Get first letter for avatar fallback
+  const getInitial = () => {
+    if (userData?.displayName) {
+      return userData.displayName.charAt(0).toUpperCase();
+    }
+    if (userData?.email) {
+      return userData.email.charAt(0).toUpperCase();
+    }
+    return 'U';
+  };
+
   return (
-    <div className="flex flex-col justify-center items-center w-full py-12">
-      <div className="container max-w-3xl space-y-8">
-        <div className="space-y-2 text-center">
-          <h1 className="font-bold text-3xl md:text-4xl text-balance">My Account</h1>
-          <p className="text-lg text-muted-foreground text-balance">Manage your profile and access information</p>
+    <div className='flex flex-col justify-center items-center w-full py-12'>
+      <div className='container max-w-3xl space-y-8'>
+        <div className='space-y-2 text-center'>
+          <h1 className='font-bold text-3xl md:text-4xl text-balance'>
+            My Account
+          </h1>
+          <p className='text-lg text-muted-foreground text-balance'>
+            Manage your profile and access information
+          </p>
         </div>
 
         {/* Profile Card */}
-        <Card className="border-border bg-card shadow-sm">
+        <Card className='border-border bg-card shadow-sm'>
           <CardHeader>
-            <div className="flex items-center gap-4">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600">
-                <User className="h-8 w-8 text-white" />
-              </div>
+            <div className='flex items-center gap-4'>
+              {userData?.photoURL ? (
+                <img
+                  src={userData.photoURL}
+                  alt={userData.displayName || 'User'}
+                  className='h-16 w-16 rounded-full object-cover'
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    const parent = img.parentElement;
+                    if (parent) {
+                      const fallback = document.createElement('div');
+                      fallback.className =
+                        'flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600';
+                      fallback.innerHTML = `<span class="text-white font-semibold text-xl">${getInitial()}</span>`;
+                      parent.replaceChild(fallback, img);
+                    }
+                  }}
+                />
+              ) : (
+                <div className='flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600'>
+                  <span className='text-white font-semibold text-xl'>
+                    {getInitial()}
+                  </span>
+                </div>
+              )}
               <div>
                 <CardTitle>Profile Information</CardTitle>
                 <CardDescription>Update your personal details</CardDescription>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
-            <Input id="name" placeholder="John Doe" defaultValue="John Doe" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">Email Address</Label>
-            <Input id="email" type="email" placeholder="you@example.com" defaultValue="john@example.com" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="institution">Institution</Label>
-            <Input id="institution" placeholder="University of Ghana" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="graduation">Graduation Year</Label>
-            <Input id="graduation" placeholder="2024" />
-          </div>
-          <Button>Save Changes</Button>
+          <CardContent className='space-y-4'>
+            <div className='space-y-2'>
+              <Label htmlFor='name'>Full Name</Label>
+              <Input
+                id='name'
+                placeholder='Your full name'
+                defaultValue={userData?.displayName || ''}
+              />
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='email'>Email Address</Label>
+              <Input
+                id='email'
+                type='email'
+                placeholder='your@email.com'
+                defaultValue={userData?.email || ''}
+                disabled
+                className='bg-muted cursor-not-allowed'
+              />
+              <p className='text-xs text-muted-foreground'>
+                Email cannot be changed
+              </p>
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='institution'>Institution</Label>
+              <Input id='institution' placeholder='University of Ghana' />
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='graduation'>Graduation Year</Label>
+              <Input id='graduation' placeholder='2024' />
+            </div>
+            <Button>Save Changes</Button>
           </CardContent>
         </Card>
 
         {/* Account Stats */}
-        <div className="grid gap-6 md:grid-cols-2">
-        <Card className="border-border bg-card shadow-sm">
-          <CardHeader>
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 mb-2">
-              <Mail className="h-5 w-5 text-white" />
-            </div>
-            <CardTitle className="text-lg">Member Since</CardTitle>
-            <CardDescription>January 2024</CardDescription>
-          </CardHeader>
-        </Card>
+        <div className='grid gap-6 md:grid-cols-2'>
+          <Card className='border-border bg-card shadow-sm'>
+            <CardHeader>
+              <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 mb-2'>
+                <Mail className='h-5 w-5 text-white' />
+              </div>
+              <CardTitle className='text-lg'>Member Since</CardTitle>
+              <CardDescription>{getMemberSince()}</CardDescription>
+            </CardHeader>
+          </Card>
 
-        <Card className="border-border bg-card shadow-sm">
-          <CardHeader>
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 to-pink-600 mb-2">
-              <Calendar className="h-5 w-5 text-white" />
-            </div>
-            <CardTitle className="text-lg">Account Status</CardTitle>
-            <CardDescription>Active Member</CardDescription>
-          </CardHeader>
-        </Card>
+          <Card className='border-border bg-card shadow-sm'>
+            <CardHeader>
+              <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 to-pink-600 mb-2'>
+                <Calendar className='h-5 w-5 text-white' />
+              </div>
+              <CardTitle className='text-lg'>Account Status</CardTitle>
+              <CardDescription>Active Member</CardDescription>
+            </CardHeader>
+          </Card>
         </div>
 
         {/* Access Information */}

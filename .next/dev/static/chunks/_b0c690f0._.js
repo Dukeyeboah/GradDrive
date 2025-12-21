@@ -139,33 +139,33 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$
 // Map each card to a unique soft pastel gradient
 const getIconGradient = (title)=>{
     const titleLower = title.toLowerCase();
-    if (titleLower.includes("photographer") || titleLower.includes("camera")) {
-        return "from-pink-200 to-rose-300";
+    if (titleLower.includes('photographer') || titleLower.includes('camera')) {
+        return 'from-pink-200 to-rose-300';
     }
-    if (titleLower.includes("book") || titleLower.includes("ebook")) {
-        return "from-emerald-200 to-teal-300";
+    if (titleLower.includes('book') || titleLower.includes('ebook')) {
+        return 'from-emerald-200 to-teal-300';
     }
-    if (titleLower.includes("digital") || titleLower.includes("asset") || titleLower.includes("poster")) {
-        return "from-blue-200 to-purple-300";
+    if (titleLower.includes('digital') || titleLower.includes('asset') || titleLower.includes('poster')) {
+        return 'from-blue-200 to-purple-300';
     }
-    if (titleLower.includes("cap") || titleLower.includes("graduation")) {
-        return "from-violet-200 to-indigo-300";
+    if (titleLower.includes('cap') || titleLower.includes('graduation')) {
+        return 'from-violet-200 to-indigo-300';
     }
-    if (titleLower.includes("alumni") || titleLower.includes("club") || titleLower.includes("users")) {
-        return "from-cyan-200 to-blue-300";
+    if (titleLower.includes('alumni') || titleLower.includes('club') || titleLower.includes('users')) {
+        return 'from-cyan-200 to-blue-300';
     }
-    if (titleLower.includes("history") || titleLower.includes("kente")) {
-        return "from-amber-200 to-orange-300";
+    if (titleLower.includes('history') || titleLower.includes('kente')) {
+        return 'from-amber-200 to-orange-300';
     }
-    if (titleLower.includes("scholarship") || titleLower.includes("award")) {
-        return "from-yellow-200 to-amber-300";
+    if (titleLower.includes('scholarship') || titleLower.includes('award')) {
+        return 'from-yellow-200 to-amber-300';
     }
-    if (titleLower.includes("discount") || titleLower.includes("gift") || titleLower.includes("coming soon")) {
-        return "from-purple-200 to-pink-300";
+    if (titleLower.includes('discount') || titleLower.includes('gift') || titleLower.includes('coming soon')) {
+        return 'from-purple-200 to-pink-300';
     }
-    return "from-blue-200 to-purple-300";
+    return 'from-blue-200 to-purple-300';
 };
-function PerkCard({ icon: Icon, title, description, href, buttonText = "View", gradient }) {
+function PerkCard({ icon: Icon, title, description, href, buttonText = 'View', gradient }) {
     const defaultGradient = getIconGradient(title);
     const finalGradient = gradient || defaultGradient;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -178,17 +178,17 @@ function PerkCard({ icon: Icon, title, description, href, buttonText = "View", g
                         className: "flex items-center gap-3 mb-3",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br flex-shrink-0", finalGradient),
+                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])('flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br flex-shrink-0', finalGradient),
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
                                     className: "h-4 w-4 text-white"
                                 }, void 0, false, {
                                     fileName: "[project]/components/perk-card.tsx",
-                                    lineNumber: 55,
+                                    lineNumber: 85,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/perk-card.tsx",
-                                lineNumber: 54,
+                                lineNumber: 79,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
@@ -196,13 +196,13 @@ function PerkCard({ icon: Icon, title, description, href, buttonText = "View", g
                                 children: title
                             }, void 0, false, {
                                 fileName: "[project]/components/perk-card.tsx",
-                                lineNumber: 57,
+                                lineNumber: 87,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/perk-card.tsx",
-                        lineNumber: 53,
+                        lineNumber: 78,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
@@ -210,13 +210,13 @@ function PerkCard({ icon: Icon, title, description, href, buttonText = "View", g
                         children: description
                     }, void 0, false, {
                         fileName: "[project]/components/perk-card.tsx",
-                        lineNumber: 59,
+                        lineNumber: 89,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/perk-card.tsx",
-                lineNumber: 52,
+                lineNumber: 77,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -229,23 +229,23 @@ function PerkCard({ icon: Icon, title, description, href, buttonText = "View", g
                         children: buttonText
                     }, void 0, false, {
                         fileName: "[project]/components/perk-card.tsx",
-                        lineNumber: 63,
+                        lineNumber: 95,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/perk-card.tsx",
-                    lineNumber: 62,
+                    lineNumber: 94,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/perk-card.tsx",
-                lineNumber: 61,
+                lineNumber: 93,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/perk-card.tsx",
-        lineNumber: 51,
+        lineNumber: 76,
         columnNumber: 5
     }, this);
 }
