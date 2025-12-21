@@ -3,6 +3,7 @@
 ## Step 1: Add Debug Logging
 
 I've added console logging to the upload function. When you try to upload, check your browser console for:
+
 - User UID
 - User Data
 - User Role
@@ -25,6 +26,7 @@ To test if the issue is with the admin role check, we can temporarily use open r
 ## Step 3: Check Console Logs
 
 After trying to upload, check browser console for:
+
 ```
 === UPLOAD DEBUG INFO ===
 User: [object]
@@ -36,6 +38,7 @@ Is Authenticated: true
 ```
 
 **What to look for:**
+
 - ✅ User UID matches your Firestore document ID
 - ✅ User Role is "admin" (not undefined or "user")
 - ✅ Is Authenticated is true
@@ -74,4 +77,3 @@ Once we identify the issue:
 ⚠️ **NEVER leave test rules in production!** They allow any authenticated user to upload.
 
 ✅ Always revert to the secure rules from `storage.rules` after testing.
-

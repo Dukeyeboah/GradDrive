@@ -5,11 +5,13 @@
 ### 1. Deploy Updated Rules to Firebase Console
 
 **Firestore Rules:**
+
 1. Copy ALL content from `firestore.rules`
 2. Go to Firebase Console → Firestore Database → Rules tab
 3. Delete old rules, paste new rules, click "Publish"
 
 **Storage Rules:**
+
 1. Copy ALL content from `storage.rules`
 2. Go to Firebase Console → Storage → Rules tab
 3. Delete old rules, paste new rules, click "Publish"
@@ -24,6 +26,7 @@
    - `"super admin"`
 
 **If the role is missing or wrong:**
+
 - Click on your user document
 - Add/edit the `role` field
 - Set it to `"admin"` (or `"super admin"` if you used the super admin passkey)
@@ -38,6 +41,7 @@
 ### 4. Test Upload Again
 
 After completing steps 1-3:
+
 1. Refresh your browser
 2. Try uploading a poster
 3. It should work!
@@ -45,13 +49,17 @@ After completing steps 1-3:
 ## Common Issues
 
 ### Issue: "User document doesn't exist"
+
 **Solution:** Sign up again via `/admin` with the passkey, or manually create the user document in Firestore with `role: "admin"`
 
 ### Issue: "Role is set to 'user' instead of 'admin'"
+
 **Solution:** Manually update the `role` field in Firestore to `"admin"` or `"super admin"`
 
 ### Issue: "Rules deployed but still getting 403"
-**Solution:** 
+
+**Solution:**
+
 - Wait 1-2 minutes for rules to propagate
 - Clear browser cache
 - Log out and log back in
@@ -62,10 +70,12 @@ After completing steps 1-3:
 To verify everything is working:
 
 1. **Check Firestore:**
+
    - Your user document exists
    - Has `role: "admin"` or `role: "super admin"`
 
 2. **Check Storage Rules:**
+
    - Rules are deployed in Firebase Console
    - Rules match the content in `storage.rules` file
 
@@ -74,4 +84,3 @@ To verify everything is working:
    - Your user ID matches the document ID in Firestore
 
 If all three are correct, uploads should work!
-

@@ -13,7 +13,7 @@ export function PublicNav() {
   return (
     <>
       <nav className='flex justify-center items-center z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-        <div className='container flex h-16 items-center justify-between px-4 md:px-6'>
+        <div className='container flex h-16 items-center justify-between px-4 md:px-4'>
           <Link href='/' className='flex items-center gap-2'>
             <div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary'>
               <span className='font-bold text-primary-foreground text-lg'>
