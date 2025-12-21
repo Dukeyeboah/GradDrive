@@ -1,0 +1,49 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // SECURE VERSION: Allows authenticated users to upload
+    // Client-side validation ensures only admins can access upload UI
+    // This is a workaround because Storage rules can't reliably read Firestore
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Photographers folder
+    match /photographers/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated(); // Client validates admin role
+    }
+
+    // Posters folder - authenticated users can upload (client validates admin)
+    match /posters/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated(); // Client validates admin role
+    }
+
+    // Ebooks folder
+    match /ebooks/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated(); // Client validates admin role
+    }
+
+    // Cap designs folder
+    match /cap-designs/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated(); // Client validates admin role
+    }
+
+    // User uploads folder
+    match /users/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Default deny
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

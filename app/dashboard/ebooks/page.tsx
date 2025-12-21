@@ -1,37 +1,41 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { BookOpen, Download } from "lucide-react"
+import { getEbooks, type Ebook } from "@/lib/firebase/firestore"
 
 export default function EbooksPage() {
-  const ebooks = [
-    {
-      id: 1,
-      title: "After-Grad Kit",
-      author: "Grad Drive Team",
-      description:
-        "Complete guide to navigating life after graduation, including career planning, financial tips, and personal development strategies.",
-      pages: 120,
-      available: true,
-      thumbnailUrl: undefined,
-    },
-    {
-      id: 2,
-      title: "Career Launch Blueprint",
-      author: "Coming Soon",
-      description: "Strategic guide to launching your professional career with confidence and clarity.",
-      pages: 85,
-      available: false,
-    },
-    {
-      id: 3,
-      title: "Financial Freedom Fundamentals",
-      author: "Coming Soon",
-      description: "Essential financial literacy for young professionals starting their journey.",
-      pages: 95,
-      available: false,
-    },
-  ]
+  const [ebooks, setEbooks] = useState<Ebook[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadEbooks()
+  }, [])
+
+  const loadEbooks = async () => {
+    try {
+      setLoading(true)
+      const data = await getEbooks()
+      setEbooks(data)
+    } catch (error) {
+      console.error("Error loading ebooks:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex flex-col justify-center items-center w-full py-12">
+        <div className="container max-w-6xl">
+          <p className="text-muted-foreground text-center">Loading ebooks...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col justify-center items-center w-full py-12">
@@ -43,57 +47,61 @@ export default function EbooksPage() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {ebooks.map((ebook) => (
-            <Card
-              key={ebook.id}
-              className="border-border bg-card shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden"
-            >
-              {ebook.thumbnailUrl ? (
-                <div className="w-full h-64 relative overflow-hidden">
-                  <img 
-                    src={ebook.thumbnailUrl} 
-                    alt={ebook.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ) : (
-                <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-600">
-                  <BookOpen className="h-16 w-16 text-white/50" />
-                </div>
-              )}
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg">{ebook.title}</CardTitle>
-                  {ebook.available ? (
-                    <Badge variant="default">Available</Badge>
-                  ) : (
-                    <Badge variant="secondary">Coming Soon</Badge>
+        {ebooks.length === 0 ? (
+          <div className="text-center py-12">
+            <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground">No e-books available yet. Check back soon!</p>
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {ebooks.map((ebook) => (
+              <Card
+                key={ebook.id}
+                className="border-border bg-card shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden"
+              >
+                {ebook.thumbnailUrl ? (
+                  <div className="w-full h-48 relative overflow-hidden flex-shrink-0">
+                    <img 
+                      src={ebook.thumbnailUrl} 
+                      alt={ebook.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-full h-48 flex items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-600 flex-shrink-0">
+                    <BookOpen className="h-16 w-16 text-white/50" />
+                  </div>
+                )}
+                <CardHeader className="pb-3 pt-3 flex-shrink-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <CardTitle className="text-sm font-semibold leading-tight flex-1">{ebook.title}</CardTitle>
+                    {ebook.available ? (
+                      <Badge variant="default" className="text-xs">Available</Badge>
+                    ) : (
+                      <Badge variant="secondary" className="text-xs">Coming Soon</Badge>
+                    )}
+                  </div>
+                  <CardDescription className="text-xs">By {ebook.author}</CardDescription>
+                  {ebook.description && (
+                    <CardDescription className="text-xs mt-1 line-clamp-2">{ebook.description}</CardDescription>
                   )}
-                </div>
-                <CardDescription className="leading-relaxed">{ebook.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-1">
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <span>By {ebook.author}</span>
-                  <span>{ebook.pages} pages</span>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button className="w-full gap-2" disabled={!ebook.available}>
-                  {ebook.available ? (
-                    <>
-                      <Download className="h-4 w-4" />
-                      Download
-                    </>
-                  ) : (
-                    "Notify Me"
-                  )}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+                </CardHeader>
+                <CardFooter className="pt-0 pb-3">
+                  <Button className="w-full gap-2" size="sm" disabled={!ebook.available}>
+                    {ebook.available ? (
+                      <>
+                        <Download className="h-4 w-4" />
+                        Download
+                      </>
+                    ) : (
+                      "Notify Me"
+                    )}
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

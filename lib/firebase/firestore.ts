@@ -40,12 +40,13 @@ export interface Poster {
   id?: string
   name: string
   description: string
-  type: string
-  format: string
   downloads: number
   category?: string
   tags?: string[]
   imageUrl?: string
+  shopifyLink?: string
+  uploadedBy?: string
+  uploadedByName?: string
   createdAt?: Timestamp
   updatedAt?: Timestamp
 }
@@ -62,6 +63,9 @@ export interface Ebook {
   thumbnailUrl?: string
   fileUrl?: string
   downloads?: number
+  uploadedBy?: string
+  uploadedByName?: string
+  uploadedByEmail?: string
   createdAt?: Timestamp
   updatedAt?: Timestamp
 }
@@ -223,6 +227,90 @@ export async function deletePoster(id: string): Promise<boolean> {
 }
 
 /**
+ * Cap Designs Collection
+ */
+export const capDesignsCollection = collection(db, "capDesigns")
+
+export async function getCapDesigns(): Promise<Poster[]> {
+  try {
+    const q = query(capDesignsCollection, orderBy("createdAt", "desc"))
+    const snapshot = await getDocs(q)
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as Poster[]
+  } catch (error) {
+    console.error("Error getting cap designs:", error)
+    return []
+  }
+}
+
+export async function getCapDesign(id: string): Promise<Poster | null> {
+  try {
+    const docRef = doc(db, "capDesigns", id)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() } as Poster
+    }
+    return null
+  } catch (error) {
+    console.error("Error getting cap design:", error)
+    return null
+  }
+}
+
+export async function addCapDesign(data: Omit<Poster, "id" | "createdAt" | "updatedAt" | "downloads">): Promise<string | null> {
+  try {
+    const docRef = doc(capDesignsCollection)
+    const designData: any = {
+      ...data,
+      downloads: 0,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    }
+    // Remove undefined values
+    Object.keys(designData).forEach(key => {
+      if (designData[key] === undefined) {
+        delete designData[key]
+      }
+    })
+    await setDoc(docRef, designData)
+    return docRef.id
+  } catch (error) {
+    console.error("Error adding cap design:", error)
+    return null
+  }
+}
+
+export async function updateCapDesign(id: string, data: Partial<Poster>): Promise<boolean> {
+  try {
+    const docRef = doc(db, "capDesigns", id)
+    const updateData: any = { ...data, updatedAt: serverTimestamp() }
+    // Remove undefined values
+    Object.keys(updateData).forEach(key => {
+      if (updateData[key] === undefined) {
+        delete updateData[key]
+      }
+    })
+    await updateDoc(docRef, updateData)
+    return true
+  } catch (error) {
+    console.error("Error updating cap design:", error)
+    return false
+  }
+}
+
+export async function deleteCapDesign(id: string): Promise<boolean> {
+  try {
+    await deleteDoc(doc(db, "capDesigns", id))
+    return true
+  } catch (error) {
+    console.error("Error deleting cap design:", error)
+    return false
+  }
+}
+
+/**
  * Ebooks Collection
  */
 export const ebooksCollection = collection(db, "ebooks")
@@ -258,12 +346,19 @@ export async function getEbook(id: string): Promise<Ebook | null> {
 export async function addEbook(data: Omit<Ebook, "id" | "createdAt" | "updatedAt" | "downloads">): Promise<string | null> {
   try {
     const docRef = doc(ebooksCollection)
-    await setDoc(docRef, {
+    const ebookData: any = {
       ...data,
       downloads: 0,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
+    }
+    // Remove undefined values
+    Object.keys(ebookData).forEach(key => {
+      if (ebookData[key] === undefined) {
+        delete ebookData[key]
+      }
     })
+    await setDoc(docRef, ebookData)
     return docRef.id
   } catch (error) {
     console.error("Error adding ebook:", error)
@@ -343,7 +438,7 @@ export async function addSystemLog(
 /**
  * Users Collection
  */
-export async function getUserRole(uid: string): Promise<"user" | "admin" | null> {
+export async function getUserRole(uid: string): Promise<"user" | "admin" | "super admin" | null> {
   try {
     const userDoc = await getDoc(doc(db, "users", uid))
     if (userDoc.exists()) {
@@ -357,7 +452,7 @@ export async function getUserRole(uid: string): Promise<"user" | "admin" | null>
   }
 }
 
-export async function setUserRole(uid: string, role: "user" | "admin"): Promise<boolean> {
+export async function setUserRole(uid: string, role: "user" | "admin" | "super admin"): Promise<boolean> {
   try {
     await updateDoc(doc(db, "users", uid), {
       role,

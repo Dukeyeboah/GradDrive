@@ -14,12 +14,19 @@ export async function uploadFile(
   path: string
 ): Promise<{ url: string | null; error: string | null }> {
   try {
+    console.log("📤 Starting upload to path:", path)
     const storageRef = ref(storage, path)
+    console.log("📤 Storage ref created, attempting upload...")
     const snapshot = await uploadBytes(storageRef, file)
+    console.log("✅ Upload successful, getting download URL...")
     const downloadURL = await getDownloadURL(snapshot.ref)
+    console.log("✅ Download URL obtained:", downloadURL)
     return { url: downloadURL, error: null }
   } catch (error: any) {
-    console.error("Error uploading file:", error)
+    console.error("❌ Error uploading file:", error)
+    console.error("❌ Error code:", error.code)
+    console.error("❌ Error message:", error.message)
+    console.error("❌ Full error:", JSON.stringify(error, null, 2))
     return { url: null, error: error.message }
   }
 }

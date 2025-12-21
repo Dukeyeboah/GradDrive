@@ -6,11 +6,12 @@ service cloud.firestore {
       return request.auth != null;
     }
     
-    // Helper function to check if user is admin
+    // Helper function to check if user is admin or super admin
     function isAdmin() {
       return isAuthenticated() && 
              exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+             (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+              get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super admin');
     }
     
     // Helper function to check if user owns the document
@@ -20,55 +21,50 @@ service cloud.firestore {
 
     // Users collection
     match /users/{userId} {
-      // Users can read their own data
-      allow read: if isOwner(userId);
-      // Users can create their own document when signing up
+      // Allow read if authenticated user is reading their own document
+      // This also allows Storage rules to check user roles when evaluating security
+      allow read: if isAuthenticated() && request.auth.uid == userId;
       allow create: if isOwner(userId);
-      // Users can update their own data (except role - only admins can change roles)
       allow update: if isOwner(userId) && 
                       (!('role' in request.resource.data) || 
                        request.resource.data.role == resource.data.role ||
                        isAdmin());
-      // Only admins can delete users
       allow delete: if isAdmin();
     }
 
     // Photographers collection
     match /photographers/{photographerId} {
-      // Everyone can read photographers
       allow read: if true;
-      // Only admins can write
       allow write: if isAdmin();
     }
 
     // Posters collection
     match /posters/{posterId} {
-      // Everyone can read posters
       allow read: if true;
-      // Only admins can write
       allow write: if isAdmin();
     }
 
     // Ebooks collection
     match /ebooks/{ebookId} {
-      // Everyone can read ebooks
       allow read: if true;
-      // Only admins can write
+      allow write: if isAdmin();
+    }
+
+    // Cap Designs collection
+    match /capDesigns/{designId} {
+      allow read: if true;
       allow write: if isAdmin();
     }
 
     // System logs collection
     match /systemLogs/{logId} {
-      // Only admins can read logs
       allow read: if isAdmin();
-      // Only admins can write logs
       allow write: if isAdmin();
     }
 
-    // Default deny all other collections
+    // Default deny
     match /{document=**} {
       allow read, write: if false;
     }
   }
 }
-

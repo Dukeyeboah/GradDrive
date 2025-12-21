@@ -144,7 +144,7 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
         <DialogHeader>
           <DialogTitle>{mode === "login" ? "Welcome back" : "Create an account"}</DialogTitle>
           <DialogDescription>
-            {mode === "login" ? "Sign in to your Grad Drive account" : "Get started with Grad Drive today"}
+            {mode === "login" ? "Log in to your Grad Drive account" : "Get started with Grad Drive today"}
           </DialogDescription>
         </DialogHeader>
         <Card className="border-0 shadow-none">
@@ -193,7 +193,7 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
                     {mode === "login" ? "Signing in..." : "Creating account..."}
                   </>
                 ) : (
-                  mode === "login" ? "Sign In" : "Create Account"
+                  mode === "login" ? "Log In" : "Create Account"
                 )}
               </Button>
               <div className="relative">
@@ -213,7 +213,7 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
                 disabled={loading}
               >
                 <Chrome className="mr-2 h-4 w-4" />
-                {mode === "login" ? "Sign in" : "Sign up"} with Google
+                {mode === "login" ? "Log in" : "Sign up"} with Google
               </Button>
             </CardContent>
           </form>
@@ -238,7 +238,7 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
                     className="text-accent hover:underline font-medium"
                     type="button"
                   >
-                    Sign in
+                    Log in
                   </button>
                 </>
               )}

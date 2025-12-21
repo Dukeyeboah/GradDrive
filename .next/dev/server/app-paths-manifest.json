@@ -1,5 +1,6 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
+  "/admin/cap-designs/page": "app/admin/cap-designs/page.js",
   "/admin/customizer/page": "app/admin/customizer/page.js",
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/admin/ebooks/page": "app/admin/ebooks/page.js",

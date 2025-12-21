@@ -28,7 +28,7 @@ export interface UserData {
   email: string | null
   displayName: string | null
   photoURL: string | null
-  role?: "user" | "admin"
+  role?: "user" | "admin" | "super admin"
   createdAt?: any
   updatedAt?: any
 }
@@ -52,7 +52,7 @@ export async function signUpEmailPassword(
   email: string,
   password: string,
   displayName?: string,
-  role: "user" | "admin" = "user"
+  role: "user" | "admin" | "super admin" = "user"
 ) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
@@ -84,7 +84,7 @@ export async function signUpEmailPassword(
 /**
  * Sign in with Google
  */
-export async function signInWithGoogle(role: "user" | "admin" = "user") {
+export async function signInWithGoogle(role: "user" | "admin" | "super admin" = "user") {
   try {
     const result = await signInWithPopup(auth, googleProvider)
     const user = result.user
