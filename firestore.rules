@@ -21,9 +21,9 @@ service cloud.firestore {
 
     // Users collection
     match /users/{userId} {
-      // Allow read if authenticated user is reading their own document
+      // Allow read if authenticated user is reading their own document OR if admin
       // This also allows Storage rules to check user roles when evaluating security
-      allow read: if isAuthenticated() && request.auth.uid == userId;
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
       allow create: if isOwner(userId);
       allow update: if isOwner(userId) && 
                       (!('role' in request.resource.data) || 

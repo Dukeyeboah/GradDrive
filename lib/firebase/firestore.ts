@@ -77,6 +77,7 @@ export interface SystemLog {
   userId: string
   userName: string
   userEmail: string
+  userRole?: string
   details?: any
   timestamp: Timestamp
 }
@@ -216,9 +217,15 @@ export async function updatePoster(id: string, data: Partial<Poster>): Promise<b
   }
 }
 
-export async function deletePoster(id: string): Promise<boolean> {
+export async function deletePoster(id: string, imageUrl?: string): Promise<boolean> {
   try {
+    // Delete from Firestore
     await deleteDoc(doc(db, "posters", id))
+    
+    // Note: Storage deletion should be handled by the caller
+    // since we need to import deleteFile from storage.ts
+    // and this file should focus on Firestore operations
+    
     return true
   } catch (error) {
     console.error("Error deleting poster:", error)
@@ -415,9 +422,23 @@ export async function addSystemLog(
   userId: string,
   userName: string,
   userEmail: string,
-  details?: any
+  details?: any,
+  userRole?: string
 ): Promise<string | null> {
   try {
+    // If role not provided, try to get it from user document
+    let role = userRole;
+    if (!role) {
+      try {
+        const userDoc = await getDoc(doc(db, "users", userId));
+        if (userDoc.exists()) {
+          role = userDoc.data().role || 'user';
+        }
+      } catch (e) {
+        // If we can't get role, continue without it
+      }
+    }
+
     const docRef = doc(logsCollection)
     await setDoc(docRef, {
       action,
@@ -425,6 +446,7 @@ export async function addSystemLog(
       userId,
       userName,
       userEmail,
+      userRole: role || 'user',
       details,
       timestamp: serverTimestamp(),
     })
@@ -462,6 +484,134 @@ export async function setUserRole(uid: string, role: "user" | "admin" | "super a
   } catch (error) {
     console.error("Error setting user role:", error)
     return false
+  }
+}
+
+/**
+ * Analytics Functions
+ */
+export interface AnalyticsData {
+  totalUsers: number
+  totalAdmins: number
+  totalDownloads: number
+  photographersListed: number
+  postersUploaded: number
+  capDesigns: number
+  recentActivity: SystemLog[]
+}
+
+export async function getAnalytics(): Promise<AnalyticsData> {
+  try {
+    // Get all users
+    const usersSnapshot = await getDocs(collection(db, "users"))
+    // Total users = only users with role "user" (excludes admins)
+    const totalUsers = usersSnapshot.docs.filter(
+      (doc) => {
+        const role = doc.data().role;
+        return !role || role === 'user';
+      }
+    ).length
+    const totalAdmins = usersSnapshot.docs.filter(
+      (doc) => doc.data().role === 'admin' || doc.data().role === 'super admin'
+    ).length
+
+    // Get total downloads from posters, ebooks, and cap designs
+    const postersSnapshot = await getDocs(collection(db, "posters"))
+    const ebooksSnapshot = await getDocs(collection(db, "ebooks"))
+    const capDesignsSnapshot = await getDocs(collection(db, "capDesigns"))
+    
+    let totalDownloads = 0
+    postersSnapshot.docs.forEach((doc) => {
+      totalDownloads += doc.data().downloads || 0
+    })
+    ebooksSnapshot.docs.forEach((doc) => {
+      totalDownloads += doc.data().downloads || 0
+    })
+    capDesignsSnapshot.docs.forEach((doc) => {
+      totalDownloads += doc.data().downloads || 0
+    })
+
+    // Get photographers count
+    const photographersSnapshot = await getDocs(collection(db, "photographers"))
+    const photographersListed = photographersSnapshot.size
+
+    // Get counts
+    const postersUploaded = postersSnapshot.size
+    const capDesigns = capDesignsSnapshot.size
+
+    // Get recent activity (last 10 logs)
+    const recentActivity = await getSystemLogs(10)
+
+    return {
+      totalUsers,
+      totalAdmins,
+      totalDownloads,
+      photographersListed,
+      postersUploaded,
+      capDesigns,
+      recentActivity,
+    }
+  } catch (error) {
+    console.error("Error getting analytics:", error)
+    return {
+      totalUsers: 0,
+      totalAdmins: 0,
+      totalDownloads: 0,
+      photographersListed: 0,
+      postersUploaded: 0,
+      capDesigns: 0,
+      recentActivity: [],
+    }
+  }
+}
+
+// Get all users with details
+export async function getAllUsers(): Promise<any[]> {
+  try {
+    const usersSnapshot = await getDocs(collection(db, "users"))
+    return usersSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+  } catch (error) {
+    console.error("Error getting users:", error)
+    return []
+  }
+}
+
+// Get download breakdown
+export async function getDownloadBreakdown(): Promise<{
+  posters: { name: string; downloads: number; id: string }[]
+  ebooks: { title: string; downloads: number; id: string }[]
+  capDesigns: { name: string; downloads: number; id: string }[]
+}> {
+  try {
+    const postersSnapshot = await getDocs(collection(db, "posters"))
+    const ebooksSnapshot = await getDocs(collection(db, "ebooks"))
+    const capDesignsSnapshot = await getDocs(collection(db, "capDesigns"))
+
+    const posters = postersSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      name: doc.data().name,
+      downloads: doc.data().downloads || 0,
+    })).sort((a, b) => b.downloads - a.downloads)
+
+    const ebooks = ebooksSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      title: doc.data().title,
+      downloads: doc.data().downloads || 0,
+    })).sort((a, b) => b.downloads - a.downloads)
+
+    const capDesigns = capDesignsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      name: doc.data().name,
+      downloads: doc.data().downloads || 0,
+    })).sort((a, b) => b.downloads - a.downloads)
+
+    return { posters, ebooks, capDesigns }
+  } catch (error) {
+    console.error("Error getting download breakdown:", error)
+    return { posters: [], ebooks: [], capDesigns: [] }
   }
 }
 

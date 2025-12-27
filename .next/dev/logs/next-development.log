@@ -1,234 +1,55 @@
-[00:00:01.109] Server  WARN     ⚠ Minimum recommended TypeScript version is v5.1.0, older versions can potentially be incompatible with Next.js. Detected: 5.0.2
-[00:00:01.246] Server  LOG      ✓ Ready in 833ms
-[00:00:12.904] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:12.905] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:00:12.905] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766331055416}
-[00:00:13.344] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[00:00:41.101] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766331083604}
-[00:01:04.973] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766331107475}
-[00:02:13.423] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766331175930}
-[00:10:07.020] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766331649523}
-[00:10:12.201] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766331654705}
-[00:11:27.297] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766331729798}
-[00:12:00.675] Server  LOG      ✓ Compiled in 135ms
-[00:12:11.699] Server  LOG      ✓ Compiled in 99ms
-[00:12:18.561] Server  LOG      ✓ Compiled in 72ms
-[00:12:20.737] Server  LOG      ✓ Compiled in 66ms
-[00:12:26.053] Server  LOG      ✓ Compiled in 73ms
-[00:12:36.139] Server  LOG      ✓ Compiled in 102ms
-[00:12:42.799] Server  LOG      ✓ Compiled in 87ms
-[00:12:45.733] Server  LOG      ✓ Compiled in 75ms
-[00:12:50.836] Server  LOG      ✓ Compiled in 135ms
-[00:13:00.863] Server  LOG      ✓ Compiled in 97ms
-[00:13:03.885] Server  LOG      ✓ Compiled in 64ms
-[00:13:09.350] Server  LOG      ✓ Compiled in 112ms
-[00:13:13.058] Server  LOG      ✓ Compiled in 72ms
-[00:13:44.965] Server  LOG      ✓ Compiled in 109ms
-[00:13:55.785] Server  LOG      ✓ Compiled in 92ms
-[00:14:07.652] Server  LOG      ✓ Compiled in 85ms
-[00:14:11.553] Server  LOG      ✓ Compiled in 81ms
-[00:14:15.214] Server  LOG      ✓ Compiled in 87ms
-[00:14:25.516] Server  LOG      ✓ Compiled in 87ms
-[00:15:23.878] Server  LOG      ✓ Compiled in 78ms
-[00:15:56.259] Server  LOG      ✓ Compiled in 91ms
-[00:16:04.366] Server  LOG      ✓ Compiled in 80ms
-[00:17:06.861] Server  LOG      ✓ Compiled in 79ms
-[00:17:14.190] Server  LOG      ✓ Compiled in 77ms
-[00:17:17.421] Server  LOG      ✓ Compiled in 72ms
-[00:17:34.862] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766332097486}
-[00:18:04.671] Server  LOG      ✓ Compiled in 97ms
-[00:19:30.973] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766332213595}
-[00:19:44.724] Server  LOG      ✓ Compiled in 131ms
-[00:19:56.786] Server  LOG      ✓ Compiled in 73ms
-[00:20:02.343] Server  LOG      ✓ Compiled in 76ms
-[00:20:07.733] Server  LOG      ✓ Compiled in 98ms
-[00:20:19.901] Server  LOG      ✓ Compiled in 93ms
-[00:20:23.578] Server  LOG      ✓ Compiled in 68ms
-[00:20:38.326] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:20:38.326] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/grad-drive","route":"/dashboard/grad-drive"}
-[00:20:38.326] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766332280958}
-[00:20:38.774] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[00:22:12.963] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766332375595}
-[00:22:14.455] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766332377087}
-[00:22:25.259] Server  LOG      ✓ Compiled in 94ms
-[00:23:10.909] Server  LOG      ✓ Compiled in 83ms
-[00:23:28.958] Server  LOG      ✓ Compiled in 138ms
-[00:23:29.065] Browser ERROR   ./app/dashboard/grad-drive/page.tsx:54:52
-Parsing ecmascript source code failed
-  52 |   return (
-  53 |     <div className='flex flex-col justify-start items-center w-full py-4">
-> 54 |       <div className='container max-w-6xl space-y-8'>
-     |                                                    ^^
-  55 |         <div className='space-y-2 text-center'>
-  56 |           <h1 className='font-bold text-3xl md:text-4xl text-balance'>
-  57 |             Digital Posters & Artwork
-
-Unterminated string constant
-
-Import traces:
-  Client Component Browser:
-    ./app/dashboard/grad-drive/page.tsx [Client Component Browser]
-    ./app/dashboard/grad-drive/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/dashboard/grad-drive/page.tsx [Client Component SSR]
-    ./app/dashboard/grad-drive/page.tsx [Server Component]
-[00:23:32.743] Server  LOG      ✓ Compiled in 89ms
-[00:24:12.616] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766332495247}
-[00:24:17.554] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766332500186}
-[00:25:41.653] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766332584284}
-[00:25:44.176] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766332586807}
-[00:26:02.112] Server  LOG      ✓ Compiled in 111ms
-[00:26:07.295] Server  LOG      ✓ Compiled in 64ms
-[00:26:32.857] Server  LOG      ✓ Compiled in 76ms
-[00:26:49.759] Server  LOG      ✓ Compiled in 92ms
-[00:26:51.236] Server  LOG      ✓ Compiled in 53ms
-[00:26:52.987] Server  LOG      ✓ Compiled in 52ms
-[00:26:58.732] Server  LOG      ✓ Compiled in 63ms
-[00:27:02.475] Server  LOG      ✓ Compiled in 73ms
-[00:27:12.880] Server  LOG      ✓ Compiled in 157ms
-[00:27:19.641] Server  LOG      ✓ Compiled in 96ms
-[00:27:27.073] Server  LOG      ✓ Compiled in 70ms
-[00:27:28.610] Server  LOG      ✓ Compiled in 52ms
-[00:28:52.343] Server  LOG      ✓ Compiled in 136ms
-[00:28:54.142] Server  LOG      ✓ Compiled in 98ms
-[00:29:01.863] Server  LOG      ✓ Compiled in 105ms
-[00:29:03.562] Server  LOG      ✓ Compiled in 106ms
-[00:29:05.058] Server  LOG      ✓ Compiled in 95ms
-[00:29:08.079] Server  LOG      ✓ Compiled in 159ms
-[00:29:17.120] Server  LOG      ✓ Compiled in 137ms
-[00:29:25.117] Server  LOG      ✓ Compiled in 99ms
-[00:29:28.347] Server  LOG      ✓ Compiled in 67ms
-[00:29:31.047] Server  LOG      ✓ Compiled in 77ms
-[00:29:52.821] Server  LOG      ✓ Compiled in 96ms
-[00:29:56.032] Server  LOG      ✓ Compiled in 129ms
-[00:29:59.921] Server  LOG      ✓ Compiled in 69ms
-[00:30:06.904] Server  LOG      ✓ Compiled in 70ms
-[00:30:16.332] Server  LOG      ✓ Compiled in 119ms
-[00:30:21.375] Server  LOG      ✓ Compiled in 91ms
-[00:30:50.097] Server  LOG      ✓ Compiled in 71ms
-[00:30:51.097] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766332893802}
-[00:31:02.102] Server  LOG      ✓ Compiled in 86ms
-[00:31:07.284] Server  LOG      ✓ Compiled in 104ms
-[00:31:17.335] Server  LOG      ✓ Compiled in 79ms
-[00:31:50.386] Server  LOG      ✓ Compiled in 93ms
-[00:31:59.277] Server  LOG      ✓ Compiled in 84ms
-[00:32:32.301] Server  LOG      ✓ Compiled in 109ms
-[00:32:55.649] Server  LOG      ✓ Compiled in 132ms
-[00:33:26.789] Server  LOG      ✓ Compiled in 133ms
-[00:33:31.482] Server  LOG      ✓ Compiled in 139ms
-[00:33:36.643] Server  LOG      ✓ Compiled in 160ms
-[00:34:29.311] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766333112015}
-[00:34:58.412] Server  LOG      ✓ Compiled in 194ms
-[00:35:02.244] Server  LOG      ✓ Compiled in 96ms
-[00:35:23.201] Server  LOG      ✓ Compiled in 95ms
-[00:35:25.463] Server  LOG      ✓ Compiled in 104ms
-[00:35:26.999] Server  LOG      ✓ Compiled in 74ms
-[00:35:36.902] Server  LOG      ✓ Compiled in 79ms
-[00:35:39.905] Server  LOG      ✓ Compiled in 73ms
-[00:40:49.321] Server  LOG      ✓ Compiled in 307ms
-[00:40:56.532] Server  LOG      ✓ Compiled in 172ms
-[00:40:59.239] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:40:59.239] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/grad-drive","route":"/dashboard/grad-drive"}
-[00:40:59.239] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766333501756}
-[00:41:00.240] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[00:41:04.875] Server  LOG      ✓ Compiled in 183ms
-[00:41:27.011] Server  LOG      ✓ Compiled in 118ms
-[00:41:33.597] Server  LOG      ✓ Compiled in 70ms
-[00:41:40.844] Server  LOG      ✓ Compiled in 91ms
-[00:42:50.499] Server  LOG      ✓ Compiled in 190ms
-[00:43:17.208] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766333639920}
-[00:43:31.760] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:43:31.760] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[00:43:31.760] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766333654475}
-[00:43:32.179] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[00:45:13.441] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766333756155}
-[00:45:19.084] Browser ERROR   Error downloading ebook: {}
-[00:46:29.196] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766333831909}
-[00:46:32.818] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766333835534}
-[00:46:39.082] Browser ERROR   Error downloading poster: {}
-[00:49:02.255] Server  LOG      ✓ Compiled in 218ms
-[00:49:11.176] Server  LOG      ✓ Compiled in 243ms
-[00:49:17.874] Server  LOG      ✓ Compiled in 121ms
-[00:49:36.627] Server  LOG      ✓ Compiled in 113ms
-[00:49:43.351] Server  LOG      ✓ Compiled in 107ms
-[00:49:50.796] Server  LOG      ✓ Compiled in 117ms
-[00:49:58.019] Server  LOG      ✓ Compiled in 174ms
-[00:50:13.391] Server  LOG      ✓ Compiled in 228ms
-[00:50:22.281] Server  LOG      ✓ Compiled in 191ms
-[00:50:29.121] Server  LOG      ✓ Compiled in 101ms
-[00:50:37.085] Server  LOG      ✓ Compiled in 140ms
-[00:50:37.195] Server  LOG      ✓ Compiled in 67ms
-[00:51:13.650] Server  LOG      ✓ Compiled in 84ms
-[00:51:44.593] Server  LOG      ✓ Compiled in 73ms
-[00:51:49.466] Server  LOG      ✓ Compiled in 66ms
-[00:52:18.525] Server  LOG      ✓ Compiled in 97ms
-[00:52:45.970] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766334208686}
-[00:52:49.863] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766334212537}
-[00:52:53.871] Browser LOG     Fetch method failed, trying alternative: {}
-[00:52:59.218] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:52:59.218] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/ebooks","route":"/dashboard/ebooks"}
-[00:52:59.218] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766334221933}
-[00:52:59.644] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[00:54:53.980] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766334336694}
-[00:54:56.754] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766334339470}
-[00:54:59.868] Browser LOG     Fetch method failed, trying alternative: {}
-[00:55:03.697] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:55:03.697] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/grad-drive","route":"/dashboard/grad-drive"}
-[00:55:03.697] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766334346413}
-[00:55:04.142] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[01:08:24.433] Server  LOG      ✓ Compiled in 221ms
-[01:09:06.330] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:09:06.330] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/grad-drive","route":"/dashboard/grad-drive"}
-[01:09:06.330] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335189115}
-[01:09:06.761] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[01:09:13.221] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:09:13.221] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/grad-drive","route":"/dashboard/grad-drive"}
-[01:09:13.221] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335196007}
-[01:09:14.039] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[01:09:54.872] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335237657}
-[01:09:58.301] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335241086}
-[01:10:07.016] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:10:07.016] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/ebooks","route":"/dashboard/ebooks"}
-[01:10:07.016] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335249803}
-[01:10:08.308] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335251086}
-[01:10:09.019] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[01:10:12.393] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335255179}
-[01:10:18.886] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:10:18.886] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/grad-drive","route":"/dashboard/grad-drive"}
-[01:10:18.886] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335261673}
-[01:10:19.319] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[01:10:26.558] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:10:26.558] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/dukeyeboah.com","route":"/dashboard/dukeyeboah.com"}
-[01:10:26.558] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/dukeyeboah.com color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/dukeyeboah.com","o":"http://localhost:3003/dashboard/dukeyeboah.com","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335269345}
-[01:10:27.061] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[01:15:21.481] Server  LOG      ✓ Compiled in 377ms
-[01:15:47.657] Server  LOG      ✓ Compiled in 84ms
-[01:16:28.507] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335631284}
-[01:16:31.417] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335634195}
-[01:16:36.082] Browser ERROR   Download failed: {}
-[01:16:57.805] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335660583}
-[01:17:02.516] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766335665293}
-[01:17:06.080] Browser ERROR   Download failed: {}
-[01:34:08.195] Browser WARN    [2025-12-21T17:04:50.076Z]  @firebase/firestore: Firestore (11.0.0): WebChannelConnection RPC 'Listen' stream 0x67e029cb transport errored: {"defaultPrevented":false,"g":{"F":null,"M":"[Circular]","g":{"A":null,"Aa":12,"B":0,"C":null,"Ca":true,"D":"gsessionid","Da":{"g":{}},"F":true,"G":0,"H":{"database":"projects/graddrive-e3695/databases/(default)"},"I":{"g":"firestore.googleapis.com","h":false,"i":{"g":{},"h":3,"i":null,"j":false},"j":"https","l":"/google.firestore.v1.Firestore/Listen/channel","m":"","o":"","s":null},"J":true,"K":"biVLzgcJGy-arfhDDj1TbA","L":45000,"M":true,"O":true,"P":false,"R":418,"S":{"Authorization":"Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk4OGQ1YTM3OWI3OGJkZjFlNTBhNDA5MTEzZjJiMGM3NWU0NTJlNDciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWZyb1NwaXJpdEFydCIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NMcVlWZThOOWRvWFZOSExEcW5sXzN6R0w0YmNGQlhNMmN2WHU4a3lSQk9qTndyWHpBPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2dyYWRkcml2ZS1lMzY5NSIsImF1ZCI6ImdyYWRkcml2ZS1lMzY5NSIsImF1dGhfdGltZSI6MTc2NjMzMTA3OSwidXNlcl9pZCI6ImVRTU52bFJpbk1oUGFrYXpOeHBvNjNtNUpVYzIiLCJzdWIiOiJlUU1OdmxSaW5NaFBha2F6TnhwbzYzbTVKVWMyIiwiaWF0IjoxNzY2MzM0MzgwLCJleHAiOjE3NjYzMzc5ODAsImVtYWlsIjoiYWZyb3NwaXJpdGFydGlzdEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExNDA5NzY0NzY2MzU5NTY1MzAzMSJdLCJlbWFpbCI6WyJhZnJvc3Bpcml0YXJ0aXN0QGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.lxtXuwgluYgxkoNf2x6zkPNozKPO_nPHB8VoRhOveCIFBlu4OK-Pkvk5CdWqswL6d_Hgd7DcdaRt9wM21xhqXR2zjTNY6fbIxfnLmS8h_X3MlECOnxRzHRNxeurQCUZPFx5f9DJzGzUupdUOEA5KJPiivL9XDuDNNiEtzGEihqxE9offg8udjhHTEehYMnWhcyRSVprSp8i5oOP55MNEGJQnr6IGD5_UIraGGMlm0TMqE-dCragMKt85tCcgIEr0mbkk9U-CGx9BpnJY0bNH6nGIwHynt69sx_HCrgSW-G5mtl00fESGcpa2oE1zEBXe5vGgMz2o1sAwsnfvnduaag","Content-Type":"text/plain","X-Firebase-GMPID":"1:721935097812:web:eece464983d41da455c041","X-Goog-Api-Client":"gl-js/ fire/11.0.0"},"T":15,"Ta":5000,"U":53314,"Ua":false,"Va":false,"W":"https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel","Wa":2,"X":true,"Y":1,"Ya":4,"ba":true,"cb":10000,"g":null,"h":{"g":null,"h":null,"i":[],"j":1,"l":10},"i":[],"ia":"","j":{"g":true},"ka":null,"l":{"g":"[Circular]"},"la":8,"m":null,"o":null,"qa":{"g":"firestore.googleapis.com","h":false,"i":{"g":{},"h":3,"i":null,"j":false},"j":"https","l":"/google.firestore.v1.Firestore/Listen/channel","m":"","o":"","s":null},"s":null,"u":null,"v":0,"wa":600000,"ya":"kmQ9a5kHyPRavDPmfZW3OP8uQSLSG1bom08mdPUrs0Y","za":14},"h":{"database":"projects/graddrive-e3695/databases/(default)"},"i":{"g":{"a":["[Object]"],"b":["[Object]"],"c":["[Object]"],"d":["[Object]"]},"h":4,"src":"[Circular]"},"j":{"g":"[Circular]"},"l":"https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel","s":false,"u":true,"v":true},"status":1,"target":{"F":null,"M":"[Circular]","g":{"A":null,"Aa":12,"B":0,"C":null,"Ca":true,"D":"gsessionid","Da":{"g":{}},"F":true,"G":0,"H":{"database":"projects/graddrive-e3695/databases/(default)"},"I":{"g":"firestore.googleapis.com","h":false,"i":{"g":{},"h":3,"i":null,"j":false},"j":"https","l":"/google.firestore.v1.Firestore/Listen/channel","m":"","o":"","s":null},"J":true,"K":"biVLzgcJGy-arfhDDj1TbA","L":45000,"M":true,"O":true,"P":false,"R":418,"S":{"Authorization":"Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk4OGQ1YTM3OWI3OGJkZjFlNTBhNDA5MTEzZjJiMGM3NWU0NTJlNDciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWZyb1NwaXJpdEFydCIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NMcVlWZThOOWRvWFZOSExEcW5sXzN6R0w0YmNGQlhNMmN2WHU4a3lSQk9qTndyWHpBPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2dyYWRkcml2ZS1lMzY5NSIsImF1ZCI6ImdyYWRkcml2ZS1lMzY5NSIsImF1dGhfdGltZSI6MTc2NjMzMTA3OSwidXNlcl9pZCI6ImVRTU52bFJpbk1oUGFrYXpOeHBvNjNtNUpVYzIiLCJzdWIiOiJlUU1OdmxSaW5NaFBha2F6TnhwbzYzbTVKVWMyIiwiaWF0IjoxNzY2MzM0MzgwLCJleHAiOjE3NjYzMzc5ODAsImVtYWlsIjoiYWZyb3NwaXJpdGFydGlzdEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExNDA5NzY0NzY2MzU5NTY1MzAzMSJdLCJlbWFpbCI6WyJhZnJvc3Bpcml0YXJ0aXN0QGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.lxtXuwgluYgxkoNf2x6zkPNozKPO_nPHB8VoRhOveCIFBlu4OK-Pkvk5CdWqswL6d_Hgd7DcdaRt9wM21xhqXR2zjTNY6fbIxfnLmS8h_X3MlECOnxRzHRNxeurQCUZPFx5f9DJzGzUupdUOEA5KJPiivL9XDuDNNiEtzGEihqxE9offg8udjhHTEehYMnWhcyRSVprSp8i5oOP55MNEGJQnr6IGD5_UIraGGMlm0TMqE-dCragMKt85tCcgIEr0mbkk9U-CGx9BpnJY0bNH6nGIwHynt69sx_HCrgSW-G5mtl00fESGcpa2oE1zEBXe5vGgMz2o1sAwsnfvnduaag","Content-Type":"text/plain","X-Firebase-GMPID":"1:721935097812:web:eece464983d41da455c041","X-Goog-Api-Client":"gl-js/ fire/11.0.0"},"T":15,"Ta":5000,"U":53314,"Ua":false,"Va":false,"W":"https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel","Wa":2,"X":true,"Y":1,"Ya":4,"ba":true,"cb":10000,"g":null,"h":{"g":null,"h":null,"i":[],"j":1,"l":10},"i":[],"ia":"","j":{"g":true},"ka":null,"l":{"g":"[Circular]"},"la":8,"m":null,"o":null,"qa":{"g":"firestore.googleapis.com","h":false,"i":{"g":{},"h":3,"i":null,"j":false},"j":"https","l":"/google.firestore.v1.Firestore/Listen/channel","m":"","o":"","s":null},"s":null,"u":null,"v":0,"wa":600000,"ya":"kmQ9a5kHyPRavDPmfZW3OP8uQSLSG1bom08mdPUrs0Y","za":14},"h":{"database":"projects/graddrive-e3695/databases/(default)"},"i":{"g":{"a":["[Object]"],"b":["[Object]"],"c":["[Object]"],"d":["[Object]"]},"h":4,"src":"[Circular]"},"j":{"g":"[Circular]"},"l":"https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel","s":false,"u":true,"v":true},"type":"c"}
-[02:11:20.567] Server  LOG      ✓ Compiled in 117ms
-[02:11:38.501] Server  LOG      ✓ Compiled in 95ms
-[02:13:18.722] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[02:13:18.722] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/grad-drive","route":"/dashboard/grad-drive"}
-[02:13:18.722] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766339041638}
-[02:13:19.265] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[02:13:30.985] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766339053802}
-[02:13:33.004] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766339055822}
-[02:16:06.178] Server  LOG      ✓ Compiled in 237ms
-[02:16:10.083] Server  LOG      ✓ Compiled in 205ms
-[02:16:32.657] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/account color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/account","o":"http://localhost:3003/dashboard/account","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766339235476}
-[02:20:57.800] Server  LOG      ✓ Compiled in 237ms
-[02:21:04.402] Server  LOG      ✓ Compiled in 112ms
-[02:23:32.904] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766339655802}
-[02:25:41.616] Server  LOG      ✓ Compiled in 313ms
-[02:25:43.849] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[02:25:43.850] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[02:25:43.850] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766339786755}
-[02:25:44.392] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[02:26:02.371] Server  LOG      ✓ Compiled in 109ms
-[02:26:20.593] Server  LOG      ✓ Compiled in 192ms
+[00:00:00.915] Server  WARN     ⚠ Minimum recommended TypeScript version is v5.1.0, older versions can potentially be incompatible with Next.js. Detected: 5.0.2
+[00:00:01.063] Server  LOG      ✓ Ready in 749ms
+[00:00:12.587] Server  LOG      ○ Compiling / ...
+[00:00:16.673] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:16.673] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:16.673] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766836407242}
+[00:00:16.673] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:00:29.013] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:29.013] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin","route":"/admin"}
+[00:00:29.013] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin color: rgb(120, 120, 120) color: inherit {"dp":"/admin","o":"http://localhost:3003/admin","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766836420526}
+[00:00:29.730] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:00:41.367] Server  LOG      ✓ Compiled in 259ms
+[00:02:59.633] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:02:59.633] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin","route":"/admin"}
+[00:02:59.634] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin color: rgb(120, 120, 120) color: inherit {"dp":"/admin","o":"http://localhost:3003/admin","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766836571151}
+[00:03:00.218] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:03:00.821] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766836572337}
+[00:03:01.218] Browser ERROR   Error getting analytics: {"code":"permission-denied","name":"FirebaseError"}
+[00:03:01.218] Browser ERROR   Error getting analytics: {"code":"permission-denied","name":"FirebaseError"}
+[00:10:38.132] Server  LOG      ✓ Compiled in 127ms
+[00:12:24.668] Server  LOG      ✓ Compiled in 179ms
+[00:15:06.342] Server  LOG      ✓ Compiled in 236ms
+[00:16:57.235] Server  LOG      ✓ Compiled in 113ms
+[00:16:58.718] Browser ERROR   Error getting analytics: {"code":"permission-denied","name":"FirebaseError"}
+[00:17:14.097] Server  LOG      ✓ Compiled in 135ms
+[00:24:28.831] Browser WARN    [2025-12-27T12:17:39.564Z]  @firebase/firestore: Firestore (11.0.0): WebChannelConnection RPC 'Listen' stream 0x47e2cfd7 transport errored: {"defaultPrevented":false,"g":{"F":null,"M":"[Circular]","g":{"A":null,"Aa":12,"B":0,"C":null,"Ca":true,"D":"gsessionid","Da":{"g":{}},"F":true,"G":0,"H":{"database":"projects/graddrive-e3695/databases/(default)"},"I":{"g":"firestore.googleapis.com","h":false,"i":{"g":{},"h":3,"i":null,"j":false},"j":"https","l":"/google.firestore.v1.Firestore/Listen/channel","m":"","o":"","s":null},"J":true,"K":"wwhQ44vOfAOTT8S7dIWX2Q","L":45000,"M":true,"O":true,"P":false,"R":399,"S":{"Authorization":"Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImEzOGVhNmEwNDA4YjBjYzVkYTE4OWRmYzg4ODgyZDBmMWI3ZmJmMGUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiRHVrZSBZZWJvYWgiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSUpkNUlZSmFJNHA4V2F6RWIxdmM1aGpfaFBYWFZPZm52Y1pWcks1a0NfOV9zWEJNTT1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9ncmFkZHJpdmUtZTM2OTUiLCJhdWQiOiJncmFkZHJpdmUtZTM2OTUiLCJhdXRoX3RpbWUiOjE3NjY4MzY0NDMsInVzZXJfaWQiOiJmMVU3dG9scGtEZDZDWTRlWm9nOW92VFdIRkwyIiwic3ViIjoiZjFVN3RvbHBrRGQ2Q1k0ZVpvZzlvdlRXSEZMMiIsImlhdCI6MTc2NjgzNjQ0MywiZXhwIjoxNzY2ODQwMDQzLCJlbWFpbCI6ImRreWVib2FoMUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjEwOTI1ODg2NjIxMDIwNDgzNTMxNCJdLCJlbWFpbCI6WyJka3llYm9haDFAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.cb7sJxMg6ZhnRAIGrE2uRs2q_KwWmRpOUeU1RS5QzmGBA2D_qS9lxtCIYd3cZODx5ikTdvg0XGfGnPfm73CJMYgZxyIdY7Mlcxj50uis5UFC6HySXX_foAb6TRp4rG6f9jwJuQEEHmQN8PZdBnnq-qwXIwQq_5vKlpyoHvnHl3wfPCdFjYthmRst8SJ_RPeG7j0TcmgPBu3laWbJQaMXPuGv1WnPhSHdcl20cLgqJWBM-zgxSK2xp-MkAL0FRoHrYEZUzDUkBVfQ6QUeJuRYrUOrSyAI_laEt5zyrC9dAmt2SnuJfy-XbGXdcgYAQb-IfN7z0bjUl9ygiCahpDbBNQ","Content-Type":"text/plain","X-Firebase-GMPID":"1:721935097812:web:eece464983d41da455c041","X-Goog-Api-Client":"gl-js/ fire/11.0.0"},"T":2,"Ta":5000,"U":54918,"Ua":false,"Va":false,"W":"https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel","Wa":2,"X":true,"Y":1,"Ya":1,"ba":true,"cb":10000,"g":null,"h":{"g":null,"h":null,"i":[],"j":1,"l":10},"i":[],"ia":"","j":{"g":true},"ka":null,"l":{"g":"[Circular]"},"la":8,"m":null,"o":null,"qa":{"g":"firestore.googleapis.com","h":false,"i":{"g":{},"h":3,"i":null,"j":false},"j":"https","l":"/google.firestore.v1.Firestore/Listen/channel","m":"","o":"","s":null},"s":null,"u":null,"v":0,"wa":600000,"ya":"OOkqCoWGnQku6ktHc6--_fLsJ26pBI5OgFnHqrF_E8w","za":-1},"h":{"database":"projects/graddrive-e3695/databases/(default)"},"i":{"g":{"a":["[Object]"],"b":["[Object]"],"c":["[Object]"],"d":["[Object]"]},"h":4,"src":"[Circular]"},"j":{"g":"[Circular]"},"l":"https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel","s":false,"u":true,"v":true},"status":1,"target":{"F":null,"M":"[Circular]","g":{"A":null,"Aa":12,"B":0,"C":null,"Ca":true,"D":"gsessionid","Da":{"g":{}},"F":true,"G":0,"H":{"database":"projects/graddrive-e3695/databases/(default)"},"I":{"g":"firestore.googleapis.com","h":false,"i":{"g":{},"h":3,"i":null,"j":false},"j":"https","l":"/google.firestore.v1.Firestore/Listen/channel","m":"","o":"","s":null},"J":true,"K":"wwhQ44vOfAOTT8S7dIWX2Q","L":45000,"M":true,"O":true,"P":false,"R":399,"S":{"Authorization":"Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImEzOGVhNmEwNDA4YjBjYzVkYTE4OWRmYzg4ODgyZDBmMWI3ZmJmMGUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiRHVrZSBZZWJvYWgiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSUpkNUlZSmFJNHA4V2F6RWIxdmM1aGpfaFBYWFZPZm52Y1pWcks1a0NfOV9zWEJNTT1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9ncmFkZHJpdmUtZTM2OTUiLCJhdWQiOiJncmFkZHJpdmUtZTM2OTUiLCJhdXRoX3RpbWUiOjE3NjY4MzY0NDMsInVzZXJfaWQiOiJmMVU3dG9scGtEZDZDWTRlWm9nOW92VFdIRkwyIiwic3ViIjoiZjFVN3RvbHBrRGQ2Q1k0ZVpvZzlvdlRXSEZMMiIsImlhdCI6MTc2NjgzNjQ0MywiZXhwIjoxNzY2ODQwMDQzLCJlbWFpbCI6ImRreWVib2FoMUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjEwOTI1ODg2NjIxMDIwNDgzNTMxNCJdLCJlbWFpbCI6WyJka3llYm9haDFAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.cb7sJxMg6ZhnRAIGrE2uRs2q_KwWmRpOUeU1RS5QzmGBA2D_qS9lxtCIYd3cZODx5ikTdvg0XGfGnPfm73CJMYgZxyIdY7Mlcxj50uis5UFC6HySXX_foAb6TRp4rG6f9jwJuQEEHmQN8PZdBnnq-qwXIwQq_5vKlpyoHvnHl3wfPCdFjYthmRst8SJ_RPeG7j0TcmgPBu3laWbJQaMXPuGv1WnPhSHdcl20cLgqJWBM-zgxSK2xp-MkAL0FRoHrYEZUzDUkBVfQ6QUeJuRYrUOrSyAI_laEt5zyrC9dAmt2SnuJfy-XbGXdcgYAQb-IfN7z0bjUl9ygiCahpDbBNQ","Content-Type":"text/plain","X-Firebase-GMPID":"1:721935097812:web:eece464983d41da455c041","X-Goog-Api-Client":"gl-js/ fire/11.0.0"},"T":2,"Ta":5000,"U":54918,"Ua":false,"Va":false,"W":"https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel","Wa":2,"X":true,"Y":1,"Ya":1,"ba":true,"cb":10000,"g":null,"h":{"g":null,"h":null,"i":[],"j":1,"l":10},"i":[],"ia":"","j":{"g":true},"ka":null,"l":{"g":"[Circular]"},"la":8,"m":null,"o":null,"qa":{"g":"firestore.googleapis.com","h":false,"i":{"g":{},"h":3,"i":null,"j":false},"j":"https","l":"/google.firestore.v1.Firestore/Listen/channel","m":"","o":"","s":null},"s":null,"u":null,"v":0,"wa":600000,"ya":"OOkqCoWGnQku6ktHc6--_fLsJ26pBI5OgFnHqrF_E8w","za":-1},"h":{"database":"projects/graddrive-e3695/databases/(default)"},"i":{"g":{"a":["[Object]"],"b":["[Object]"],"c":["[Object]"],"d":["[Object]"]},"h":4,"src":"[Circular]"},"j":{"g":"[Circular]"},"l":"https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel","s":false,"u":true,"v":true},"type":"c"}
+[00:26:00.137] Server  LOG      ✓ Compiled in 191ms
+[00:26:08.720] Server  LOG      ✓ Compiled in 204ms
+[00:26:37.949] Server  LOG      ✓ Compiled in 388ms
+[00:28:13.752] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:28:13.752] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/dashboard","route":"/admin/dashboard"}
+[00:28:13.752] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766838085194}
+[00:28:14.185] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:28:15.165] Browser ERROR   Error getting analytics: {"code":"permission-denied","name":"FirebaseError"}
+[00:31:09.981] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:31:09.981] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/dashboard","route":"/admin/dashboard"}
+[00:31:09.981] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766838261422}
+[00:31:10.389] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:35:59.014] Server  LOG      ✓ Compiled in 282ms
+[00:37:12.992] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:37:12.992] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/dashboard","route":"/admin/dashboard"}
+[00:37:12.993] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766838624432}
+[00:37:13.464] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:38:47.466] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/posters color: rgb(120, 120, 120) color: inherit {"dp":"/admin/posters","o":"http://localhost:3003/admin/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766838718904}
+[00:40:41.295] Server  LOG      ✓ Compiled in 273ms
+[00:40:51.241] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:40:51.241] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/posters","route":"/admin/posters"}
+[00:40:51.241] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/posters color: rgb(120, 120, 120) color: inherit {"dp":"/admin/posters","o":"http://localhost:3003/admin/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766838842677}
+[00:40:51.754] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[02:10:57.573] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766844249179}
+[02:15:27.185] Server  LOG      ✓ Compiled in 297ms
+[02:15:36.230] Server  LOG      ✓ Compiled in 219ms
+[02:15:45.841] Server  LOG      ✓ Compiled in 121ms
+[02:15:54.429] Server  LOG      ✓ Compiled in 152ms
+[02:16:08.825] Server  LOG      ✓ Compiled in 193ms

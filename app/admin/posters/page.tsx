@@ -25,7 +25,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Plus, FileImage, MoreVertical, Eye, Edit, Upload } from 'lucide-react';
+import { Plus, FileImage, MoreVertical, Eye, Edit, Upload, Trash2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import {
   getPosters,
@@ -34,7 +34,7 @@ import {
   deletePoster,
   type Poster,
 } from '@/lib/firebase/firestore';
-import { uploadImage } from '@/lib/firebase/storage';
+import { uploadImage, deleteFile } from '@/lib/firebase/storage';
 import { addSystemLog } from '@/lib/firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 
@@ -196,12 +196,13 @@ export default function AdminPostersPage() {
       if (posterId) {
         // Log the action
         await addSystemLog(
-          'Poster uploaded',
+          'add_poster',
           'poster',
           user.uid,
           userData.displayName || user.email || 'Unknown',
           userData.email || '',
-          { posterId, posterName: formData.name }
+          { posterId, posterName: formData.name },
+          userData.role
         );
 
         toast({
@@ -281,12 +282,13 @@ export default function AdminPostersPage() {
       if (success) {
         // Log the action
         await addSystemLog(
-          'Poster updated',
+          'update_poster',
           'poster',
           user.uid,
           userData.displayName || user.email || 'Unknown',
           userData.email || '',
-          { posterId: selectedPoster.id, posterName: formData.name }
+          { posterId: selectedPoster.id, posterName: formData.name },
+          userData.role
         );
 
         toast({
@@ -347,6 +349,73 @@ export default function AdminPostersPage() {
     setImagePreview(poster.imageUrl || null);
     setImageFile(null);
     setEditModalOpen(true);
+  };
+
+  const handleDeletePoster = async (poster: Poster) => {
+    if (!poster.id || !user || !userData) return;
+
+    // Confirm deletion
+    if (!confirm(`Are you sure you want to delete "${poster.name}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      // Delete image from Storage if it exists
+      if (poster.imageUrl) {
+        // Extract storage path from URL
+        // URL format: https://firebasestorage.googleapis.com/v0/b/{bucket}/o/{path}?alt=media&token=...
+        const urlMatch = poster.imageUrl.match(/\/o\/([^?]+)/);
+        if (urlMatch) {
+          const storagePath = decodeURIComponent(urlMatch[1]);
+          const { success, error } = await deleteFile(storagePath);
+          if (!success && error) {
+            console.warn('Failed to delete image from storage:', error);
+            // Continue with Firestore deletion even if storage deletion fails
+          }
+        }
+      }
+
+      // Delete from Firestore
+      const success = await deletePoster(poster.id);
+      if (success) {
+        // Log the action
+        await addSystemLog(
+          'delete_poster',
+          'poster',
+          user.uid,
+          userData.displayName || 'Unknown',
+          userData.email || 'unknown@example.com',
+          { posterName: poster.name, posterId: poster.id },
+          userData.role
+        );
+
+        toast({
+          title: 'Success',
+          description: 'Poster deleted successfully',
+        });
+
+        // Reload posters
+        loadPosters();
+
+        // Close modals if open
+        setEditModalOpen(false);
+        setViewModalOpen(false);
+        setSelectedPoster(null);
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Failed to delete poster',
+          variant: 'destructive',
+        });
+      }
+    } catch (error: any) {
+      console.error('Error deleting poster:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'An error occurred',
+        variant: 'destructive',
+      });
+    }
   };
 
   if (loading) {
@@ -445,6 +514,13 @@ export default function AdminPostersPage() {
                       <DropdownMenuItem onClick={() => openEditModal(poster)}>
                         <Edit className='h-4 w-4 mr-2' />
                         Edit
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => handleDeletePoster(poster)}
+                        className='text-destructive focus:text-destructive'
+                      >
+                        <Trash2 className='h-4 w-4 mr-2' />
+                        Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -769,21 +845,35 @@ export default function AdminPostersPage() {
                 )}
               </div>
             </div>
-            <div className='flex justify-end gap-2'>
+            <div className='flex justify-between items-center'>
               <Button
-                variant='outline'
+                variant='destructive'
                 onClick={() => {
-                  setEditModalOpen(false);
-                  setSelectedPoster(null);
-                  resetForm();
+                  if (selectedPoster) {
+                    handleDeletePoster(selectedPoster);
+                  }
                 }}
                 disabled={uploading}
               >
-                Cancel
+                <Trash2 className='h-4 w-4 mr-2' />
+                Delete Poster
               </Button>
-              <Button onClick={handleEditPoster} disabled={uploading}>
-                {uploading ? 'Saving...' : 'Save Changes'}
-              </Button>
+              <div className='flex gap-2'>
+                <Button
+                  variant='outline'
+                  onClick={() => {
+                    setEditModalOpen(false);
+                    setSelectedPoster(null);
+                    resetForm();
+                  }}
+                  disabled={uploading}
+                >
+                  Cancel
+                </Button>
+                <Button onClick={handleEditPoster} disabled={uploading}>
+                  {uploading ? 'Saving...' : 'Save Changes'}
+                </Button>
+              </div>
             </div>
           </div>
         </DialogContent>
