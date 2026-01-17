@@ -20,17 +20,28 @@ import { db } from "./config"
 // Type definitions
 export interface Photographer {
   id?: string
-  name: string
-  location: string
-  description: string
-  style: string
-  tags: string[]
-  price: number
-  rating: number
-  reviews: number
-  verified: boolean
+  firstName: string
+  lastName?: string
   email?: string
+  website?: string
+  instagram?: string
   phone?: string
+  address?: string
+  state?: string
+  status: 'contacted' | 'not-contacted' | 'interested-follow-up' | 'not-interested/no-response'
+  instagramContact: boolean
+  emailContact: boolean
+  phoneContact: boolean
+  // Legacy fields (optional for backward compatibility)
+  name?: string
+  location?: string
+  description?: string
+  style?: string
+  tags?: string[]
+  price?: number
+  rating?: number
+  reviews?: number
+  verified?: boolean
   imageUrl?: string
   createdAt?: Timestamp
   updatedAt?: Timestamp
@@ -87,14 +98,47 @@ export interface SystemLog {
  */
 export const photographersCollection = collection(db, "photographers")
 
-export async function getPhotographers(): Promise<Photographer[]> {
+export async function getPhotographers(statusFilter?: string): Promise<Photographer[]> {
   try {
-    const q = query(photographersCollection, orderBy("createdAt", "desc"))
-    const snapshot = await getDocs(q)
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as Photographer[]
+    let q
+    if (statusFilter) {
+      // Try to query with orderBy, but fallback to simple query if index doesn't exist
+      try {
+        q = query(photographersCollection, where("status", "==", statusFilter), orderBy("createdAt", "desc"))
+        const snapshot = await getDocs(q)
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Photographer[]
+      } catch (orderByError: any) {
+        // If orderBy fails (likely missing index), try without it
+        console.warn("OrderBy failed, trying without it:", orderByError)
+        q = query(photographersCollection, where("status", "==", statusFilter))
+        const snapshot = await getDocs(q)
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Photographer[]
+      }
+    } else {
+      // Try to query with orderBy, but fallback to simple query if index doesn't exist
+      try {
+        q = query(photographersCollection, orderBy("createdAt", "desc"))
+        const snapshot = await getDocs(q)
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Photographer[]
+      } catch (orderByError: any) {
+        // If orderBy fails (likely missing index), try without it
+        console.warn("OrderBy failed, trying without it:", orderByError)
+        const snapshot = await getDocs(photographersCollection)
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Photographer[]
+      }
+    }
   } catch (error) {
     console.error("Error getting photographers:", error)
     return []
@@ -118,16 +162,94 @@ export async function getPhotographer(id: string): Promise<Photographer | null> 
 export async function addPhotographer(data: Omit<Photographer, "id" | "createdAt" | "updatedAt">): Promise<string | null> {
   try {
     const docRef = doc(photographersCollection)
-    await setDoc(docRef, {
+    const photographerData: any = {
       ...data,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
+    }
+    // Remove undefined values
+    Object.keys(photographerData).forEach(key => {
+      if (photographerData[key] === undefined) {
+        delete photographerData[key]
+      }
     })
+    await setDoc(docRef, photographerData)
     return docRef.id
   } catch (error) {
     console.error("Error adding photographer:", error)
     return null
   }
+}
+
+// Import photographers from JSON data
+export async function importPhotographers(jsonData: any[]): Promise<{ success: number; errors: number }> {
+  let success = 0
+  let errors = 0
+
+  for (const item of jsonData) {
+    try {
+      // Skip header rows
+      if (item["First Name"] === "First Name" || item["Contact Stage"] === "Contact Stage") {
+        continue
+      }
+
+      // Normalize status value - support both old and new key names
+      let status = item["Contact Stage"] || item.Column1 || item.Status || "interested-follow-up"
+      if (typeof status === "string") {
+        status = status.toLowerCase().trim()
+        // Map various status formats to our enum values
+        if (status.includes("interested") && status.includes("follow")) {
+          status = "interested-follow-up"
+        } else if (status.includes("contacted")) {
+          status = "contacted"
+        } else if (status.includes("not") && status.includes("contacted")) {
+          status = "not-contacted"
+        } else if (status.includes("not") || status.includes("no response")) {
+          status = "not-interested/no-response"
+        }
+      }
+
+      // Map JSON columns to Photographer interface - support both old and new key names
+      const photographerData: Omit<Photographer, "id" | "createdAt" | "updatedAt"> = {
+        firstName: item["First Name"] || item.Column2 || "",
+        lastName: item["Last Name"] || item.Column3 || undefined,
+        email: item["Email"] || item.Column4 || undefined,
+        website: item["Website"] || item.Column5 || undefined,
+        instagram: item["Instagram"] || item.Column6 || undefined,
+        phone: item["Phone Number"] || item["Phone"] || item.Column7 || undefined,
+        address: item["Address"] || item.Column8 || undefined,
+        state: item["State"] || item.Column9 || undefined,
+        status: status as Photographer["status"],
+        // Support both old and new key names for contact preferences
+        instagramContact: item["Instagram-contact"] === true || item["Mode of Contact"] === true || item["Column 10"] === true || false,
+        emailContact: item["Email-contact"] === true || item.Column11 === true || false,
+        phoneContact: item["Phone-contact"] === true || item.Column12 === true || false,
+      }
+
+      // Remove empty strings and convert to undefined
+      Object.keys(photographerData).forEach(key => {
+        const value = photographerData[key as keyof typeof photographerData]
+        if (value === "" || value === " " || value === null) {
+          photographerData[key as keyof typeof photographerData] = undefined as any
+        }
+      })
+
+      // Ensure firstName is not empty
+      if (!photographerData.firstName) {
+        console.warn("Skipping photographer with no first name:", item)
+        errors++
+        continue
+      }
+
+      await addPhotographer(photographerData)
+      success++
+    } catch (error) {
+      console.error("Error importing photographer:", error, item)
+      errors++
+    }
+  }
+
+  return { success, errors }
 }
 
 export async function updatePhotographer(id: string, data: Partial<Photographer>): Promise<boolean> {

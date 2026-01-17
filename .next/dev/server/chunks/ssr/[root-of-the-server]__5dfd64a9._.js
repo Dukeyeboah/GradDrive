@@ -438,6 +438,8 @@ __turbopack_context__.s([
     ()=>getSystemLogs,
     "getUserRole",
     ()=>getUserRole,
+    "importPhotographers",
+    ()=>importPhotographers,
     "logsCollection",
     ()=>logsCollection,
     "photographersCollection",
@@ -462,14 +464,47 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e
 ;
 ;
 const photographersCollection = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["collection"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], "photographers");
-async function getPhotographers() {
+async function getPhotographers(statusFilter) {
     try {
-        const q = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["query"])(photographersCollection, (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["orderBy"])("createdAt", "desc"));
-        const snapshot = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getDocs"])(q);
-        return snapshot.docs.map((doc)=>({
-                id: doc.id,
-                ...doc.data()
-            }));
+        let q;
+        if (statusFilter) {
+            // Try to query with orderBy, but fallback to simple query if index doesn't exist
+            try {
+                q = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["query"])(photographersCollection, (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["where"])("status", "==", statusFilter), (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["orderBy"])("createdAt", "desc"));
+                const snapshot = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getDocs"])(q);
+                return snapshot.docs.map((doc)=>({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+            } catch (orderByError) {
+                // If orderBy fails (likely missing index), try without it
+                console.warn("OrderBy failed, trying without it:", orderByError);
+                q = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["query"])(photographersCollection, (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["where"])("status", "==", statusFilter));
+                const snapshot = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getDocs"])(q);
+                return snapshot.docs.map((doc)=>({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+            }
+        } else {
+            // Try to query with orderBy, but fallback to simple query if index doesn't exist
+            try {
+                q = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["query"])(photographersCollection, (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["orderBy"])("createdAt", "desc"));
+                const snapshot = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getDocs"])(q);
+                return snapshot.docs.map((doc)=>({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+            } catch (orderByError) {
+                // If orderBy fails (likely missing index), try without it
+                console.warn("OrderBy failed, trying without it:", orderByError);
+                const snapshot = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getDocs"])(photographersCollection);
+                return snapshot.docs.map((doc)=>({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+            }
+        }
     } catch (error) {
         console.error("Error getting photographers:", error);
         return [];
@@ -494,16 +529,88 @@ async function getPhotographer(id) {
 async function addPhotographer(data) {
     try {
         const docRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["doc"])(photographersCollection);
-        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["setDoc"])(docRef, {
+        const photographerData = {
             ...data,
             createdAt: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["serverTimestamp"])(),
             updatedAt: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["serverTimestamp"])()
+        };
+        // Remove undefined values
+        Object.keys(photographerData).forEach((key)=>{
+            if (photographerData[key] === undefined) {
+                delete photographerData[key];
+            }
         });
+        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["setDoc"])(docRef, photographerData);
         return docRef.id;
     } catch (error) {
         console.error("Error adding photographer:", error);
         return null;
     }
+}
+async function importPhotographers(jsonData) {
+    let success = 0;
+    let errors = 0;
+    for (const item of jsonData){
+        try {
+            // Skip header rows
+            if (item["First Name"] === "First Name" || item["Contact Stage"] === "Contact Stage") {
+                continue;
+            }
+            // Normalize status value - support both old and new key names
+            let status = item["Contact Stage"] || item.Column1 || item.Status || "interested-follow-up";
+            if (typeof status === "string") {
+                status = status.toLowerCase().trim();
+                // Map various status formats to our enum values
+                if (status.includes("interested") && status.includes("follow")) {
+                    status = "interested-follow-up";
+                } else if (status.includes("contacted")) {
+                    status = "contacted";
+                } else if (status.includes("not") && status.includes("contacted")) {
+                    status = "not-contacted";
+                } else if (status.includes("not") || status.includes("no response")) {
+                    status = "not-interested/no-response";
+                }
+            }
+            // Map JSON columns to Photographer interface - support both old and new key names
+            const photographerData = {
+                firstName: item["First Name"] || item.Column2 || "",
+                lastName: item["Last Name"] || item.Column3 || undefined,
+                email: item["Email"] || item.Column4 || undefined,
+                website: item["Website"] || item.Column5 || undefined,
+                instagram: item["Instagram"] || item.Column6 || undefined,
+                phone: item["Phone Number"] || item["Phone"] || item.Column7 || undefined,
+                address: item["Address"] || item.Column8 || undefined,
+                state: item["State"] || item.Column9 || undefined,
+                status: status,
+                // Support both old and new key names for contact preferences
+                instagramContact: item["Instagram-contact"] === true || item["Mode of Contact"] === true || item["Column 10"] === true || false,
+                emailContact: item["Email-contact"] === true || item.Column11 === true || false,
+                phoneContact: item["Phone-contact"] === true || item.Column12 === true || false
+            };
+            // Remove empty strings and convert to undefined
+            Object.keys(photographerData).forEach((key)=>{
+                const value = photographerData[key];
+                if (value === "" || value === " " || value === null) {
+                    photographerData[key] = undefined;
+                }
+            });
+            // Ensure firstName is not empty
+            if (!photographerData.firstName) {
+                console.warn("Skipping photographer with no first name:", item);
+                errors++;
+                continue;
+            }
+            await addPhotographer(photographerData);
+            success++;
+        } catch (error) {
+            console.error("Error importing photographer:", error, item);
+            errors++;
+        }
+    }
+    return {
+        success,
+        errors
+    };
 }
 async function updatePhotographer(id, data) {
     try {
