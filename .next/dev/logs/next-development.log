@@ -30,3 +30,187 @@
 [00:05:54.673] Server  LOG      ✓ Compiled in 689ms
 [00:06:21.881] Server  LOG      ✓ Compiled in 280ms
 [00:07:09.206] Server  LOG      ✓ Compiled in 117ms
+[17:30:09.173] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[17:30:09.173] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[17:30:09.174] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732238299}
+[17:30:09.782] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[17:30:32.198] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[17:30:32.198] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[17:30:32.198] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732261254}
+[17:30:32.838] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[17:30:51.275] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732280309}
+[17:30:58.017] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/users color: rgb(120, 120, 120) color: inherit {"dp":"/admin/users","o":"http://localhost:3003/admin/users","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732287071}
+[17:31:59.278] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732348334}
+[17:32:36.642] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732385693}
+[17:32:43.286] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/photographers","o":"http://localhost:3003/dashboard/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732392342}
+[17:32:43.613] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
+[17:32:43.613] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
+[17:44:04.706] Server  LOG      ✓ Compiled in 686ms
+[17:44:13.731] Server  LOG      ✓ Compiled in 524ms
+[17:44:14.568] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
+[17:44:23.978] Server  LOG      ✓ Compiled in 245ms
+[17:44:24.088] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
+Export bookPhotographer doesn't exist in target module
+   7 | import { Input } from "@/components/ui/input"
+   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
+>  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  10 | import { Loader2 } from "lucide-react"
+  11 | import { useAuth } from "@/contexts/AuthContext"
+  12 | import { useToast } from "@/hooks/use-toast"
+
+The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-client] (ecmascript).
+Did you mean to import getPhotographer?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/dashboard/photographers/page.tsx [Client Component Browser]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/dashboard/photographers/page.tsx [Client Component SSR]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+[17:44:24.088] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
+Export bookPhotographer doesn't exist in target module
+   7 | import { Input } from "@/components/ui/input"
+   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
+>  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  10 | import { Loader2 } from "lucide-react"
+  11 | import { useAuth } from "@/contexts/AuthContext"
+  12 | import { useToast } from "@/hooks/use-toast"
+
+The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-ssr] (ecmascript).
+Did you mean to import getPhotographer?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/dashboard/photographers/page.tsx [Client Component Browser]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/dashboard/photographers/page.tsx [Client Component SSR]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+[17:44:36.228] Server  LOG      ✓ Compiled in 226ms
+[17:44:36.334] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
+Export bookPhotographer doesn't exist in target module
+   7 | import { Input } from "@/components/ui/input"
+   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
+>  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  10 | import { Loader2 } from "lucide-react"
+  11 | import { useAuth } from "@/contexts/AuthContext"
+  12 | import { useToast } from "@/hooks/use-toast"
+
+The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-client] (ecmascript).
+Did you mean to import getPhotographer?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/dashboard/photographers/page.tsx [Client Component Browser]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/dashboard/photographers/page.tsx [Client Component SSR]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+[17:44:36.334] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
+Export bookPhotographer doesn't exist in target module
+   7 | import { Input } from "@/components/ui/input"
+   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
+>  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  10 | import { Loader2 } from "lucide-react"
+  11 | import { useAuth } from "@/contexts/AuthContext"
+  12 | import { useToast } from "@/hooks/use-toast"
+
+The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-ssr] (ecmascript).
+Did you mean to import getPhotographer?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/dashboard/photographers/page.tsx [Client Component Browser]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/dashboard/photographers/page.tsx [Client Component SSR]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+[17:44:45.162] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
+Export bookPhotographer doesn't exist in target module
+   7 | import { Input } from "@/components/ui/input"
+   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
+>  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  10 | import { Loader2 } from "lucide-react"
+  11 | import { useAuth } from "@/contexts/AuthContext"
+  12 | import { useToast } from "@/hooks/use-toast"
+
+The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-client] (ecmascript).
+Did you mean to import getPhotographer?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/dashboard/photographers/page.tsx [Client Component Browser]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/dashboard/photographers/page.tsx [Client Component SSR]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+[17:44:45.162] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
+Export bookPhotographer doesn't exist in target module
+   7 | import { Input } from "@/components/ui/input"
+   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
+>  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  10 | import { Loader2 } from "lucide-react"
+  11 | import { useAuth } from "@/contexts/AuthContext"
+  12 | import { useToast } from "@/hooks/use-toast"
+
+The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-ssr] (ecmascript).
+Did you mean to import getPhotographer?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/dashboard/photographers/page.tsx [Client Component Browser]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/dashboard/photographers/page.tsx [Client Component SSR]
+    ./app/dashboard/photographers/page.tsx [Server Component]
+[17:45:04.832] Server  LOG      ✓ Compiled in 130ms
+[17:45:04.889] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./lib/firebase/firestore.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[17:45:07.606] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[17:45:07.606] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/photographers","route":"/dashboard/photographers"}
+[17:45:07.606] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/photographers","o":"http://localhost:3003/dashboard/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768733136658}
+[17:45:08.129] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[17:45:08.530] Browser ERROR   Error getting analytics: {"code":"permission-denied","name":"FirebaseError"}
+[17:45:08.530] Browser ERROR   Error getting users: {"code":"permission-denied","name":"FirebaseError"}
+[17:45:08.530] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
+[17:45:17.864] Server  LOG      ✓ Compiled in 260ms
+[17:46:54.048] Server  LOG      ✓ Compiled in 1114ms
+[17:47:12.608] Browser ERROR   ./app/admin/photographers/page.tsx:223:9
+Ecmascript file had an error
+  221 |   }
+  222 |
+> 223 |   const formatDate = (timestamp: any) => {
+      |         ^^^^^^^^^^
+  224 |     if (!timestamp) return "Unknown"
+  225 |     const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp)
+  226 |     return date.toLocaleDateString("en-US", { 
+
+the name `formatDate` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/photographers/page.tsx [Client Component Browser]
+    ./app/admin/photographers/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/admin/photographers/page.tsx [Client Component SSR]
+    ./app/admin/photographers/page.tsx [Server Component]
+[17:47:30.790] Server  LOG      ✓ Compiled in 96ms

@@ -6,13 +6,18 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
-import { getPhotographers, Photographer } from "@/lib/firebase/firestore"
+import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
 import { Loader2 } from "lucide-react"
+import { useAuth } from "@/contexts/AuthContext"
+import { useToast } from "@/hooks/use-toast"
 
 export default function PhotographersPage() {
   const [photographers, setPhotographers] = useState<Photographer[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
+  const [bookingLoading, setBookingLoading] = useState<string | null>(null)
+  const { user, userData } = useAuth()
+  const { toast } = useToast()
 
   useEffect(() => {
     loadPhotographers()
@@ -52,6 +57,45 @@ export default function PhotographersPage() {
     const query = searchQuery.toLowerCase()
     return name.includes(query) || location.includes(query)
   })
+
+  const handleBookPhotographer = async (photographer: Photographer) => {
+    if (!user || !userData || !photographer.id) {
+      toast({
+        title: "Error",
+        description: "Please sign in to book a photographer",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setBookingLoading(photographer.id)
+    try {
+      const success = await bookPhotographer({
+        photographerId: photographer.id,
+        photographerName: getPhotographerName(photographer),
+        userId: user.uid,
+        userName: userData.displayName || user.email || "Unknown",
+        userEmail: userData.email || user.email || "unknown@example.com",
+      })
+
+      if (success) {
+        toast({
+          title: "Booking Request Sent",
+          description: `Your interest in ${getPhotographerName(photographer)} has been sent to the admin.`,
+        })
+      } else {
+        throw new Error("Failed to book photographer")
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to book photographer",
+        variant: "destructive",
+      })
+    } finally {
+      setBookingLoading(null)
+    }
+  }
 
   return (
     <div className="flex flex-col justify-center items-center w-full py-12">
@@ -107,66 +151,73 @@ export default function PhotographersPage() {
                   
                   <CardContent className="space-y-4">
                     {/* Contact Information */}
-                    <div className="space-y-2 pt-2 border-t">
-                      <p className="text-sm font-medium">Contact Information</p>
-                      <div className="flex flex-wrap gap-2">
-                        {/* Instagram - only show if instagramContact is true */}
-                        {photographer.instagramContact && photographer.instagram && (
-                          <a
-                            href={photographer.instagram}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-sm text-pink-600 hover:text-pink-700"
-                          >
-                            <Instagram className="h-4 w-4" />
-                            Instagram
-                          </a>
-                        )}
-                        
-                        {/* Email - only show if emailContact is true */}
-                        {photographer.emailContact && photographer.email && (
-                          <a
-                            href={`mailto:${photographer.email}`}
-                            className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
-                          >
-                            <Mail className="h-4 w-4" />
-                            Email
-                          </a>
-                        )}
-                        
-                        {/* Phone - only show if phoneContact is true */}
-                        {photographer.phoneContact && photographer.phone && (
-                          <a
-                            href={`tel:${photographer.phone}`}
-                            className="inline-flex items-center gap-1 text-sm text-green-600 hover:text-green-700"
-                          >
-                            <Phone className="h-4 w-4" />
-                            Phone
-                          </a>
-                        )}
-                        
-                        {/* Show message if no contact methods available */}
-                        {!photographer.instagramContact && !photographer.emailContact && !photographer.phoneContact && (
-                          <span className="text-sm text-muted-foreground">Contact information not available</span>
-                        )}
+                    {(photographer.instagramContact || photographer.emailContact || photographer.phoneContact || photographer.website) && (
+                      <div className="space-y-2 pt-2 border-t">
+                        <div className="flex flex-wrap gap-2">
+                          {/* Instagram - only show if instagramContact is true */}
+                          {photographer.instagramContact && photographer.instagram && (
+                            <a
+                              href={photographer.instagram}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-sm text-pink-600 hover:text-pink-700"
+                            >
+                              <Instagram className="h-4 w-4" />
+                              Instagram
+                            </a>
+                          )}
+                          
+                          {/* Email - only show if emailContact is true */}
+                          {photographer.emailContact && photographer.email && (
+                            <a
+                              href={`mailto:${photographer.email}`}
+                              className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
+                            >
+                              <Mail className="h-4 w-4" />
+                              Email
+                            </a>
+                          )}
+                          
+                          {/* Phone - only show if phoneContact is true */}
+                          {photographer.phoneContact && photographer.phone && (
+                            <a
+                              href={`tel:${photographer.phone}`}
+                              className="inline-flex items-center gap-1 text-sm text-green-600 hover:text-green-700"
+                            >
+                              <Phone className="h-4 w-4" />
+                              Phone
+                            </a>
+                          )}
+                          
+                          {/* Website - always show if available */}
+                          {photographer.website && (
+                            <a
+                              href={photographer.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-sm text-purple-600 hover:text-purple-700"
+                            >
+                              <Globe className="h-4 w-4" />
+                              Website
+                            </a>
+                          )}
+                        </div>
                       </div>
-                      
-                      {/* Website - always show if available */}
-                      {photographer.website && (
-                        <a
-                          href={photographer.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-sm text-purple-600 hover:text-purple-700"
-                        >
-                          <Globe className="h-4 w-4" />
-                          Website
-                        </a>
-                      )}
-                    </div>
+                    )}
                     
-                    <Button className="w-full">
-                      View Details
+                    <Button 
+                      className="w-full"
+                      onClick={() => handleBookPhotographer(photographer)}
+                      disabled={bookingLoading === photographer.id}
+                    >
+                      {bookingLoading === photographer.id ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Booking...
+                        </>
+                      ) : (
+                        "Book Photographer"
+                      )}
                     </Button>
                   </CardContent>
                 </Card>

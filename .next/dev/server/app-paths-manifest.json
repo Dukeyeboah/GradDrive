@@ -3,6 +3,9 @@
   "/admin/page": "app/admin/page.js",
   "/admin/photographers/import/page": "app/admin/photographers/import/page.js",
   "/admin/photographers/page": "app/admin/photographers/page.js",
+  "/admin/users/page": "app/admin/users/page.js",
   "/api/photographers/import/route": "app/api/photographers/import/route.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/photographers/page": "app/dashboard/photographers/page.js",
   "/page": "app/page.js"
 }

@@ -93,6 +93,56 @@ export interface SystemLog {
   timestamp: Timestamp
 }
 
+export interface PhotographerBooking {
+  id?: string
+  photographerId: string
+  photographerName: string
+  userId: string
+  userName: string
+  userEmail: string
+  status?: "pending" | "contacted" | "completed"
+  timestamp: Timestamp
+}
+
+/**
+ * Photographer Bookings Collection
+ */
+export const bookingsCollection = collection(db, "photographerBookings")
+
+export async function bookPhotographer(data: Omit<PhotographerBooking, "id" | "timestamp">): Promise<boolean> {
+  try {
+    const docRef = doc(bookingsCollection)
+    await setDoc(docRef, {
+      ...data,
+      status: "pending",
+      timestamp: serverTimestamp(),
+    })
+    return true
+  } catch (error) {
+    console.error("Error booking photographer:", error)
+    return false
+  }
+}
+
+export async function getPhotographerBookings(photographerId?: string): Promise<PhotographerBooking[]> {
+  try {
+    let q
+    if (photographerId) {
+      q = query(bookingsCollection, where("photographerId", "==", photographerId), orderBy("timestamp", "desc"))
+    } else {
+      q = query(bookingsCollection, orderBy("timestamp", "desc"))
+    }
+    const snapshot = await getDocs(q)
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as PhotographerBooking[]
+  } catch (error) {
+    console.error("Error getting bookings:", error)
+    return []
+  }
+}
+
 /**
  * Photographers Collection
  */

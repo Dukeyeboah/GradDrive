@@ -26,9 +26,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { MoreVertical, Eye, Edit, Loader2, Instagram, Mail, Phone, Globe, Plus } from "lucide-react"
+import { MoreVertical, Eye, Edit, Loader2, Instagram, Mail, Phone, Globe, Plus, Clock, User } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { getPhotographers, updatePhotographer, addPhotographer, Photographer } from "@/lib/firebase/firestore"
+import { getPhotographers, updatePhotographer, addPhotographer, Photographer, getPhotographerBookings, PhotographerBooking } from "@/lib/firebase/firestore"
 import { useToast } from "@/hooks/use-toast"
 import { Switch } from "@/components/ui/switch"
 
@@ -39,6 +39,8 @@ export default function AdminPhotographersPage() {
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [addModalOpen, setAddModalOpen] = useState(false)
   const [selectedPhotographer, setSelectedPhotographer] = useState<Photographer | null>(null)
+  const [bookings, setBookings] = useState<PhotographerBooking[]>([])
+  const [loadingBookings, setLoadingBookings] = useState(false)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -90,9 +92,33 @@ export default function AdminPhotographersPage() {
     return photographer.address || photographer.state || photographer.location || "N/A"
   }
 
-  const openViewModal = (photographer: Photographer) => {
+  const openViewModal = async (photographer: Photographer) => {
     setSelectedPhotographer(photographer)
     setViewModalOpen(true)
+    // Load bookings for this photographer
+    if (photographer.id) {
+      setLoadingBookings(true)
+      try {
+        const photographerBookings = await getPhotographerBookings(photographer.id)
+        setBookings(photographerBookings)
+      } catch (error) {
+        console.error("Error loading bookings:", error)
+      } finally {
+        setLoadingBookings(false)
+      }
+    }
+  }
+
+  const formatDate = (timestamp: any) => {
+    if (!timestamp) return "Unknown"
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp)
+    return date.toLocaleDateString("en-US", { 
+      year: "numeric", 
+      month: "short", 
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    })
   }
 
   const openEditModal = (photographer: Photographer) => {
@@ -411,8 +437,53 @@ export default function AdminPhotographersPage() {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-end">
-                <Button variant="outline" onClick={() => setViewModalOpen(false)}>
+
+              {/* Bookings Section */}
+              <div className="space-y-3 pt-4 border-t">
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm font-medium flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    Booking Requests ({bookings.length})
+                  </Label>
+                </div>
+                {loadingBookings ? (
+                  <div className="flex justify-center items-center py-4">
+                    <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+                  </div>
+                ) : bookings.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No booking requests yet</p>
+                ) : (
+                  <div className="space-y-2 max-h-64 overflow-y-auto">
+                    {bookings.map((booking) => (
+                      <div
+                        key={booking.id}
+                        className="p-3 border border-border rounded-lg bg-muted/30"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <User className="h-4 w-4 text-muted-foreground" />
+                              <span className="font-medium text-sm">{booking.userName}</span>
+                              <Badge variant={booking.status === "pending" ? "default" : booking.status === "contacted" ? "secondary" : "outline"}>
+                                {booking.status || "pending"}
+                              </Badge>
+                            </div>
+                            <p className="text-xs text-muted-foreground">{booking.userEmail}</p>
+                            {booking.timestamp && (
+                              <p className="text-xs text-muted-foreground mt-1">
+                                Requested: {formatDate(booking.timestamp)}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="flex justify-end pt-4">
+                <Button variant="outline" onClick={() => { setViewModalOpen(false); setBookings([]) }}>
                   Close
                 </Button>
               </div>

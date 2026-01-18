@@ -35,7 +35,7 @@ service cloud.firestore {
     // Photographers collection
     match /photographers/{photographerId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isAdmin(); // Only authenticated admins can write
     }
 
     // Posters collection
@@ -60,6 +60,13 @@ service cloud.firestore {
     match /systemLogs/{logId} {
       allow read: if isAdmin();
       allow write: if isAdmin();
+    }
+
+    // Photographer Bookings collection
+    match /photographerBookings/{bookingId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated(); // Any authenticated user can create bookings
+      allow update, delete: if isAdmin(); // Only admins can update/delete bookings
     }
 
     // Default deny
