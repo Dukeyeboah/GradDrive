@@ -350,6 +350,8 @@ __turbopack_context__.s([
     ()=>getPoster,
     "getPosters",
     ()=>getPosters,
+    "getScholarshipSubmissions",
+    ()=>getScholarshipSubmissions,
     "getSystemLogs",
     ()=>getSystemLogs,
     "getUserRole",
@@ -362,8 +364,12 @@ __turbopack_context__.s([
     ()=>photographersCollection,
     "postersCollection",
     ()=>postersCollection,
+    "scholarshipSubmissionsCollection",
+    ()=>scholarshipSubmissionsCollection,
     "setUserRole",
     ()=>setUserRole,
+    "submitScholarshipInterest",
+    ()=>submitScholarshipInterest,
     "updateCapDesign",
     ()=>updateCapDesign,
     "updateEbook",
@@ -380,6 +386,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e
 ;
 ;
 const bookingsCollection = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$esm2017$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["collection"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["db"], "photographerBookings");
+const scholarshipSubmissionsCollection = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$esm2017$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["collection"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["db"], "scholarshipSubmissions");
 async function bookPhotographer(data) {
     try {
         const docRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$esm2017$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["doc"])(bookingsCollection);
@@ -409,6 +416,33 @@ async function getPhotographerBookings(photographerId) {
             }));
     } catch (error) {
         console.error("Error getting bookings:", error);
+        return [];
+    }
+}
+async function submitScholarshipInterest(data) {
+    try {
+        const docRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$esm2017$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["doc"])(scholarshipSubmissionsCollection);
+        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$esm2017$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["setDoc"])(docRef, {
+            ...data,
+            status: "pending",
+            timestamp: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$esm2017$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["serverTimestamp"])()
+        });
+        return true;
+    } catch (error) {
+        console.error("Error submitting scholarship interest:", error);
+        return false;
+    }
+}
+async function getScholarshipSubmissions() {
+    try {
+        const q = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$esm2017$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["query"])(scholarshipSubmissionsCollection, (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$esm2017$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["orderBy"])("timestamp", "desc"));
+        const snapshot = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$esm2017$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDocs"])(q);
+        return snapshot.docs.map((doc)=>({
+                id: doc.id,
+                ...doc.data()
+            }));
+    } catch (error) {
+        console.error("Error getting scholarship submissions:", error);
         return [];
     }
 }
@@ -995,9 +1029,11 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/next@16.0.10_react-dom@19.2.0_react@19.2.0/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/next@16.0.10_react-dom@19.2.0_react@19.2.0/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$firestore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/firebase/firestore.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/contexts/AuthContext.tsx [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature();
 'use client';
+;
 ;
 ;
 const DataContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])({
@@ -1011,12 +1047,17 @@ const DataContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project
 });
 function DataProvider({ children }) {
     _s();
+    const { user, userData } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"])();
     const [analytics, setAnalytics] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [users, setUsers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [downloadBreakdown, setDownloadBreakdown] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const refreshAnalytics = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "DataProvider.useCallback[refreshAnalytics]": async ()=>{
+            // Only fetch analytics if user is authenticated and is admin
+            if (!user || !userData || userData.role !== 'admin' && userData.role !== 'super admin') {
+                return;
+            }
             try {
                 const data = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$firestore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAnalytics"])();
                 setAnalytics(data);
@@ -1024,9 +1065,16 @@ function DataProvider({ children }) {
                 console.error('Error refreshing analytics:', error);
             }
         }
-    }["DataProvider.useCallback[refreshAnalytics]"], []);
+    }["DataProvider.useCallback[refreshAnalytics]"], [
+        user,
+        userData
+    ]);
     const refreshUsers = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "DataProvider.useCallback[refreshUsers]": async ()=>{
+            // Only fetch users if user is authenticated and is admin
+            if (!user || !userData || userData.role !== 'admin' && userData.role !== 'super admin') {
+                return;
+            }
             try {
                 const data = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$firestore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAllUsers"])();
                 setUsers(data);
@@ -1034,9 +1082,16 @@ function DataProvider({ children }) {
                 console.error('Error refreshing users:', error);
             }
         }
-    }["DataProvider.useCallback[refreshUsers]"], []);
+    }["DataProvider.useCallback[refreshUsers]"], [
+        user,
+        userData
+    ]);
     const refreshDownloadBreakdown = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "DataProvider.useCallback[refreshDownloadBreakdown]": async ()=>{
+            // Only fetch download breakdown if user is authenticated and is admin
+            if (!user || !userData || userData.role !== 'admin' && userData.role !== 'super admin') {
+                return;
+            }
             try {
                 const data = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$firestore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDownloadBreakdown"])();
                 setDownloadBreakdown(data);
@@ -1044,12 +1099,20 @@ function DataProvider({ children }) {
                 console.error('Error refreshing download breakdown:', error);
             }
         }
-    }["DataProvider.useCallback[refreshDownloadBreakdown]"], []);
-    // Initial load
+    }["DataProvider.useCallback[refreshDownloadBreakdown]"], [
+        user,
+        userData
+    ]);
+    // Initial load - only fetch if user is authenticated and is admin
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "DataProvider.useEffect": ()=>{
             const loadInitialData = {
                 "DataProvider.useEffect.loadInitialData": async ()=>{
+                    // Only load data if user is authenticated and is admin
+                    if (!user || !userData || userData.role !== 'admin' && userData.role !== 'super admin') {
+                        setLoading(false);
+                        return;
+                    }
                     setLoading(true);
                     try {
                         await Promise.all([
@@ -1067,6 +1130,8 @@ function DataProvider({ children }) {
             loadInitialData();
         }
     }["DataProvider.useEffect"], [
+        user,
+        userData,
         refreshAnalytics,
         refreshUsers,
         refreshDownloadBreakdown
@@ -1084,11 +1149,15 @@ function DataProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/contexts/DataContext.tsx",
-        lineNumber: 84,
+        lineNumber: 104,
         columnNumber: 5
     }, this);
 }
-_s(DataProvider, "qeyQeaEWr5w3Y6rafaOWnk0rC2w=");
+_s(DataProvider, "mwnaQpMV1PkZTxFVwjSPXr5bvro=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"]
+    ];
+});
 _c = DataProvider;
 function useData() {
     _s1();

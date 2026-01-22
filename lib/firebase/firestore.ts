@@ -54,7 +54,8 @@ export interface Poster {
   downloads: number
   category?: string
   tags?: string[]
-  imageUrl?: string
+  imageUrl?: string // High-res PNG URL (for download)
+  lowResImageUrl?: string // Low-res JPEG URL (for display) - auto-generated
   shopifyLink?: string
   uploadedBy?: string
   uploadedByName?: string
@@ -104,10 +105,31 @@ export interface PhotographerBooking {
   timestamp: Timestamp
 }
 
+export interface ScholarshipSubmission {
+  id?: string
+  userId: string
+  userName: string
+  userEmail: string
+  phone?: string
+  graduationYear: string
+  school: string
+  major?: string
+  whyInterested: string
+  previousTravel?: string
+  additionalInfo?: string
+  status?: "pending" | "reviewed" | "approved" | "rejected"
+  timestamp: Timestamp
+}
+
 /**
  * Photographer Bookings Collection
  */
 export const bookingsCollection = collection(db, "photographerBookings")
+
+/**
+ * Scholarship Submissions Collection
+ */
+export const scholarshipSubmissionsCollection = collection(db, "scholarshipSubmissions")
 
 export async function bookPhotographer(data: Omit<PhotographerBooking, "id" | "timestamp">): Promise<boolean> {
   try {
@@ -139,6 +161,35 @@ export async function getPhotographerBookings(photographerId?: string): Promise<
     })) as PhotographerBooking[]
   } catch (error) {
     console.error("Error getting bookings:", error)
+    return []
+  }
+}
+
+export async function submitScholarshipInterest(data: Omit<ScholarshipSubmission, "id" | "timestamp">): Promise<boolean> {
+  try {
+    const docRef = doc(scholarshipSubmissionsCollection)
+    await setDoc(docRef, {
+      ...data,
+      status: "pending",
+      timestamp: serverTimestamp(),
+    })
+    return true
+  } catch (error) {
+    console.error("Error submitting scholarship interest:", error)
+    return false
+  }
+}
+
+export async function getScholarshipSubmissions(): Promise<ScholarshipSubmission[]> {
+  try {
+    const q = query(scholarshipSubmissionsCollection, orderBy("timestamp", "desc"))
+    const snapshot = await getDocs(q)
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as ScholarshipSubmission[]
+  } catch (error) {
+    console.error("Error getting scholarship submissions:", error)
     return []
   }
 }

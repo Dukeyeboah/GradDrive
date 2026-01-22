@@ -356,7 +356,7 @@ function DashboardPage() {
                             icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileImage$3e$__["FileImage"],
                             title: "Digital Posters & Artwork",
                             description: "Download free graduation posters and digital artwork",
-                            href: "/dashboard/grad-drive",
+                            href: "/dashboard/posters",
                             buttonText: "Browse"
                         }, void 0, false, {
                             fileName: "[project]/app/dashboard/page.tsx",
@@ -367,7 +367,7 @@ function DashboardPage() {
                             icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$graduation$2d$cap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__GraduationCap$3e$__["GraduationCap"],
                             title: "Graduation Cap Designs",
                             description: "Explore and download cap design templates",
-                            href: "/dashboard/grad-drive",
+                            href: "/dashboard/cap-designs",
                             buttonText: "View"
                         }, void 0, false, {
                             fileName: "[project]/app/dashboard/page.tsx",
@@ -378,7 +378,7 @@ function DashboardPage() {
                             icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"],
                             title: "HoS Alumni Club",
                             description: "Connect with alumni and join exclusive community events",
-                            href: "/dashboard/discounts",
+                            href: "/dashboard/alum-club",
                             buttonText: "Join"
                         }, void 0, false, {
                             fileName: "[project]/app/dashboard/page.tsx",
@@ -389,7 +389,7 @@ function DashboardPage() {
                             icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$history$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__History$3e$__["History"],
                             title: "Kente & Graduation History",
                             description: "Learn about Kente traditions and graduation history",
-                            href: "/dashboard/discounts",
+                            href: "/dashboard/kente-history",
                             buttonText: "Explore"
                         }, void 0, false, {
                             fileName: "[project]/app/dashboard/page.tsx",

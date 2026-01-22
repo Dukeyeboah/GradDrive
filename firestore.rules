@@ -69,6 +69,13 @@ service cloud.firestore {
       allow update, delete: if isAdmin(); // Only admins can update/delete bookings
     }
 
+    // Scholarship Submissions collection
+    match /scholarshipSubmissions/{submissionId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated(); // Any authenticated user can create submissions
+      allow update, delete: if isAdmin(); // Only admins can update/delete submissions
+    }
+
     // Default deny
     match /{document=**} {
       allow read, write: if false;

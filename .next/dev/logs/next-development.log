@@ -1,216 +1,297 @@
-[00:00:00.925] Server  WARN     ⚠ Minimum recommended TypeScript version is v5.1.0, older versions can potentially be incompatible with Next.js. Detected: 5.0.2
-[00:00:01.068] Server  LOG      ✓ Ready in 761ms
-[00:00:04.625] Server  LOG      ○ Compiling /admin ...
-[00:00:10.528] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:10.528] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin","route":"/admin"}
-[00:00:10.528] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin color: rgb(120, 120, 120) color: inherit {"dp":"/admin","o":"http://localhost:3003/admin","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768669238126}
-[00:00:10.528] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[00:00:11.258] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:11.258] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:00:11.258] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768669239765}
-[00:00:12.395] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[00:00:16.967] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:16.967] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin","route":"/admin"}
-[00:00:16.967] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin color: rgb(120, 120, 120) color: inherit {"dp":"/admin","o":"http://localhost:3003/admin","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768669245475}
-[00:00:17.456] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[00:00:17.954] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768669246447}
-[00:00:20.449] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/admin/photographers","o":"http://localhost:3003/admin/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768669248955}
-[00:00:25.888] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:25.888] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/photographers/import","route":"/admin/photographers/import"}
-[00:00:25.888] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/photographers/import color: rgb(120, 120, 120) color: inherit {"dp":"/admin/photographers/import","o":"http://localhost:3003/admin/photographers/import","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768669254394}
-[00:00:26.617] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[00:00:27.074] Browser LOG     Starting import from file...
-[00:00:27.741] Server  LOG     Reading file from: "/Users/duke/Documents/GitHub/GradDrive/data/photographers.json"
-[00:00:27.742] Server  LOG     Parsed 24 records from JSON file
-[00:00:27.742] Server  LOG     Filtered to 24 valid photographer records
-[00:00:35.220] Server  LOG     Import complete: 24 success, 0 errors
-[00:00:35.357] Browser LOG     Import result: {"errors":0,"imported":24,"message":"Successfully imported 24 photographers. 0 errors.","success":true}
-[00:00:37.847] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/admin/photographers","o":"http://localhost:3003/admin/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768669266353}
-[00:05:28.227] Server  LOG      ✓ Compiled in 169ms
-[00:05:54.673] Server  LOG      ✓ Compiled in 689ms
-[00:06:21.881] Server  LOG      ✓ Compiled in 280ms
-[00:07:09.206] Server  LOG      ✓ Compiled in 117ms
-[17:30:09.173] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[17:30:09.173] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[17:30:09.174] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732238299}
-[17:30:09.782] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[17:30:32.198] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[17:30:32.198] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[17:30:32.198] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732261254}
-[17:30:32.838] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[17:30:51.275] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732280309}
-[17:30:58.017] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/admin/users color: rgb(120, 120, 120) color: inherit {"dp":"/admin/users","o":"http://localhost:3003/admin/users","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732287071}
-[17:31:59.278] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732348334}
-[17:32:36.642] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732385693}
-[17:32:43.286] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/photographers","o":"http://localhost:3003/dashboard/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768732392342}
-[17:32:43.613] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
-[17:32:43.613] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
-[17:44:04.706] Server  LOG      ✓ Compiled in 686ms
-[17:44:13.731] Server  LOG      ✓ Compiled in 524ms
-[17:44:14.568] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
-[17:44:23.978] Server  LOG      ✓ Compiled in 245ms
-[17:44:24.088] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
-Export bookPhotographer doesn't exist in target module
-   7 | import { Input } from "@/components/ui/input"
-   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
->  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  10 | import { Loader2 } from "lucide-react"
-  11 | import { useAuth } from "@/contexts/AuthContext"
-  12 | import { useToast } from "@/hooks/use-toast"
+[00:00:01.295] Server  WARN     ⚠ Minimum recommended TypeScript version is v5.1.0, older versions can potentially be incompatible with Next.js. Detected: 5.0.2
+[00:00:01.488] Server  LOG      ✓ Ready in 821ms
+[00:00:05.338] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:05.340] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:05.340] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087017152}
+[00:00:06.545] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:00:06.853] Browser ERROR   Error getting analytics: {"code":"permission-denied","name":"FirebaseError"}
+[00:00:06.853] Browser ERROR   Error getting users: {"code":"permission-denied","name":"FirebaseError"}
+[00:01:10.196] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./contexts/DataContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:01:10.209] Server  LOG      ✓ Compiled in 425ms
+[00:01:13.542] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:01:14.021] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:01:14.021] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:01:14.022] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087085841}
+[00:01:16.013] Browser ERROR   Error getting analytics: {"code":"permission-denied","name":"FirebaseError"}
+[00:01:16.013] Browser ERROR   Error getting users: {"code":"permission-denied","name":"FirebaseError"}
+[00:01:26.816] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./contexts/DataContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:01:30.846] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:01:30.849] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:01:30.849] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:01:30.849] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087102120}
+[00:05:11.368] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:05:11.368] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:05:11.368] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087323202}
+[00:05:11.681] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:05:40.539] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087352366}
+[00:05:49.260] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/photographers","o":"http://localhost:3003/dashboard/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087361086}
+[00:05:49.621] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
+[00:05:49.622] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
+[00:05:54.301] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087366132}
+[00:05:56.453] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087368283}
+[00:06:02.161] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087373994}
+[00:06:03.740] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087375573}
+[00:06:23.005] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087394839}
+[00:06:25.652] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087397487}
+[00:06:34.906] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087406711}
+[00:06:50.811] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087422646}
+[00:07:04.954] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087436787}
+[00:07:12.754] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087444588}
+[00:07:14.536] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087446370}
+[00:07:15.927] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/photographers","o":"http://localhost:3003/dashboard/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087447761}
+[00:07:16.243] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
+[00:07:16.243] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
+[00:07:17.285] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087449120}
+[00:07:19.082] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/grad-drive color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/grad-drive","o":"http://localhost:3003/dashboard/grad-drive","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087450917}
+[00:08:09.005] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087499951}
+[00:08:38.490] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/discounts color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/discounts","o":"http://localhost:3003/dashboard/discounts","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087530318}
+[00:08:42.400] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087534234}
+[00:08:47.255] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/discounts color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/discounts","o":"http://localhost:3003/dashboard/discounts","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087539090}
+[00:08:50.184] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087542012}
+[00:09:36.934] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/discounts color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/discounts","o":"http://localhost:3003/dashboard/discounts","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087588757}
+[00:09:39.213] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087591048}
+[00:12:08.007] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/scholarship color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/scholarship","o":"http://localhost:3003/dashboard/scholarship","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087739842}
+[00:12:31.180] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087763015}
+[00:13:16.132] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/scholarship color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/scholarship","o":"http://localhost:3003/dashboard/scholarship","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087807968}
+[00:13:18.574] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769087810408}
+[00:17:10.641] Server  LOG      ✓ Compiled in 987ms
+[00:20:17.569] Server  LOG      ✓ Compiled in 2s
+[00:20:45.790] Browser ERROR   ./app/dashboard/scholarship/page.tsx:17:1
+Export submitScholarshipInterest doesn't exist in target module
+  15 | } from "@/components/ui/dialog"
+  16 | import { Award, Calendar, MapPin, Users, CheckCircle, Loader2 } from "lucide-react"
+> 17 | import { submitScholarshipInterest } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  18 | import { useAuth } from "@/contexts/AuthContext"
+  19 | import { useToast } from "@/hooks/use-toast"
+  20 |
 
-The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-client] (ecmascript).
-Did you mean to import getPhotographer?
+The export submitScholarshipInterest was not found in module [project]/lib/firebase/firestore.ts [app-client] (ecmascript).
+Did you mean to import photographersCollection?
 All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
 
 Import traces:
   Client Component Browser:
-    ./app/dashboard/photographers/page.tsx [Client Component Browser]
-    ./app/dashboard/photographers/page.tsx [Server Component]
+    ./app/dashboard/scholarship/page.tsx [Client Component Browser]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/dashboard/photographers/page.tsx [Client Component SSR]
-    ./app/dashboard/photographers/page.tsx [Server Component]
-[17:44:24.088] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
-Export bookPhotographer doesn't exist in target module
-   7 | import { Input } from "@/components/ui/input"
-   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
->  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  10 | import { Loader2 } from "lucide-react"
-  11 | import { useAuth } from "@/contexts/AuthContext"
-  12 | import { useToast } from "@/hooks/use-toast"
+    ./app/dashboard/scholarship/page.tsx [Client Component SSR]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
+[00:20:45.794] Browser ERROR   ./app/dashboard/scholarship/page.tsx:17:1
+Export submitScholarshipInterest doesn't exist in target module
+  15 | } from "@/components/ui/dialog"
+  16 | import { Award, Calendar, MapPin, Users, CheckCircle, Loader2 } from "lucide-react"
+> 17 | import { submitScholarshipInterest } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  18 | import { useAuth } from "@/contexts/AuthContext"
+  19 | import { useToast } from "@/hooks/use-toast"
+  20 |
 
-The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-ssr] (ecmascript).
-Did you mean to import getPhotographer?
+The export submitScholarshipInterest was not found in module [project]/lib/firebase/firestore.ts [app-ssr] (ecmascript).
+Did you mean to import photographersCollection?
 All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
 
 Import traces:
   Client Component Browser:
-    ./app/dashboard/photographers/page.tsx [Client Component Browser]
-    ./app/dashboard/photographers/page.tsx [Server Component]
+    ./app/dashboard/scholarship/page.tsx [Client Component Browser]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/dashboard/photographers/page.tsx [Client Component SSR]
-    ./app/dashboard/photographers/page.tsx [Server Component]
-[17:44:36.228] Server  LOG      ✓ Compiled in 226ms
-[17:44:36.334] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
-Export bookPhotographer doesn't exist in target module
-   7 | import { Input } from "@/components/ui/input"
-   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
->  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  10 | import { Loader2 } from "lucide-react"
-  11 | import { useAuth } from "@/contexts/AuthContext"
-  12 | import { useToast } from "@/hooks/use-toast"
+    ./app/dashboard/scholarship/page.tsx [Client Component SSR]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
+[00:20:59.781] Browser ERROR   ./app/dashboard/scholarship/page.tsx:17:1
+Export submitScholarshipInterest doesn't exist in target module
+  15 | } from "@/components/ui/dialog"
+  16 | import { Award, Calendar, MapPin, Users, CheckCircle, Loader2 } from "lucide-react"
+> 17 | import { submitScholarshipInterest } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  18 | import { useAuth } from "@/contexts/AuthContext"
+  19 | import { useToast } from "@/hooks/use-toast"
+  20 |
 
-The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-client] (ecmascript).
-Did you mean to import getPhotographer?
+The export submitScholarshipInterest was not found in module [project]/lib/firebase/firestore.ts [app-client] (ecmascript).
+Did you mean to import photographersCollection?
 All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
 
 Import traces:
   Client Component Browser:
-    ./app/dashboard/photographers/page.tsx [Client Component Browser]
-    ./app/dashboard/photographers/page.tsx [Server Component]
+    ./app/dashboard/scholarship/page.tsx [Client Component Browser]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/dashboard/photographers/page.tsx [Client Component SSR]
-    ./app/dashboard/photographers/page.tsx [Server Component]
-[17:44:36.334] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
-Export bookPhotographer doesn't exist in target module
-   7 | import { Input } from "@/components/ui/input"
-   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
->  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  10 | import { Loader2 } from "lucide-react"
-  11 | import { useAuth } from "@/contexts/AuthContext"
-  12 | import { useToast } from "@/hooks/use-toast"
+    ./app/dashboard/scholarship/page.tsx [Client Component SSR]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
+[00:20:59.783] Browser ERROR   ./app/dashboard/scholarship/page.tsx:17:1
+Export submitScholarshipInterest doesn't exist in target module
+  15 | } from "@/components/ui/dialog"
+  16 | import { Award, Calendar, MapPin, Users, CheckCircle, Loader2 } from "lucide-react"
+> 17 | import { submitScholarshipInterest } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  18 | import { useAuth } from "@/contexts/AuthContext"
+  19 | import { useToast } from "@/hooks/use-toast"
+  20 |
 
-The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-ssr] (ecmascript).
-Did you mean to import getPhotographer?
+The export submitScholarshipInterest was not found in module [project]/lib/firebase/firestore.ts [app-ssr] (ecmascript).
+Did you mean to import photographersCollection?
 All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
 
 Import traces:
   Client Component Browser:
-    ./app/dashboard/photographers/page.tsx [Client Component Browser]
-    ./app/dashboard/photographers/page.tsx [Server Component]
+    ./app/dashboard/scholarship/page.tsx [Client Component Browser]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/dashboard/photographers/page.tsx [Client Component SSR]
-    ./app/dashboard/photographers/page.tsx [Server Component]
-[17:44:45.162] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
-Export bookPhotographer doesn't exist in target module
-   7 | import { Input } from "@/components/ui/input"
-   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
->  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  10 | import { Loader2 } from "lucide-react"
-  11 | import { useAuth } from "@/contexts/AuthContext"
-  12 | import { useToast } from "@/hooks/use-toast"
+    ./app/dashboard/scholarship/page.tsx [Client Component SSR]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
+[00:21:10.424] Server  LOG      ✓ Compiled in 535ms
+[00:21:10.801] Browser ERROR   ./app/dashboard/scholarship/page.tsx:17:1
+Export submitScholarshipInterest doesn't exist in target module
+  15 | } from "@/components/ui/dialog"
+  16 | import { Award, Calendar, MapPin, Users, CheckCircle, Loader2 } from "lucide-react"
+> 17 | import { submitScholarshipInterest } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  18 | import { useAuth } from "@/contexts/AuthContext"
+  19 | import { useToast } from "@/hooks/use-toast"
+  20 |
 
-The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-client] (ecmascript).
-Did you mean to import getPhotographer?
+The export submitScholarshipInterest was not found in module [project]/lib/firebase/firestore.ts [app-client] (ecmascript).
+Did you mean to import scholarshipSubmissionsCollection?
 All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
 
 Import traces:
   Client Component Browser:
-    ./app/dashboard/photographers/page.tsx [Client Component Browser]
-    ./app/dashboard/photographers/page.tsx [Server Component]
+    ./app/dashboard/scholarship/page.tsx [Client Component Browser]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/dashboard/photographers/page.tsx [Client Component SSR]
-    ./app/dashboard/photographers/page.tsx [Server Component]
-[17:44:45.162] Browser ERROR   ./app/dashboard/photographers/page.tsx:9:1
-Export bookPhotographer doesn't exist in target module
-   7 | import { Input } from "@/components/ui/input"
-   8 | import { MapPin, Mail, Phone, Instagram, Globe } from "lucide-react"
->  9 | import { getPhotographers, Photographer, bookPhotographer } from "@/lib/firebase/firestore"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  10 | import { Loader2 } from "lucide-react"
-  11 | import { useAuth } from "@/contexts/AuthContext"
-  12 | import { useToast } from "@/hooks/use-toast"
+    ./app/dashboard/scholarship/page.tsx [Client Component SSR]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
+[00:21:10.801] Browser ERROR   ./app/dashboard/scholarship/page.tsx:17:1
+Export submitScholarshipInterest doesn't exist in target module
+  15 | } from "@/components/ui/dialog"
+  16 | import { Award, Calendar, MapPin, Users, CheckCircle, Loader2 } from "lucide-react"
+> 17 | import { submitScholarshipInterest } from "@/lib/firebase/firestore"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  18 | import { useAuth } from "@/contexts/AuthContext"
+  19 | import { useToast } from "@/hooks/use-toast"
+  20 |
 
-The export bookPhotographer was not found in module [project]/lib/firebase/firestore.ts [app-ssr] (ecmascript).
-Did you mean to import getPhotographer?
+The export submitScholarshipInterest was not found in module [project]/lib/firebase/firestore.ts [app-ssr] (ecmascript).
+Did you mean to import scholarshipSubmissionsCollection?
 All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
 
 Import traces:
   Client Component Browser:
-    ./app/dashboard/photographers/page.tsx [Client Component Browser]
-    ./app/dashboard/photographers/page.tsx [Server Component]
+    ./app/dashboard/scholarship/page.tsx [Client Component Browser]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/dashboard/photographers/page.tsx [Client Component SSR]
-    ./app/dashboard/photographers/page.tsx [Server Component]
-[17:45:04.832] Server  LOG      ✓ Compiled in 130ms
-[17:45:04.889] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./lib/firebase/firestore.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[17:45:07.606] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[17:45:07.606] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/photographers","route":"/dashboard/photographers"}
-[17:45:07.606] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/photographers color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/photographers","o":"http://localhost:3003/dashboard/photographers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1768733136658}
-[17:45:08.129] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
-[17:45:08.530] Browser ERROR   Error getting analytics: {"code":"permission-denied","name":"FirebaseError"}
-[17:45:08.530] Browser ERROR   Error getting users: {"code":"permission-denied","name":"FirebaseError"}
-[17:45:08.530] Browser WARN    OrderBy failed, trying without it: {"code":"failed-precondition","name":"FirebaseError"}
-[17:45:17.864] Server  LOG      ✓ Compiled in 260ms
-[17:46:54.048] Server  LOG      ✓ Compiled in 1114ms
-[17:47:12.608] Browser ERROR   ./app/admin/photographers/page.tsx:223:9
-Ecmascript file had an error
-  221 |   }
-  222 |
-> 223 |   const formatDate = (timestamp: any) => {
-      |         ^^^^^^^^^^
-  224 |     if (!timestamp) return "Unknown"
-  225 |     const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp)
-  226 |     return date.toLocaleDateString("en-US", { 
-
-the name `formatDate` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/photographers/page.tsx [Client Component Browser]
-    ./app/admin/photographers/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/photographers/page.tsx [Client Component SSR]
-    ./app/admin/photographers/page.tsx [Server Component]
-[17:47:30.790] Server  LOG      ✓ Compiled in 96ms
+    ./app/dashboard/scholarship/page.tsx [Client Component SSR]
+    ./app/dashboard/scholarship/page.tsx [Server Component]
+[00:21:38.004] Server  LOG      ✓ Compiled in 625ms
+[00:21:38.238] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./lib/firebase/firestore.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:21:46.848] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:21:46.862] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[00:21:46.863] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769088317720}
+[00:21:49.966] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[00:23:01.713] Server  LOG      ✓ Compiled in 24.5s
+[01:03:50.246] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769090842138}
+[01:03:53.837] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769090845728}
+[01:03:57.233] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/posters color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/posters","o":"http://localhost:3003/dashboard/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769090849124}
+[01:07:47.486] Server  LOG      ✓ Compiled in 873ms
+[01:07:58.356] Server  LOG      ✓ Compiled in 155ms
+[01:08:32.398] Server  LOG      ✓ Compiled in 133ms
+[01:08:50.686] Server  LOG      ✓ Compiled in 96ms
+[01:09:25.900] Server  LOG      ✓ Compiled in 110ms
+[01:11:01.362] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769091273257}
+[01:11:03.422] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/posters color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/posters","o":"http://localhost:3003/dashboard/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769091275319}
+[01:11:23.835] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769091295732}
+[01:16:05.435] Server  LOG      ✓ Compiled in 396ms
+[01:16:14.336] Server  LOG      ✓ Compiled in 103ms
+[01:17:25.576] Server  LOG      ✓ Compiled in 117ms
+[01:27:47.534] Browser LOG     📥 Loading posters...
+[01:27:47.534] Browser LOG     [2;38;2;124;124;124m%s[0m 📥 Loading posters...
+[01:27:47.535] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/posters color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/posters","o":"http://localhost:3003/dashboard/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769092279407}
+[01:27:48.403] Browser LOG     📥 Loaded 4 posters in 879.00ms
+[01:27:48.403] Browser LOG     📥 Filtered to 4 posters (excluding cap designs)
+[01:27:48.403] Browser LOG     📥 Loaded 4 posters in 874.80ms
+[01:27:48.403] Browser LOG     📥 Filtered to 4 posters (excluding cap designs)
+[01:27:48.403] Browser LOG     🖼️ Loading image for More than Fabric: LOW-RES
+[01:27:48.403] Browser LOG     🖼️ Loading image for Kente is a Verb: LOW-RES
+[01:27:48.403] Browser LOG     🖼️ Loading image for Coded in Kente: LOW-RES
+[01:27:48.403] Browser LOG     🖼️ Loading image for Kente is King: LOW-RES
+[01:27:48.403] Browser LOG     [2;38;2;124;124;124m%s[0m 🖼️ Loading image for More than Fabric: LOW-RES
+[01:27:48.403] Browser LOG     [2;38;2;124;124;124m%s[0m 🖼️ Loading image for Kente is a Verb: LOW-RES
+[01:27:48.403] Browser LOG     [2;38;2;124;124;124m%s[0m 🖼️ Loading image for Coded in Kente: LOW-RES
+[01:27:48.403] Browser LOG     [2;38;2;124;124;124m%s[0m 🖼️ Loading image for Kente is King: LOW-RES
+[01:27:48.940] Browser ERROR   ❌ Image failed to load for More than Fabric: https://firebasestorage.googleapis.com/v0/b/graddrive-e3695.firebasestorage.app/o/posters%2FlowRes%2F1766836258805_KENTE%20CLOTH%20POSTER%20001-04.jpg?alt=media
+[01:27:48.940] Browser LOG     🔄 Falling back to high-res for More than Fabric
+[01:27:48.940] Browser LOG     🖼️ Loading image for Kente is a Verb: LOW-RES
+[01:27:48.940] Browser LOG     🖼️ Loading image for Coded in Kente: LOW-RES
+[01:27:48.941] Browser LOG     🖼️ Loading image for Kente is King: LOW-RES
+[01:27:48.941] Browser LOG     [2;38;2;124;124;124m%s[0m 🖼️ Loading image for Kente is a Verb: LOW-RES
+[01:27:48.941] Browser LOG     [2;38;2;124;124;124m%s[0m 🖼️ Loading image for Coded in Kente: LOW-RES
+[01:27:48.941] Browser LOG     [2;38;2;124;124;124m%s[0m 🖼️ Loading image for Kente is King: LOW-RES
+[01:27:48.941] Browser ERROR   ❌ Image failed to load for Kente is a Verb: https://firebasestorage.googleapis.com/v0/b/graddrive-e3695.firebasestorage.app/o/posters%2FlowRes%2F1766835169566_KENTE%20CLOTH%20POSTER%20001-03.jpg?alt=media
+[01:27:48.941] Browser LOG     🔄 Falling back to high-res for Kente is a Verb
+[01:27:48.941] Browser LOG     🖼️ Loading image for Coded in Kente: LOW-RES
+[01:27:48.941] Browser LOG     🖼️ Loading image for Kente is King: LOW-RES
+[01:27:48.941] Browser LOG     [2;38;2;124;124;124m%s[0m 🖼️ Loading image for Coded in Kente: LOW-RES
+[01:27:48.941] Browser LOG     [2;38;2;124;124;124m%s[0m 🖼️ Loading image for Kente is King: LOW-RES
+[01:27:48.941] Browser ERROR   ❌ Image failed to load for Kente is King: https://firebasestorage.googleapis.com/v0/b/graddrive-e3695.firebasestorage.app/o/posters%2FlowRes%2F1766834661636_KENTE%20CLOTH%20POSTER%20001-01.jpg?alt=media
+[01:27:48.941] Browser LOG     🔄 Falling back to high-res for Kente is King
+[01:27:48.941] Browser LOG     🖼️ Loading image for Coded in Kente: LOW-RES
+[01:27:48.941] Browser LOG     [2;38;2;124;124;124m%s[0m 🖼️ Loading image for Coded in Kente: LOW-RES
+[01:27:48.941] Browser ERROR   ❌ Image failed to load for Coded in Kente: https://firebasestorage.googleapis.com/v0/b/graddrive-e3695.firebasestorage.app/o/posters%2FlowRes%2F1766834884486_KENTE%20CLOTH%20POSTER%20001-02.jpg?alt=media
+[01:27:48.941] Browser LOG     🔄 Falling back to high-res for Coded in Kente
+[01:27:49.493] Browser ERROR   uncaughtError: ReferenceError: e is not defined
+[01:27:49.493] Browser ERROR   uncaughtError: ReferenceError: e is not defined
+[01:27:49.493] Browser ERROR   uncaughtError: ReferenceError: e is not defined
+[01:27:49.738] Browser ERROR   uncaughtError: ReferenceError: e is not defined
+[01:29:50.297] Server  LOG      ✓ Compiled in 780ms
+[01:30:11.288] Server  LOG      ✓ Compiled in 148ms
+[01:30:26.998] Server  LOG      ✓ Compiled in 151ms
+[01:30:38.340] Server  LOG      ✓ Compiled in 156ms
+[01:31:18.719] Server  LOG      ✓ Compiled in 981ms
+[01:32:13.173] Server  LOG      ✓ Compiled in 489ms
+[01:32:49.696] Browser LOG     📥 Loading posters...
+[01:32:49.816] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:32:49.818] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/posters","route":"/dashboard/posters"}
+[01:32:49.819] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/posters color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/posters","o":"http://localhost:3003/dashboard/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769092581705}
+[01:32:50.528] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[01:32:59.731] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769092591616}
+[01:33:00.425] Browser LOG     📥 Loaded 4 posters in 10728.90ms
+[01:33:00.425] Browser LOG     📥 Filtered to 4 posters (excluding cap designs)
+[01:33:01.455] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/ebooks color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/ebooks","o":"http://localhost:3003/dashboard/ebooks","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769092593344}
+[01:33:02.375] Browser ERROR   Error getting file URL: {"_baseMessage":"Firebase Storage: Object 'posters/lowRes/1766836258805_KENTE CLOTH POSTER 001-04.jpg' does not exist. (storage/object-not-found)","code":"storage/object-not-found","customData":{"serverResponse":""},"name":"FirebaseError","status_":0}
+[01:33:02.375] Browser LOG     ⚠️ Low-res file not found for More than Fabric: posters/lowRes/1766836258805_KENTE CLOTH POSTER 001-04.jpg
+[01:33:03.150] Browser ERROR   Error getting file URL: {"_baseMessage":"Firebase Storage: Object 'posters/lowRes/1766835169566_KENTE CLOTH POSTER 001-03.jpg' does not exist. (storage/object-not-found)","code":"storage/object-not-found","customData":{"serverResponse":""},"name":"FirebaseError","status_":0}
+[01:33:03.150] Browser LOG     ⚠️ Low-res file not found for Kente is a Verb: posters/lowRes/1766835169566_KENTE CLOTH POSTER 001-03.jpg
+[01:33:03.615] Browser ERROR   Error getting file URL: {"_baseMessage":"Firebase Storage: Object 'posters/lowRes/1766834884486_KENTE CLOTH POSTER 001-02.jpg' does not exist. (storage/object-not-found)","code":"storage/object-not-found","customData":{"serverResponse":""},"name":"FirebaseError","status_":0}
+[01:33:03.615] Browser LOG     ⚠️ Low-res file not found for Coded in Kente: posters/lowRes/1766834884486_KENTE CLOTH POSTER 001-02.jpg
+[01:33:04.236] Browser ERROR   Error getting file URL: {"_baseMessage":"Firebase Storage: Object 'posters/lowRes/1766834661636_KENTE CLOTH POSTER 001-01.jpg' does not exist. (storage/object-not-found)","code":"storage/object-not-found","customData":{"serverResponse":""},"name":"FirebaseError","status_":0}
+[01:33:04.236] Browser LOG     ⚠️ Low-res file not found for Kente is King: posters/lowRes/1766834661636_KENTE CLOTH POSTER 001-01.jpg
+[01:33:06.129] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769092598017}
+[01:37:59.072] Server  LOG      ✓ Compiled in 622ms
+[01:38:08.125] Server  LOG      ✓ Compiled in 118ms
+[01:38:19.581] Server  LOG      ✓ Compiled in 122ms
+[01:38:28.990] Server  LOG      ✓ Compiled in 144ms
+[01:38:38.500] Server  LOG      ✓ Compiled in 123ms
+[01:58:13.246] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/posters color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/posters","o":"http://localhost:3003/dashboard/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769094105205}
+[02:04:50.964] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769094501312}
+[02:04:57.026] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/cap-designs color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/cap-designs","o":"http://localhost:3003/dashboard/cap-designs","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769094508998}
+[02:05:03.354] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769094515325}
+[02:05:05.840] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/alum-club color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/alum-club","o":"http://localhost:3003/dashboard/alum-club","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769094517812}
+[02:05:08.361] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769094520330}
+[02:05:10.980] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/kente-history color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/kente-history","o":"http://localhost:3003/dashboard/kente-history","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769094522946}
+[02:05:13.411] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769094525380}
+[02:05:15.648] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/scholarship color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/scholarship","o":"http://localhost:3003/dashboard/scholarship","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769094527621}
+[02:05:24.376] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769094536349}
+[02:13:25.980] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/posters color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/posters","o":"http://localhost:3003/dashboard/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769095018003}
+[02:18:02.307] Server  LOG      ✓ Compiled in 619ms
+[02:18:11.624] Server  LOG      ✓ Compiled in 160ms
+[02:18:31.339] Server  LOG      ✓ Compiled in 101ms
+[02:18:41.572] Server  LOG      ✓ Compiled in 122ms
+[02:18:52.012] Server  LOG      ✓ Compiled in 125ms
+[02:19:06.166] Server  LOG      ✓ Compiled in 529ms

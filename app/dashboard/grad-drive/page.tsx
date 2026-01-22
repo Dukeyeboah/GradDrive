@@ -16,6 +16,7 @@ import { getPosters, type Poster } from '@/lib/firebase/firestore';
 export default function GradDrivePage() {
   const [posters, setPosters] = useState<Poster[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadPosters();
@@ -77,10 +78,29 @@ export default function GradDrivePage() {
               >
                 {poster.imageUrl ? (
                   <div className='w-full h-full relative overflow-hidden'>
+                    {!loadedImages.has(poster.id || '') && (
+                      <div className='absolute inset-0 bg-gradient-to-br from-muted to-muted/50 animate-pulse flex items-center justify-center'>
+                        <FileImage className='h-12 w-12 text-muted-foreground/30' />
+                      </div>
+                    )}
                     <img
                       src={poster.imageUrl}
                       alt={poster.name}
-                      className='w-full h-full object-cover'
+                      className={`w-full h-full object-cover transition-opacity duration-300 ${
+                        loadedImages.has(poster.id || '') ? 'opacity-100' : 'opacity-0'
+                      }`}
+                      loading="lazy"
+                      decoding="async"
+                      onLoad={() => {
+                        if (poster.id) {
+                          setLoadedImages((prev) => new Set(prev).add(poster.id!));
+                        }
+                      }}
+                      onError={() => {
+                        if (poster.id) {
+                          setLoadedImages((prev) => new Set(prev).add(poster.id!));
+                        }
+                      }}
                     />
                     {/* Title overlay with see-through background */}
                     <div className='absolute bottom-0 left-0 right-0 bg-black/10 backdrop-blur-sm px-3 py-2'>

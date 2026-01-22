@@ -65,7 +65,7 @@ export default function DashboardPage() {
             icon={FileImage}
             title='Digital Posters & Artwork'
             description='Download free graduation posters and digital artwork'
-            href='/dashboard/grad-drive'
+            href='/dashboard/posters'
             buttonText='Browse'
           />
 
@@ -73,7 +73,7 @@ export default function DashboardPage() {
             icon={GraduationCap}
             title='Graduation Cap Designs'
             description='Explore and download cap design templates'
-            href='/dashboard/grad-drive'
+            href='/dashboard/cap-designs'
             buttonText='View'
           />
 
@@ -81,7 +81,7 @@ export default function DashboardPage() {
             icon={Users}
             title='HoS Alumni Club'
             description='Connect with alumni and join exclusive community events'
-            href='/dashboard/discounts'
+            href='/dashboard/alum-club'
             buttonText='Join'
           />
 
@@ -89,7 +89,7 @@ export default function DashboardPage() {
             icon={History}
             title='Kente & Graduation History'
             description='Learn about Kente traditions and graduation history'
-            href='/dashboard/discounts'
+            href='/dashboard/kente-history'
             buttonText='Explore'
           />
 

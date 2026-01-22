@@ -34,7 +34,7 @@ import {
   deletePoster,
   type Poster,
 } from '@/lib/firebase/firestore';
-import { uploadImage, deleteFile } from '@/lib/firebase/storage';
+import { uploadImage, deleteFile, getFileURL } from '@/lib/firebase/storage';
 import { addSystemLog } from '@/lib/firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 
@@ -156,7 +156,7 @@ export default function AdminPostersPage() {
       console.log('✅ Role check passed - User is admin');
       console.log('=========================');
 
-      // Upload image to Firebase Storage
+      // Upload high-res PNG image to Firebase Storage (posters/ folder)
       const { url, error: uploadError } = await uploadImage(
         imageFile,
         'posters'
@@ -171,7 +171,40 @@ export default function AdminPostersPage() {
         return;
       }
 
-      // Save poster data to Firestore (remove undefined values)
+      // Extract filename from uploaded URL to find corresponding JPG file in same folder
+      // PNG files have format: {timestamp}_{originalFilename}.png
+      // JPG files have format: {originalFilename}.jpg (no timestamp prefix)
+      // So we need to remove the timestamp prefix when looking for JPG
+      let displayImageUrl: string | null = null;
+      try {
+        const urlMatch = url.match(/\/o\/posters%2F([^?]+)/);
+        if (urlMatch) {
+          const highResFilename = decodeURIComponent(urlMatch[1]);
+          // Remove timestamp prefix (format: {timestamp}_{filename}.png)
+          // Pattern: starts with digits, followed by underscore
+          const filenameWithoutPrefix = highResFilename.replace(/^\d+_/, '');
+          // Convert PNG to JPG - remove timestamp prefix, change extension
+          const jpgFilename = filenameWithoutPrefix.replace(/\.(png|PNG)$/, '.jpg');
+          const jpgPath = `posters/${jpgFilename}`;
+          
+          console.log(`🔍 Looking for JPG: ${jpgPath} (from PNG: ${highResFilename})`);
+          
+          // Try to get the download URL for the JPG file
+          const { url: jpgUrl, error: jpgError } = await getFileURL(jpgPath);
+          if (jpgUrl && !jpgError) {
+            displayImageUrl = jpgUrl;
+            console.log('✅ Found JPG file for display:', formData.name);
+          } else {
+            console.warn('⚠️ JPG file not found (will use PNG for display):', jpgPath);
+          }
+        }
+      } catch (error) {
+        console.warn('⚠️ Could not get JPG URL:', error);
+      }
+
+      // Save poster data to Firestore
+      // imageUrl = PNG (for download)
+      // lowResImageUrl = JPG (for display) - both in posters/ folder
       const posterData: any = {
         name: formData.name,
         description: formData.description,
@@ -179,10 +212,15 @@ export default function AdminPostersPage() {
           .split(',')
           .map((t) => t.trim())
           .filter(Boolean),
-        imageUrl: url,
+        imageUrl: url, // PNG URL (for download)
         uploadedBy: user.uid,
         uploadedByName: userData.displayName || user.email || 'Unknown',
       };
+
+      // Add JPG URL if found (for display)
+      if (displayImageUrl) {
+        posterData.lowResImageUrl = displayImageUrl;
+      }
 
       // Only include optional fields if they have values
       if (formData.category && formData.category.trim()) {
@@ -239,6 +277,7 @@ export default function AdminPostersPage() {
       let imageUrl = selectedPoster.imageUrl;
 
       // Upload new image if one was selected
+      let lowResUrl: string | undefined = undefined;
       if (imageFile) {
         const { url, error: uploadError } = await uploadImage(
           imageFile,
@@ -254,9 +293,28 @@ export default function AdminPostersPage() {
           return;
         }
         imageUrl = url;
+
+        // Try to get corresponding JPG URL (same folder, different extension)
+        // PNG files have timestamp prefix, JPG files don't
+        try {
+          const urlMatch = url.match(/\/o\/posters%2F([^?]+)/);
+          if (urlMatch) {
+            const highResFilename = decodeURIComponent(urlMatch[1]);
+            // Remove timestamp prefix (format: {timestamp}_{filename}.png)
+            const filenameWithoutPrefix = highResFilename.replace(/^\d+_/, '');
+            const jpgFilename = filenameWithoutPrefix.replace(/\.(png|PNG)$/, '.jpg');
+            const jpgPath = `posters/${jpgFilename}`;
+            const { url: jpgUrlResult } = await getFileURL(jpgPath);
+            if (jpgUrlResult) {
+              lowResUrl = jpgUrlResult;
+            }
+          }
+        } catch (error) {
+          console.warn('Could not get JPG URL for edit:', error);
+        }
       }
 
-      // Update poster in Firestore (remove undefined values)
+      // Update poster in Firestore
       const updateData: any = {
         name: formData.name,
         description: formData.description,
@@ -266,6 +324,16 @@ export default function AdminPostersPage() {
           .filter(Boolean),
         imageUrl,
       };
+
+      // Add JPG URL if found, or remove it if image was changed but JPG not found
+      if (imageFile) {
+        if (lowResUrl) {
+          updateData.lowResImageUrl = lowResUrl;
+        } else {
+          // Remove lowResImageUrl if new image uploaded but JPG not found
+          updateData.lowResImageUrl = null;
+        }
+      }
 
       // Only include optional fields if they have values
       if (formData.category && formData.category.trim()) {
@@ -346,7 +414,8 @@ export default function AdminPostersPage() {
       shopifyLink: poster.shopifyLink || '',
       imageUrl: poster.imageUrl || '',
     });
-    setImagePreview(poster.imageUrl || null);
+    // Use low-res for preview if available, otherwise use high-res
+    setImagePreview(poster.lowResImageUrl || poster.imageUrl || null);
     setImageFile(null);
     setEditModalOpen(true);
   };
@@ -450,9 +519,19 @@ export default function AdminPostersPage() {
             {poster.imageUrl ? (
               <div className='w-full h-full relative overflow-hidden'>
                 <img
-                  src={poster.imageUrl}
+                  src={poster.lowResImageUrl || poster.imageUrl}
                   alt={poster.name}
                   className='w-full h-full object-cover'
+                  loading="lazy"
+                  onError={(e) => {
+                    // Fallback to high-res if low-res fails
+                    if (poster.lowResImageUrl && poster.imageUrl) {
+                      const img = e.currentTarget;
+                      if (img.src === poster.lowResImageUrl) {
+                        img.src = poster.imageUrl;
+                      }
+                    }
+                  }}
                 />
                 {/* Title overlay with see-through background */}
                 <div className='absolute bottom-0 left-0 right-0 bg-black/10 backdrop-blur-sm px-3 py-2'>
@@ -664,9 +743,18 @@ export default function AdminPostersPage() {
               {selectedPoster.imageUrl ? (
                 <div className='w-full h-64 rounded-lg overflow-hidden'>
                   <img
-                    src={selectedPoster.imageUrl}
+                    src={selectedPoster.lowResImageUrl || selectedPoster.imageUrl}
                     alt={selectedPoster.name}
                     className='w-full h-full object-cover'
+                    onError={(e) => {
+                      // Fallback to high-res if low-res fails
+                      if (selectedPoster.lowResImageUrl && selectedPoster.imageUrl) {
+                        const img = e.currentTarget;
+                        if (img.src === selectedPoster.lowResImageUrl) {
+                          img.src = selectedPoster.imageUrl;
+                        }
+                      }
+                    }}
                   />
                 </div>
               ) : (

@@ -1,4 +1,6 @@
-import Link from 'next/link';
+'use client';
+
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -9,8 +11,11 @@ import {
   Gift,
   Award,
 } from 'lucide-react';
+import { AuthModals } from '@/components/auth-modals';
 
 export function WelcomeScreen() {
+  const [authOpen, setAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('signup');
   const benefits = [
     {
       icon: GraduationCap,
@@ -67,16 +72,16 @@ export function WelcomeScreen() {
           </p>
 
           <div className='flex items-center justify-center gap-4 pt-4'>
-            <Link href='/signup'>
-              <Button size='lg' className='gap-2'>
-                Get Started Free
-              </Button>
-            </Link>
-            <Link href='/login'>
-              <Button size='lg' variant='outline'>
-                Log In
-              </Button>
-            </Link>
+            <Button 
+              size='lg' 
+              className='gap-2'
+              onClick={() => {
+                setAuthMode('signup');
+                setAuthOpen(true);
+              }}
+            >
+              Get Started
+            </Button>
           </div>
         </div>
       </section>
@@ -124,6 +129,12 @@ export function WelcomeScreen() {
           </Link>
         </div>
       </section> */}
+      <AuthModals
+        open={authOpen}
+        onOpenChange={setAuthOpen}
+        mode={authMode}
+        onModeChange={setAuthMode}
+      />
     </main>
   );
 }
