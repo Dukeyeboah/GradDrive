@@ -167,6 +167,8 @@ __turbopack_context__.s([
     ()=>getCurrentUser,
     "getUserData",
     ()=>getUserData,
+    "handleGoogleRedirect",
+    ()=>handleGoogleRedirect,
     "onAuthStateChange",
     ()=>onAuthStateChange,
     "signInEmailPassword",
@@ -243,8 +245,38 @@ async function signUpEmailPassword(email, password, displayName, role = 'user') 
 }
 async function signInWithGoogle(role = 'user') {
     try {
-        const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$auth$40$1$2e$8$2e$0_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$auth$2f$dist$2f$node$2d$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signInWithPopup"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["auth"], googleProvider);
+        // Store role in sessionStorage for use after redirect
+        if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+        ;
+        // Use redirect instead of popup to avoid COOP issues
+        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$auth$40$1$2e$8$2e$0_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$auth$2f$dist$2f$node$2d$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signInWithRedirect"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["auth"], googleProvider);
+        // Note: The actual result will be handled by getRedirectResult in AuthContext
+        return {
+            user: null,
+            error: null
+        };
+    } catch (error) {
+        console.error('Google sign-in error:', error);
+        return {
+            user: null,
+            error: error.message || 'An error occurred during Google sign-in'
+        };
+    }
+}
+async function handleGoogleRedirect() {
+    try {
+        const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$auth$40$1$2e$8$2e$0_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$auth$2f$dist$2f$node$2d$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getRedirectResult"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["auth"]);
+        if (!result) {
+            return {
+                user: null,
+                error: null
+            };
+        }
         const user = result.user;
+        // Get role from sessionStorage (stored before redirect)
+        let role = 'user';
+        if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+        ;
         // Check if user document exists
         const userDoc = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getDoc"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["doc"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], 'users', user.uid));
         if (!userDoc.exists()) {
@@ -264,8 +296,8 @@ async function signInWithGoogle(role = 'user') {
             const updateData = {
                 updatedAt: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["serverTimestamp"])()
             };
-            if (role === 'admin') {
-                updateData.role = 'admin';
+            if (role === 'admin' || role === 'super admin') {
+                updateData.role = role;
             }
             await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["setDoc"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["doc"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], 'users', user.uid), updateData, {
                 merge: true
@@ -276,21 +308,10 @@ async function signInWithGoogle(role = 'user') {
             error: null
         };
     } catch (error) {
-        console.error('Google sign-in error:', error);
-        // Handle specific error cases
-        let errorMessage = error.message || 'An error occurred during Google sign-in';
-        if (error.code === 'auth/popup-closed-by-user') {
-            errorMessage = 'Sign-in popup was closed. Please try again.';
-        } else if (error.code === 'auth/popup-blocked') {
-            errorMessage = 'Popup was blocked by your browser. Please allow popups for this site and try again.';
-        } else if (error.code === 'auth/cancelled-popup-request') {
-            errorMessage = 'Sign-in was cancelled. Please try again.';
-        } else if (error.code === 'auth/account-exists-with-different-credential') {
-            errorMessage = 'An account already exists with this email. Please sign in with your existing method.';
-        }
+        console.error('Google redirect error:', error);
         return {
             user: null,
-            error: errorMessage
+            error: error.message || 'An error occurred during Google sign-in'
         };
     }
 }
@@ -356,6 +377,26 @@ function AuthProvider({ children }) {
     const [userData, setUserData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        // Handle Google redirect result if present
+        const handleRedirect = async ()=>{
+            try {
+                const { user: redirectUser } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$auth$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleGoogleRedirect"])();
+                if (redirectUser) {
+                    // Redirect user based on role after a brief delay to allow state update
+                    setTimeout(async ()=>{
+                        const data = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$auth$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getUserData"])(redirectUser.uid);
+                        if (data?.role === 'admin' || data?.role === 'super admin') {
+                            window.location.href = '/admin/dashboard';
+                        } else {
+                            window.location.href = '/dashboard';
+                        }
+                    }, 500);
+                }
+            } catch (error) {
+                console.error("Error handling Google redirect:", error);
+            }
+        };
+        handleRedirect();
         const unsubscribe = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$auth$40$1$2e$8$2e$0_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$auth$2f$dist$2f$node$2d$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["onAuthStateChanged"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["auth"], async (firebaseUser)=>{
             setUser(firebaseUser);
             if (firebaseUser) {
@@ -378,7 +419,7 @@ function AuthProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/contexts/AuthContext.tsx",
-        lineNumber: 44,
+        lineNumber: 65,
         columnNumber: 5
     }, this);
 }

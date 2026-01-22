@@ -100,32 +100,11 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
   const handleGoogleAuth = async () => {
     setLoading(true)
     try {
-      const { user, error } = await signInWithGoogle("user")
-      if (error) {
-        toast({
-          title: "Sign-in Error",
-          description: error,
-          variant: "destructive",
-        })
-        setLoading(false)
-        return
-      }
-      
-      if (user) {
-        // Check user role and redirect accordingly
-        const role = await getUserRole(user.uid)
-        toast({
-          title: "Success",
-          description: "Signed in with Google successfully!",
-        })
-        onOpenChange(false)
-        if (role === "admin") {
-          router.push("/admin/dashboard")
-        } else {
-          router.push("/dashboard")
-        }
-        router.refresh()
-      }
+      // signInWithGoogle now uses redirect, so the page will reload
+      // The redirect result will be handled by AuthContext
+      await signInWithGoogle("user")
+      // Note: User will be redirected to Google, then back to the app
+      // The AuthContext will handle the redirect result and navigation
     } catch (error: any) {
       console.error("Google auth error:", error)
       toast({
@@ -133,7 +112,6 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
         description: error.message || "An unexpected error occurred. Please try again.",
         variant: "destructive",
       })
-    } finally {
       setLoading(false)
     }
   }

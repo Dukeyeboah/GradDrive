@@ -4,6 +4,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   signOut,
   User,
@@ -90,14 +92,47 @@ export async function signUpEmailPassword(
 }
 
 /**
- * Sign in with Google
+ * Sign in with Google using redirect (avoids COOP issues)
  */
 export async function signInWithGoogle(
   role: 'user' | 'admin' | 'super admin' = 'user'
 ) {
   try {
-    const result = await signInWithPopup(auth, googleProvider);
+    // Store role in sessionStorage for use after redirect
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('googleAuthRole', role);
+    }
+    // Use redirect instead of popup to avoid COOP issues
+    await signInWithRedirect(auth, googleProvider);
+    // Note: The actual result will be handled by getRedirectResult in AuthContext
+    return { user: null, error: null };
+  } catch (error: any) {
+    console.error('Google sign-in error:', error);
+    return { user: null, error: error.message || 'An error occurred during Google sign-in' };
+  }
+}
+
+/**
+ * Handle Google redirect result and create/update user document
+ */
+export async function handleGoogleRedirect() {
+  try {
+    const result = await getRedirectResult(auth);
+    if (!result) {
+      return { user: null, error: null };
+    }
+
     const user = result.user;
+    
+    // Get role from sessionStorage (stored before redirect)
+    let role: 'user' | 'admin' | 'super admin' = 'user';
+    if (typeof window !== 'undefined') {
+      const storedRole = sessionStorage.getItem('googleAuthRole');
+      if (storedRole === 'admin' || storedRole === 'super admin') {
+        role = storedRole;
+      }
+      sessionStorage.removeItem('googleAuthRole');
+    }
 
     // Check if user document exists
     const userDoc = await getDoc(doc(db, 'users', user.uid));
@@ -117,33 +152,16 @@ export async function signInWithGoogle(
     } else {
       // Update last login and role if needed
       const updateData: any = { updatedAt: serverTimestamp() };
-      if (role === 'admin') {
-        updateData.role = 'admin';
+      if (role === 'admin' || role === 'super admin') {
+        updateData.role = role;
       }
       await setDoc(doc(db, 'users', user.uid), updateData, { merge: true });
     }
 
     return { user, error: null };
   } catch (error: any) {
-    console.error('Google sign-in error:', error);
-
-    // Handle specific error cases
-    let errorMessage =
-      error.message || 'An error occurred during Google sign-in';
-
-    if (error.code === 'auth/popup-closed-by-user') {
-      errorMessage = 'Sign-in popup was closed. Please try again.';
-    } else if (error.code === 'auth/popup-blocked') {
-      errorMessage =
-        'Popup was blocked by your browser. Please allow popups for this site and try again.';
-    } else if (error.code === 'auth/cancelled-popup-request') {
-      errorMessage = 'Sign-in was cancelled. Please try again.';
-    } else if (error.code === 'auth/account-exists-with-different-credential') {
-      errorMessage =
-        'An account already exists with this email. Please sign in with your existing method.';
-    }
-
-    return { user: null, error: errorMessage };
+    console.error('Google redirect error:', error);
+    return { user: null, error: error.message || 'An error occurred during Google sign-in' };
   }
 }
 

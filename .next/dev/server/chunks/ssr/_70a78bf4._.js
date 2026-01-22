@@ -596,7 +596,7 @@ function AdminPostersPage() {
             }
             console.log('✅ Role check passed - User is admin');
             console.log('=========================');
-            // Upload image to Firebase Storage
+            // Upload high-res PNG image to Firebase Storage (posters/ folder)
             const { url, error: uploadError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$storage$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["uploadImage"])(imageFile, 'posters');
             if (uploadError || !url) {
                 toast({
@@ -607,7 +607,37 @@ function AdminPostersPage() {
                 setUploading(false);
                 return;
             }
-            // Save poster data to Firestore (remove undefined values)
+            // Extract filename from uploaded URL to find corresponding JPG file in same folder
+            // PNG files have format: {timestamp}_{originalFilename}.png
+            // JPG files have format: {originalFilename}.jpg (no timestamp prefix)
+            // So we need to remove the timestamp prefix when looking for JPG
+            let displayImageUrl = null;
+            try {
+                const urlMatch = url.match(/\/o\/posters%2F([^?]+)/);
+                if (urlMatch) {
+                    const highResFilename = decodeURIComponent(urlMatch[1]);
+                    // Remove timestamp prefix (format: {timestamp}_{filename}.png)
+                    // Pattern: starts with digits, followed by underscore
+                    const filenameWithoutPrefix = highResFilename.replace(/^\d+_/, '');
+                    // Convert PNG to JPG - remove timestamp prefix, change extension
+                    const jpgFilename = filenameWithoutPrefix.replace(/\.(png|PNG)$/, '.jpg');
+                    const jpgPath = `posters/${jpgFilename}`;
+                    console.log(`🔍 Looking for JPG: ${jpgPath} (from PNG: ${highResFilename})`);
+                    // Try to get the download URL for the JPG file
+                    const { url: jpgUrl, error: jpgError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$storage$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getFileURL"])(jpgPath);
+                    if (jpgUrl && !jpgError) {
+                        displayImageUrl = jpgUrl;
+                        console.log('✅ Found JPG file for display:', formData.name);
+                    } else {
+                        console.warn('⚠️ JPG file not found (will use PNG for display):', jpgPath);
+                    }
+                }
+            } catch (error) {
+                console.warn('⚠️ Could not get JPG URL:', error);
+            }
+            // Save poster data to Firestore
+            // imageUrl = PNG (for download)
+            // lowResImageUrl = JPG (for display) - both in posters/ folder
             const posterData = {
                 name: formData.name,
                 description: formData.description,
@@ -616,6 +646,10 @@ function AdminPostersPage() {
                 uploadedBy: user.uid,
                 uploadedByName: userData.displayName || user.email || 'Unknown'
             };
+            // Add JPG URL if found (for display)
+            if (displayImageUrl) {
+                posterData.lowResImageUrl = displayImageUrl;
+            }
             // Only include optional fields if they have values
             if (formData.category && formData.category.trim()) {
                 posterData.category = formData.category.trim();
@@ -661,6 +695,7 @@ function AdminPostersPage() {
         try {
             let imageUrl = selectedPoster.imageUrl;
             // Upload new image if one was selected
+            let lowResUrl = undefined;
             if (imageFile) {
                 const { url, error: uploadError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$storage$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["uploadImage"])(imageFile, 'posters');
                 if (uploadError || !url) {
@@ -673,14 +708,41 @@ function AdminPostersPage() {
                     return;
                 }
                 imageUrl = url;
+                // Try to get corresponding JPG URL (same folder, different extension)
+                // PNG files have timestamp prefix, JPG files don't
+                try {
+                    const urlMatch = url.match(/\/o\/posters%2F([^?]+)/);
+                    if (urlMatch) {
+                        const highResFilename = decodeURIComponent(urlMatch[1]);
+                        // Remove timestamp prefix (format: {timestamp}_{filename}.png)
+                        const filenameWithoutPrefix = highResFilename.replace(/^\d+_/, '');
+                        const jpgFilename = filenameWithoutPrefix.replace(/\.(png|PNG)$/, '.jpg');
+                        const jpgPath = `posters/${jpgFilename}`;
+                        const { url: jpgUrlResult } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$storage$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getFileURL"])(jpgPath);
+                        if (jpgUrlResult) {
+                            lowResUrl = jpgUrlResult;
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Could not get JPG URL for edit:', error);
+                }
             }
-            // Update poster in Firestore (remove undefined values)
+            // Update poster in Firestore
             const updateData = {
                 name: formData.name,
                 description: formData.description,
                 tags: formData.tags.split(',').map((t)=>t.trim()).filter(Boolean),
                 imageUrl
             };
+            // Add JPG URL if found, or remove it if image was changed but JPG not found
+            if (imageFile) {
+                if (lowResUrl) {
+                    updateData.lowResImageUrl = lowResUrl;
+                } else {
+                    // Remove lowResImageUrl if new image uploaded but JPG not found
+                    updateData.lowResImageUrl = null;
+                }
+            }
             // Only include optional fields if they have values
             if (formData.category && formData.category.trim()) {
                 updateData.category = formData.category.trim();
@@ -750,7 +812,8 @@ function AdminPostersPage() {
             shopifyLink: poster.shopifyLink || '',
             imageUrl: poster.imageUrl || ''
         });
-        setImagePreview(poster.imageUrl || null);
+        // Use low-res for preview if available, otherwise use high-res
+        setImagePreview(poster.lowResImageUrl || poster.imageUrl || null);
         setImageFile(null);
         setEditModalOpen(true);
     };
@@ -817,12 +880,12 @@ function AdminPostersPage() {
                 children: "Loading posters..."
             }, void 0, false, {
                 fileName: "[project]/app/admin/posters/page.tsx",
-                lineNumber: 424,
+                lineNumber: 493,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/admin/posters/page.tsx",
-            lineNumber: 423,
+            lineNumber: 492,
             columnNumber: 7
         }, this);
     }
@@ -840,7 +903,7 @@ function AdminPostersPage() {
                                 children: "Poster Management"
                             }, void 0, false, {
                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                lineNumber: 433,
+                                lineNumber: 502,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -848,13 +911,13 @@ function AdminPostersPage() {
                                 children: "Upload and manage digital posters"
                             }, void 0, false, {
                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                lineNumber: 434,
+                                lineNumber: 503,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/admin/posters/page.tsx",
-                        lineNumber: 432,
+                        lineNumber: 501,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -865,20 +928,20 @@ function AdminPostersPage() {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                lineNumber: 439,
+                                lineNumber: 508,
                                 columnNumber: 11
                             }, this),
                             "Upload Poster"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/admin/posters/page.tsx",
-                        lineNumber: 438,
+                        lineNumber: 507,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/admin/posters/page.tsx",
-                lineNumber: 431,
+                lineNumber: 500,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -889,12 +952,22 @@ function AdminPostersPage() {
                             className: "w-full h-full relative overflow-hidden",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                    src: poster.imageUrl,
+                                    src: poster.lowResImageUrl || poster.imageUrl,
                                     alt: poster.name,
-                                    className: "w-full h-full object-cover"
+                                    className: "w-full h-full object-cover",
+                                    loading: "lazy",
+                                    onError: (e)=>{
+                                        // Fallback to high-res if low-res fails
+                                        if (poster.lowResImageUrl && poster.imageUrl) {
+                                            const img = e.currentTarget;
+                                            if (img.src === poster.lowResImageUrl) {
+                                                img.src = poster.imageUrl;
+                                            }
+                                        }
+                                    }
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 452,
+                                    lineNumber: 521,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -904,12 +977,12 @@ function AdminPostersPage() {
                                         children: poster.name
                                     }, void 0, false, {
                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                        lineNumber: 459,
+                                        lineNumber: 538,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 458,
+                                    lineNumber: 537,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -926,17 +999,17 @@ function AdminPostersPage() {
                                                         className: "h-3 w-3"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                                        lineNumber: 472,
+                                                        lineNumber: 551,
                                                         columnNumber: 25
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 467,
+                                                    lineNumber: 546,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                                lineNumber: 466,
+                                                lineNumber: 545,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuContent"], {
@@ -949,14 +1022,14 @@ function AdminPostersPage() {
                                                                 className: "h-4 w-4 mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                                                lineNumber: 477,
+                                                                lineNumber: 556,
                                                                 columnNumber: 25
                                                             }, this),
                                                             "View Details"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                                        lineNumber: 476,
+                                                        lineNumber: 555,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -966,37 +1039,37 @@ function AdminPostersPage() {
                                                                 className: "h-4 w-4 mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                                                lineNumber: 481,
+                                                                lineNumber: 560,
                                                                 columnNumber: 25
                                                             }, this),
                                                             "Edit"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                                        lineNumber: 480,
+                                                        lineNumber: 559,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                                lineNumber: 475,
+                                                lineNumber: 554,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                        lineNumber: 465,
+                                        lineNumber: 544,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 464,
+                                    lineNumber: 543,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/admin/posters/page.tsx",
-                            lineNumber: 451,
+                            lineNumber: 520,
                             columnNumber: 15
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "w-full h-full relative bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center",
@@ -1005,7 +1078,7 @@ function AdminPostersPage() {
                                     className: "h-16 w-16 text-white/50"
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 490,
+                                    lineNumber: 569,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1015,12 +1088,12 @@ function AdminPostersPage() {
                                         children: poster.name
                                     }, void 0, false, {
                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                        lineNumber: 493,
+                                        lineNumber: 572,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 492,
+                                    lineNumber: 571,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1037,17 +1110,17 @@ function AdminPostersPage() {
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                                        lineNumber: 506,
+                                                        lineNumber: 585,
                                                         columnNumber: 25
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 501,
+                                                    lineNumber: 580,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                                lineNumber: 500,
+                                                lineNumber: 579,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuContent"], {
@@ -1060,14 +1133,14 @@ function AdminPostersPage() {
                                                                 className: "h-4 w-4 mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                                                lineNumber: 511,
+                                                                lineNumber: 590,
                                                                 columnNumber: 25
                                                             }, this),
                                                             "View Details"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                                        lineNumber: 510,
+                                                        lineNumber: 589,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -1077,14 +1150,14 @@ function AdminPostersPage() {
                                                                 className: "h-4 w-4 mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                                                lineNumber: 515,
+                                                                lineNumber: 594,
                                                                 columnNumber: 25
                                                             }, this),
                                                             "Edit"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                                        lineNumber: 514,
+                                                        lineNumber: 593,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -1095,47 +1168,47 @@ function AdminPostersPage() {
                                                                 className: "h-4 w-4 mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                                                lineNumber: 522,
+                                                                lineNumber: 601,
                                                                 columnNumber: 25
                                                             }, this),
                                                             "Delete"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                                        lineNumber: 518,
+                                                        lineNumber: 597,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/admin/posters/page.tsx",
-                                                lineNumber: 509,
+                                                lineNumber: 588,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                        lineNumber: 499,
+                                        lineNumber: 578,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 498,
+                                    lineNumber: 577,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/admin/posters/page.tsx",
-                            lineNumber: 489,
+                            lineNumber: 568,
                             columnNumber: 15
                         }, this)
                     }, poster.id, false, {
                         fileName: "[project]/app/admin/posters/page.tsx",
-                        lineNumber: 446,
+                        lineNumber: 515,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/admin/posters/page.tsx",
-                lineNumber: 444,
+                lineNumber: 513,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -1150,20 +1223,20 @@ function AdminPostersPage() {
                                     children: "Upload New Poster"
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 538,
+                                    lineNumber: 617,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Add a new poster to the library"
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 539,
+                                    lineNumber: 618,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/admin/posters/page.tsx",
-                            lineNumber: 537,
+                            lineNumber: 616,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1177,7 +1250,7 @@ function AdminPostersPage() {
                                             children: "Poster Name"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 545,
+                                            lineNumber: 624,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1191,13 +1264,13 @@ function AdminPostersPage() {
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 546,
+                                            lineNumber: 625,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 544,
+                                    lineNumber: 623,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1208,7 +1281,7 @@ function AdminPostersPage() {
                                             children: "Description"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 557,
+                                            lineNumber: 636,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -1222,13 +1295,13 @@ function AdminPostersPage() {
                                             rows: 3
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 558,
+                                            lineNumber: 637,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 556,
+                                    lineNumber: 635,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1239,7 +1312,7 @@ function AdminPostersPage() {
                                             children: "Category (optional)"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 569,
+                                            lineNumber: 648,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1252,13 +1325,13 @@ function AdminPostersPage() {
                                             placeholder: "e.g., Graduation, Celebration"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 570,
+                                            lineNumber: 649,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 568,
+                                    lineNumber: 647,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1269,7 +1342,7 @@ function AdminPostersPage() {
                                             children: "Tags (comma-separated, optional)"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 580,
+                                            lineNumber: 659,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1282,13 +1355,13 @@ function AdminPostersPage() {
                                             placeholder: "Graduation, Celebration, Kente"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 581,
+                                            lineNumber: 660,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 579,
+                                    lineNumber: 658,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1299,7 +1372,7 @@ function AdminPostersPage() {
                                             children: "Shopify Link (optional)"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 591,
+                                            lineNumber: 670,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1313,13 +1386,13 @@ function AdminPostersPage() {
                                             placeholder: "https://your-shop.myshopify.com/products/..."
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 592,
+                                            lineNumber: 671,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 590,
+                                    lineNumber: 669,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1330,7 +1403,7 @@ function AdminPostersPage() {
                                             children: "Poster Image"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 603,
+                                            lineNumber: 682,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1347,7 +1420,7 @@ function AdminPostersPage() {
                                                                     className: "h-5 w-5 text-muted-foreground"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                                    lineNumber: 607,
+                                                                    lineNumber: 686,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1355,13 +1428,13 @@ function AdminPostersPage() {
                                                                     children: "Click to upload image"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                                    lineNumber: 608,
+                                                                    lineNumber: 687,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                                            lineNumber: 606,
+                                                            lineNumber: 685,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1372,13 +1445,13 @@ function AdminPostersPage() {
                                                             onChange: handleImageChange
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                                            lineNumber: 612,
+                                                            lineNumber: 691,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 605,
+                                                    lineNumber: 684,
                                                     columnNumber: 17
                                                 }, this),
                                                 imagePreview && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1389,24 +1462,24 @@ function AdminPostersPage() {
                                                         className: "w-full h-48 object-cover rounded-lg border border-border"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                                        lineNumber: 622,
+                                                        lineNumber: 701,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 621,
+                                                    lineNumber: 700,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 604,
+                                            lineNumber: 683,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 602,
+                                    lineNumber: 681,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1422,7 +1495,7 @@ function AdminPostersPage() {
                                             children: "Cancel"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 632,
+                                            lineNumber: 711,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1431,30 +1504,30 @@ function AdminPostersPage() {
                                             children: uploading ? 'Uploading...' : 'Upload Poster'
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 642,
+                                            lineNumber: 721,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 631,
+                                    lineNumber: 710,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/admin/posters/page.tsx",
-                            lineNumber: 543,
+                            lineNumber: 622,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/admin/posters/page.tsx",
-                    lineNumber: 536,
+                    lineNumber: 615,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/admin/posters/page.tsx",
-                lineNumber: 535,
+                lineNumber: 614,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -1469,20 +1542,20 @@ function AdminPostersPage() {
                                     children: "Poster Details"
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 657,
+                                    lineNumber: 736,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Complete information about the poster"
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 658,
+                                    lineNumber: 737,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/admin/posters/page.tsx",
-                            lineNumber: 656,
+                            lineNumber: 735,
                             columnNumber: 11
                         }, this),
                         selectedPoster && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1491,17 +1564,26 @@ function AdminPostersPage() {
                                 selectedPoster.imageUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "w-full h-64 rounded-lg overflow-hidden",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                        src: selectedPoster.imageUrl,
+                                        src: selectedPoster.lowResImageUrl || selectedPoster.imageUrl,
                                         alt: selectedPoster.name,
-                                        className: "w-full h-full object-cover"
+                                        className: "w-full h-full object-cover",
+                                        onError: (e)=>{
+                                            // Fallback to high-res if low-res fails
+                                            if (selectedPoster.lowResImageUrl && selectedPoster.imageUrl) {
+                                                const img = e.currentTarget;
+                                                if (img.src === selectedPoster.lowResImageUrl) {
+                                                    img.src = selectedPoster.imageUrl;
+                                                }
+                                            }
+                                        }
                                     }, void 0, false, {
                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                        lineNumber: 666,
+                                        lineNumber: 745,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 665,
+                                    lineNumber: 744,
                                     columnNumber: 17
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex h-64 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-pink-600",
@@ -1509,12 +1591,12 @@ function AdminPostersPage() {
                                         className: "h-16 w-16 text-white/50"
                                     }, void 0, false, {
                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                        lineNumber: 674,
+                                        lineNumber: 762,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 673,
+                                    lineNumber: 761,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1527,7 +1609,7 @@ function AdminPostersPage() {
                                                     children: "Name"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 679,
+                                                    lineNumber: 767,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1535,13 +1617,13 @@ function AdminPostersPage() {
                                                     children: selectedPoster.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 680,
+                                                    lineNumber: 768,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 678,
+                                            lineNumber: 766,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1551,7 +1633,7 @@ function AdminPostersPage() {
                                                     children: "Description"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 685,
+                                                    lineNumber: 773,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1559,13 +1641,13 @@ function AdminPostersPage() {
                                                     children: selectedPoster.description
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 686,
+                                                    lineNumber: 774,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 684,
+                                            lineNumber: 772,
                                             columnNumber: 17
                                         }, this),
                                         selectedPoster.category && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1575,7 +1657,7 @@ function AdminPostersPage() {
                                                     children: "Category"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 692,
+                                                    lineNumber: 780,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1583,13 +1665,13 @@ function AdminPostersPage() {
                                                     children: selectedPoster.category
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 693,
+                                                    lineNumber: 781,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 691,
+                                            lineNumber: 779,
                                             columnNumber: 19
                                         }, this),
                                         selectedPoster.tags && selectedPoster.tags.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1599,7 +1681,7 @@ function AdminPostersPage() {
                                                     children: "Tags"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 700,
+                                                    lineNumber: 788,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1609,18 +1691,18 @@ function AdminPostersPage() {
                                                             children: tag
                                                         }, idx, false, {
                                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                                            lineNumber: 703,
+                                                            lineNumber: 791,
                                                             columnNumber: 25
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 701,
+                                                    lineNumber: 789,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 699,
+                                            lineNumber: 787,
                                             columnNumber: 19
                                         }, this),
                                         selectedPoster.shopifyLink && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1630,7 +1712,7 @@ function AdminPostersPage() {
                                                     children: "Shopify Link"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 715,
+                                                    lineNumber: 803,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -1641,13 +1723,13 @@ function AdminPostersPage() {
                                                     children: selectedPoster.shopifyLink
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 716,
+                                                    lineNumber: 804,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 714,
+                                            lineNumber: 802,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1660,7 +1742,7 @@ function AdminPostersPage() {
                                                             children: "Downloads"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                                            lineNumber: 728,
+                                                            lineNumber: 816,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1668,13 +1750,13 @@ function AdminPostersPage() {
                                                             children: selectedPoster.downloads || 0
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                                            lineNumber: 729,
+                                                            lineNumber: 817,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 727,
+                                                    lineNumber: 815,
                                                     columnNumber: 19
                                                 }, this),
                                                 selectedPoster.uploadedByName && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1684,7 +1766,7 @@ function AdminPostersPage() {
                                                             children: "Uploaded By"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                                            lineNumber: 735,
+                                                            lineNumber: 823,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1692,25 +1774,25 @@ function AdminPostersPage() {
                                                             children: selectedPoster.uploadedByName
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                                            lineNumber: 736,
+                                                            lineNumber: 824,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 734,
+                                                    lineNumber: 822,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 726,
+                                            lineNumber: 814,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 677,
+                                    lineNumber: 765,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1721,29 +1803,29 @@ function AdminPostersPage() {
                                         children: "Close"
                                     }, void 0, false, {
                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                        lineNumber: 744,
+                                        lineNumber: 832,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 743,
+                                    lineNumber: 831,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/admin/posters/page.tsx",
-                            lineNumber: 663,
+                            lineNumber: 742,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/admin/posters/page.tsx",
-                    lineNumber: 655,
+                    lineNumber: 734,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/admin/posters/page.tsx",
-                lineNumber: 654,
+                lineNumber: 733,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -1758,20 +1840,20 @@ function AdminPostersPage() {
                                     children: "Edit Poster"
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 760,
+                                    lineNumber: 848,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Update poster information"
                                 }, void 0, false, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 761,
+                                    lineNumber: 849,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/admin/posters/page.tsx",
-                            lineNumber: 759,
+                            lineNumber: 847,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1785,7 +1867,7 @@ function AdminPostersPage() {
                                             children: "Poster Name"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 765,
+                                            lineNumber: 853,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1798,13 +1880,13 @@ function AdminPostersPage() {
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 766,
+                                            lineNumber: 854,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 764,
+                                    lineNumber: 852,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1815,7 +1897,7 @@ function AdminPostersPage() {
                                             children: "Description"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 776,
+                                            lineNumber: 864,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -1828,13 +1910,13 @@ function AdminPostersPage() {
                                             rows: 3
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 777,
+                                            lineNumber: 865,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 775,
+                                    lineNumber: 863,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1845,7 +1927,7 @@ function AdminPostersPage() {
                                             children: "Category (optional)"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 787,
+                                            lineNumber: 875,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1857,13 +1939,13 @@ function AdminPostersPage() {
                                                 })
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 788,
+                                            lineNumber: 876,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 786,
+                                    lineNumber: 874,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1874,7 +1956,7 @@ function AdminPostersPage() {
                                             children: "Tags (comma-separated, optional)"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 797,
+                                            lineNumber: 885,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1886,13 +1968,13 @@ function AdminPostersPage() {
                                                 })
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 800,
+                                            lineNumber: 888,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 796,
+                                    lineNumber: 884,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1903,7 +1985,7 @@ function AdminPostersPage() {
                                             children: "Shopify Link (optional)"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 809,
+                                            lineNumber: 897,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1916,13 +1998,13 @@ function AdminPostersPage() {
                                                 })
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 810,
+                                            lineNumber: 898,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 808,
+                                    lineNumber: 896,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1933,7 +2015,7 @@ function AdminPostersPage() {
                                             children: "Update Poster Image (optional)"
                                         }, void 0, false, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 820,
+                                            lineNumber: 908,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1950,7 +2032,7 @@ function AdminPostersPage() {
                                                                     className: "h-5 w-5 text-muted-foreground"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                                    lineNumber: 824,
+                                                                    lineNumber: 912,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1958,13 +2040,13 @@ function AdminPostersPage() {
                                                                     children: "Click to upload new image"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                                    lineNumber: 825,
+                                                                    lineNumber: 913,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                                            lineNumber: 823,
+                                                            lineNumber: 911,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1975,13 +2057,13 @@ function AdminPostersPage() {
                                                             onChange: handleImageChange
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                                            lineNumber: 829,
+                                                            lineNumber: 917,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 822,
+                                                    lineNumber: 910,
                                                     columnNumber: 17
                                                 }, this),
                                                 imagePreview && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1992,24 +2074,24 @@ function AdminPostersPage() {
                                                         className: "w-full h-48 object-cover rounded-lg border border-border"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/admin/posters/page.tsx",
-                                                        lineNumber: 839,
+                                                        lineNumber: 927,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 838,
+                                                    lineNumber: 926,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 821,
+                                            lineNumber: 909,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 819,
+                                    lineNumber: 907,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2028,14 +2110,14 @@ function AdminPostersPage() {
                                                     className: "h-4 w-4 mr-2"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 858,
+                                                    lineNumber: 946,
                                                     columnNumber: 17
                                                 }, this),
                                                 "Delete Poster"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 849,
+                                            lineNumber: 937,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2052,7 +2134,7 @@ function AdminPostersPage() {
                                                     children: "Cancel"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 862,
+                                                    lineNumber: 950,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -2061,42 +2143,42 @@ function AdminPostersPage() {
                                                     children: uploading ? 'Saving...' : 'Save Changes'
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                                    lineNumber: 873,
+                                                    lineNumber: 961,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/admin/posters/page.tsx",
-                                            lineNumber: 861,
+                                            lineNumber: 949,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/admin/posters/page.tsx",
-                                    lineNumber: 848,
+                                    lineNumber: 936,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/admin/posters/page.tsx",
-                            lineNumber: 763,
+                            lineNumber: 851,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/admin/posters/page.tsx",
-                    lineNumber: 758,
+                    lineNumber: 846,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/admin/posters/page.tsx",
-                lineNumber: 757,
+                lineNumber: 845,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/admin/posters/page.tsx",
-        lineNumber: 430,
+        lineNumber: 499,
         columnNumber: 5
     }, this);
 }

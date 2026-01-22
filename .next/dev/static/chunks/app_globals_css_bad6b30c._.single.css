@@ -1114,6 +1114,14 @@
     max-height: calc(var(--spacing) * 96);
   }
 
+  .max-h-\[60vh\] {
+    max-height: 60vh;
+  }
+
+  .max-h-\[85vh\] {
+    max-height: 85vh;
+  }
+
   .max-h-\[90vh\] {
     max-height: 90vh;
   }
@@ -4754,6 +4762,12 @@
   @media (min-width: 40rem) {
     .sm\:max-w-2xl {
       max-width: var(--container-2xl);
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .sm\:max-w-3xl {
+      max-width: var(--container-3xl);
     }
   }
 

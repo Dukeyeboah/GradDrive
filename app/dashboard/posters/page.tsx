@@ -194,7 +194,7 @@ export default function PostersPage() {
 
       {/* Poster Detail Modal */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-3xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl">{selectedPoster?.name}</DialogTitle>
             {selectedPoster?.description && (
@@ -205,13 +205,13 @@ export default function PostersPage() {
           </DialogHeader>
           {selectedPoster && (
             <div className="space-y-4">
-              {/* Large Poster Image */}
+              {/* Poster Image - Constrained to fit viewport */}
               {selectedPoster.imageUrl && (
-                <div className="w-full relative bg-muted rounded-lg overflow-hidden">
+                <div className="w-full relative bg-muted rounded-lg overflow-hidden flex items-center justify-center" style={{ maxHeight: '60vh' }}>
                   <img
                     src={selectedPoster.lowResImageUrl || selectedPoster.imageUrl}
                     alt={selectedPoster.name}
-                    className="w-full h-auto object-contain"
+                    className="w-full h-auto object-contain max-h-[60vh]"
                     loading="eager"
                     onError={(e) => {
                       // Fallback to high-res if low-res fails
@@ -225,23 +225,9 @@ export default function PostersPage() {
                   />
                 </div>
               )}
-              
-              {/* Tags */}
-              {selectedPoster.tags && selectedPoster.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {selectedPoster.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="px-2 py-1 bg-muted text-muted-foreground text-sm rounded-md"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
 
               {/* Download Button */}
-              <div className="flex justify-center pt-4">
+              <div className="flex justify-center pt-2">
                 <Button
                   size="lg"
                   className="gap-2"
