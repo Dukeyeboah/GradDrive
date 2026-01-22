@@ -859,6 +859,10 @@
     margin-block: calc(var(--spacing) * 1);
   }
 
+  .my-2 {
+    margin-block: calc(var(--spacing) * 2);
+  }
+
   .-mt-4 {
     margin-top: calc(var(--spacing) * -4);
   }

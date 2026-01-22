@@ -12,7 +12,10 @@ import {
   Camera,
   Award,
   Gift,
-  Ticket,
+  FileImage,
+  Users,
+  History,
+  LogOut,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -25,6 +28,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useAuth } from '@/contexts/AuthContext';
+import { signOutUser } from '@/lib/firebase/auth';
 
 export function UserNav() {
   const isMobile = useIsMobile();
@@ -84,40 +88,98 @@ export function UserNav() {
               <SheetContent side='left' className='w-64'>
                 <div className='flex flex-col gap-2 mt-8'>
                   <Link href='/dashboard'>
-                    <Button variant='ghost' className='w-full justify-start'>
+                    <Button
+                      variant='ghost'
+                      className='w-full justify-start gap-2'
+                    >
+                      <GraduationCap className='h-4 w-4' />
                       Dashboard
                     </Button>
                   </Link>
-                  <Link href='/dashboard/grad-drive'>
-                    <Button variant='ghost' className='w-full justify-start'>
-                      Digital Assets
+                  <Link href='/dashboard/photographers'>
+                    <Button
+                      variant='ghost'
+                      className='w-full justify-start gap-2'
+                    >
+                      <Camera className='h-4 w-4' />
+                      Book Photographer
                     </Button>
                   </Link>
                   <Link href='/dashboard/ebooks'>
-                    <Button variant='ghost' className='w-full justify-start'>
-                      E-books
+                    <Button
+                      variant='ghost'
+                      className='w-full justify-start gap-2'
+                    >
+                      <BookOpen className='h-4 w-4' />
+                      Life after grad E-books
                     </Button>
                   </Link>
-                  <Link href='/dashboard/photographers'>
-                    <Button variant='ghost' className='w-full justify-start'>
-                      Photographers
+                  <Link href='/dashboard/posters'>
+                    <Button
+                      variant='ghost'
+                      className='w-full justify-start gap-2'
+                    >
+                      <FileImage className='h-4 w-4' />
+                      Digital Posters & Artwork
+                    </Button>
+                  </Link>
+                  <Link href='/dashboard/cap-designs'>
+                    <Button
+                      variant='ghost'
+                      className='w-full justify-start gap-2'
+                    >
+                      <GraduationCap className='h-4 w-4' />
+                      Graduation Cap Designs
+                    </Button>
+                  </Link>
+                  <Link href='/dashboard/alum-club'>
+                    <Button
+                      variant='ghost'
+                      className='w-full justify-start gap-2'
+                    >
+                      <Users className='h-4 w-4' />
+                      HoS Alumni Club
+                    </Button>
+                  </Link>
+                  <Link href='/dashboard/kente-history'>
+                    <Button
+                      variant='ghost'
+                      className='w-full justify-start gap-2'
+                    >
+                      <History className='h-4 w-4' />
+                      Kente & Graduation History
                     </Button>
                   </Link>
                   <Link href='/dashboard/scholarship'>
-                    <Button variant='ghost' className='w-full justify-start'>
-                      Scholarship
+                    <Button
+                      variant='ghost'
+                      className='w-full justify-start gap-2'
+                    >
+                      <Award className='h-4 w-4' />
+                      Scholarships
                     </Button>
                   </Link>
-                  <Link href='/dashboard/discounts'>
-                    <Button variant='ghost' className='w-full justify-start'>
-                      Discounts
-                    </Button>
-                  </Link>
+                  <div className='border-t border-border my-2' />
                   <Link href='/dashboard/account'>
-                    <Button variant='ghost' className='w-full justify-start'>
+                    <Button
+                      variant='ghost'
+                      className='w-full justify-start gap-2'
+                    >
+                      <User className='h-4 w-4' />
                       Account
                     </Button>
                   </Link>
+                  <Button
+                    variant='ghost'
+                    className='w-full justify-start gap-2'
+                    onClick={async () => {
+                      await signOutUser();
+                      router.push('/');
+                    }}
+                  >
+                    <LogOut className='h-4 w-4' />
+                    Sign Out
+                  </Button>
                 </div>
               </SheetContent>
             </Sheet>
@@ -143,10 +205,12 @@ export function UserNav() {
                         const parent = e.currentTarget.parentElement;
                         if (parent) {
                           // Check if fallback already exists
-                          const existingFallback = parent.querySelector('.avatar-fallback');
+                          const existingFallback =
+                            parent.querySelector('.avatar-fallback');
                           if (!existingFallback) {
                             const fallback = document.createElement('div');
-                            fallback.className = 'avatar-fallback h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm absolute inset-0';
+                            fallback.className =
+                              'avatar-fallback h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm absolute inset-0';
                             fallback.textContent = getInitial();
                             parent.appendChild(fallback);
                           } else {
@@ -186,11 +250,11 @@ export function UserNav() {
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
-                  href='/dashboard/grad-drive'
+                  href='/dashboard/photographers'
                   className='flex items-center gap-2'
                 >
-                  <GraduationCap className='h-4 w-4' />
-                  Digital Assets
+                  <Camera className='h-4 w-4' />
+                  Book Photographer
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
@@ -199,16 +263,43 @@ export function UserNav() {
                   className='flex items-center gap-2'
                 >
                   <BookOpen className='h-4 w-4' />
-                  E-books
+                  Life after grad E-books
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
-                  href='/dashboard/photographers'
+                  href='/dashboard/posters'
                   className='flex items-center gap-2'
                 >
-                  <Camera className='h-4 w-4' />
-                  Photographers
+                  <FileImage className='h-4 w-4' />
+                  Digital Posters & Artwork
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href='/dashboard/cap-designs'
+                  className='flex items-center gap-2'
+                >
+                  <GraduationCap className='h-4 w-4' />
+                  Graduation Cap Designs
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href='/dashboard/alum-club'
+                  className='flex items-center gap-2'
+                >
+                  <Users className='h-4 w-4' />
+                  HoS Alumni Club
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href='/dashboard/kente-history'
+                  className='flex items-center gap-2'
+                >
+                  <History className='h-4 w-4' />
+                  Kente & Graduation History
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
@@ -217,25 +308,30 @@ export function UserNav() {
                   className='flex items-center gap-2'
                 >
                   <Award className='h-4 w-4' />
-                  Scholarship
+                  Scholarships
                 </Link>
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link
-                  href='/dashboard/discounts'
+                  href='/dashboard/account'
                   className='flex items-center gap-2'
                 >
-                  <Gift className='h-4 w-4' />
-                  Discounts
+                  <User className='h-4 w-4' />
+                  Account
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuLabel>Account</DropdownMenuLabel>
-              <DropdownMenuItem asChild>
-                <Link href='/dashboard/account'>Account</Link>
+              <DropdownMenuItem
+                onClick={async () => {
+                  await signOutUser();
+                  router.push('/');
+                }}
+                className='flex items-center gap-2'
+              >
+                <LogOut className='h-4 w-4' />
+                Sign Out
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Sign Out</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

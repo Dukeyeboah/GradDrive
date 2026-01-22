@@ -400,3 +400,108 @@ Import traces:
 [03:04:58.553] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769098110574}
 [03:05:26.762] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard/posters color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/posters","o":"http://localhost:3003/dashboard/posters","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769098138774}
 [03:07:49.928] Server  LOG      ✓ Compiled in 13.7s
+[03:08:58.944] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769098350919}
+[03:12:14.936] Server  LOG      ✓ Compiled in 3.3s
+[03:12:27.859] Server  LOG      ✓ Compiled in 1993ms
+[03:12:28.028] Browser ERROR   ./components/user-nav.tsx:32:10
+Ecmascript file had an error
+  30 | import { useAuth } from '@/contexts/AuthContext';
+  31 | import { signOutUser } from '@/lib/firebase/auth';
+> 32 | import { useRouter } from 'next/navigation';
+     |          ^^^^^^^^^
+  33 |
+  34 | export function UserNav() {
+  35 |   const isMobile = useIsMobile();
+
+the name `useRouter` is defined multiple times
+
+Import trace:
+  Server Component:
+    ./components/user-nav.tsx
+    ./app/dashboard/layout.tsx
+[03:12:49.272] Server  LOG      ✓ Compiled in 5.9s
+[03:12:49.381] Browser ERROR   ./components/user-nav.tsx:32:10
+Ecmascript file had an error
+  30 | import { useAuth } from '@/contexts/AuthContext';
+  31 | import { signOutUser } from '@/lib/firebase/auth';
+> 32 | import { useRouter } from 'next/navigation';
+     |          ^^^^^^^^^
+  33 |
+  34 | export function UserNav() {
+  35 |   const isMobile = useIsMobile();
+
+the name `useRouter` is defined multiple times
+
+Import trace:
+  Server Component:
+    ./components/user-nav.tsx
+    ./app/dashboard/layout.tsx
+[03:13:19.525] Server  LOG      ✓ Compiled in 1373ms
+[03:13:19.744] Browser ERROR   ./components/user-nav.tsx:32:10
+Ecmascript file had an error
+  30 | import { useAuth } from '@/contexts/AuthContext';
+  31 | import { signOutUser } from '@/lib/firebase/auth';
+> 32 | import { useRouter } from 'next/navigation';
+     |          ^^^^^^^^^
+  33 |
+  34 | export function UserNav() {
+  35 |   const isMobile = useIsMobile();
+
+the name `useRouter` is defined multiple times
+
+Import trace:
+  Server Component:
+    ./components/user-nav.tsx
+    ./app/dashboard/layout.tsx
+[03:13:32.538] Browser LOG     TSS: Domain is in allow list, skipping TSS setup.
+[03:13:35.312] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <MenuProvider scope={{Menu:[...], ...}} open={false} onOpenChange={function useCallbackRef.useMemo} content={null} ...>
+      <MenuProvider scope={{Menu:[...], ...}} onClose={function Menu.useCallback} isUsingKeyboardRef={{current:false}} ...>
+        <DropdownMenuTrigger asChild={true}>
+          <DropdownMenuTrigger data-slot="dropdown-m..." asChild={true}>
+            <MenuAnchor asChild={true} __scopeMenu={{Menu:[...], ...}}>
+              <PopperAnchor __scopePopper={{Menu:[...], ...}} asChild={true} ref={null}>
+                <Primitive.div asChild={true} ref={function}>
+                  <Slot ref={function}>
+                    <SlotClone ref={function}>
+                      <Primitive.button type="button" id="radix-_R_a..." aria-haspopup="menu" aria-expanded={false} ...>
+                        <Slot type="button" id="radix-_R_a..." aria-haspopup="menu" aria-expanded={false} ...>
+                          <SlotClone type="button" id="radix-_R_a..." aria-haspopup="menu" aria-expanded={false} ...>
+                            <Button variant="ghost" size="icon" className="rounded-fu..." type="button" ...>
+                              <button
+                                data-slot="dropdown-menu-trigger"
+                                className={"inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm f..."}
+                                type="button"
++                               id="radix-_R_ad5rlb_"
+-                               id="radix-_R_19kndlb_"
+                                aria-haspopup="menu"
+                                aria-expanded={false}
+                                aria-controls={undefined}
+                                data-state="closed"
+                                data-disabled={undefined}
+                                disabled={false}
+                                onPointerDown={function handleEvent}
+                                onKeyDown={function handleEvent}
+                                ref={function}
+                              >
+        ...
+
+[03:13:37.288] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:13:37.330] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[03:13:37.332] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1769098627950}
+[03:14:06.103] Server  LOG      ✓ Compiled in 3.3s
+[03:18:42.945] Server  LOG      ✓ Compiled in 11.5s
+[03:20:38.702] Server  LOG      ✓ Compiled in 5.7s
+[03:22:07.632] Server  LOG      ✓ Compiled in 7.4s
