@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Chrome, Loader2 } from 'lucide-react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Chrome, Loader2, AlertCircle } from 'lucide-react'
 import { ADMIN_PASSKEY, SUPER_ADMIN_PASSKEY } from '@/lib/config/admin'
 import { signInEmailPassword, signUpEmailPassword, signInWithGoogle } from '@/lib/firebase/auth'
 import { getUserRole, setUserRole } from '@/lib/firebase/firestore'
@@ -23,6 +24,7 @@ export function AdminWelcomeScreen() {
   const [isLogin, setIsLogin] = useState(true) // Toggle between login and signup
   const [loading, setLoading] = useState(false)
   const [selectedRole, setSelectedRole] = useState<"admin" | "super admin">("admin")
+  const [passkeyError, setPasskeyError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -57,13 +59,19 @@ export function AdminWelcomeScreen() {
     } else if (passkey === ADMIN_PASSKEY) {
       role = "admin"
     } else {
+      const errorMessage = 'The passkey you entered is incorrect. Please check and try again, or contact an administrator if you believe this is an error.'
+      setPasskeyError(errorMessage)
       toast({
-        title: 'Invalid Passkey',
-        description: 'The admin passkey is incorrect.',
+        title: 'Incorrect Passkey',
+        description: errorMessage,
         variant: 'destructive',
       })
+      setPasskey('') // Clear the input
       return
     }
+    
+    // Clear error on successful passkey
+    setPasskeyError(null)
 
     // Store passkey verification and role in sessionStorage
     if (typeof window !== "undefined") {
@@ -81,34 +89,41 @@ export function AdminWelcomeScreen() {
 
   // Show passkey form if not verified
   if (!passkeyVerified) {
-    return (
-      <main className='flex-col flex justify-center items-center min-h-screen bg-muted/30'>
-        <div className='container py-20'>
-          <div className='mx-auto max-w-md space-y-6'>
-            <div className='text-center space-y-4'>
-              <div className='flex items-center justify-center gap-2 mb-4'>
-                <div className='flex h-12 w-12 items-center justify-center rounded-md bg-primary'>
-                  <span className='font-bold text-primary-foreground text-xl'>GD</span>
-                </div>
-                <span className='font-bold text-2xl text-foreground'>Grad Drive</span>
+  return (
+    <main className='flex-col flex justify-center items-center min-h-screen bg-muted/30'>
+      <div className='container py-20'>
+        <div className='mx-auto max-w-md space-y-6'>
+          <div className='text-center space-y-4'>
+            <div className='flex items-center justify-center gap-2 mb-4'>
+              <div className='flex h-12 w-12 items-center justify-center rounded-md bg-primary'>
+                <span className='font-bold text-primary-foreground text-xl'>GD</span>
               </div>
-              <h1 className='font-bold text-3xl md:text-4xl text-balance text-foreground'>
-                Admin Login
-              </h1>
-              <p className='text-muted-foreground text-balance'>
-                Access the admin panel to manage your Grad Drive platform
-              </p>
+              <span className='font-bold text-2xl text-foreground'>Grad Drive</span>
             </div>
+            <h1 className='font-bold text-3xl md:text-4xl text-balance text-foreground'>
+              Admin Login
+            </h1>
+            <p className='text-muted-foreground text-balance'>
+              Access the admin panel to manage your Grad Drive platform
+            </p>
+          </div>
 
-            <Card className='border-border bg-card shadow-sm'>
+          <Card className='border-border bg-card shadow-sm'>
               <CardHeader>
                 <CardTitle>Enter Admin Passkey</CardTitle>
                 <CardDescription>
                   Please enter the admin passkey to continue
                 </CardDescription>
-              </CardHeader>
+            </CardHeader>
               <form onSubmit={handlePasskeySubmit}>
-                <CardContent className='space-y-4'>
+            <CardContent className='space-y-4'>
+                  {passkeyError && (
+                    <Alert variant='destructive'>
+                      <AlertCircle className='h-4 w-4' />
+                      <AlertTitle>Incorrect Passkey</AlertTitle>
+                      <AlertDescription>{passkeyError}</AlertDescription>
+                    </Alert>
+                  )}
                   <div className='space-y-2'>
                     <Label htmlFor='passkey'>Admin Passkey</Label>
                     <Input
@@ -116,14 +131,20 @@ export function AdminWelcomeScreen() {
                       type='password'
                       placeholder='Enter admin passkey'
                       value={passkey}
-                      onChange={(e) => setPasskey(e.target.value)}
+                      onChange={(e) => {
+                        setPasskey(e.target.value)
+                        // Clear error when user starts typing
+                        if (passkeyError) {
+                          setPasskeyError(null)
+                        }
+                      }}
                       required
                       autoFocus
                     />
                   </div>
                   <Button type='submit' className='w-full' size='lg'>
                     Continue
-                  </Button>
+                </Button>
                 </CardContent>
               </form>
             </Card>
@@ -167,9 +188,44 @@ export function AdminWelcomeScreen() {
           const currentRole = await getUserRole(authUser.uid)
           const targetRole = roleFromPasskey || 'admin'
           
-          if (currentRole !== targetRole) {
+          // If user is trying to upgrade from 'user' to 'admin', check permissions
+          if (currentRole === 'user' && (targetRole === 'admin' || targetRole === 'super admin')) {
+            try {
+              await setUserRole(authUser.uid, targetRole)
+            } catch (roleError: any) {
+              // Permission denied - user can't upgrade their own role
+              if (
+                roleError.code === 'permission-denied' ||
+                roleError.message?.includes('permission') ||
+                roleError.message?.includes('insufficient permissions')
+              ) {
+                toast({
+                  title: 'Access Denied',
+                  description: 'Your account does not have admin privileges. Please contact an administrator to upgrade your account role, or sign in with a different account that has admin access.',
+                  variant: 'destructive',
+                })
+                setLoading(false)
+                return
+              }
+              throw roleError // Re-throw if it's a different error
+            }
+          } else if (currentRole !== targetRole && currentRole !== 'user') {
+            // Only update if not trying to upgrade from user
             await setUserRole(authUser.uid, targetRole)
           }
+          
+          // Check final role after update attempt
+          const finalRole = await getUserRole(authUser.uid)
+          if (finalRole !== 'admin' && finalRole !== 'super admin') {
+            toast({
+              title: 'Access Denied',
+              description: 'Your account does not have admin privileges. Please contact an administrator to upgrade your account role.',
+              variant: 'destructive',
+            })
+            setLoading(false)
+            return
+          }
+          
           toast({
             title: 'Success',
             description: 'Logged in successfully!',
@@ -237,11 +293,20 @@ export function AdminWelcomeScreen() {
       const { user, error } = await signInWithGoogle(roleFromPasskey || 'admin')
       
       if (error) {
-        toast({
-          title: 'Sign-in Error',
-          description: error,
-          variant: 'destructive',
-        })
+        // Check for specific permission denied error
+        if (error === 'PERMISSION_DENIED_ROLE_UPGRADE') {
+          toast({
+            title: 'Access Denied',
+            description: 'Your account does not have admin privileges. Please contact an administrator to upgrade your account role, or sign in with a different account that has admin access.',
+            variant: 'destructive',
+          })
+        } else {
+          toast({
+            title: 'Sign-in Error',
+            description: error,
+            variant: 'destructive',
+          })
+        }
         setLoading(false)
         return
       }
@@ -329,7 +394,7 @@ export function AdminWelcomeScreen() {
               </CardDescription>
             </CardHeader>
             <form onSubmit={handleEmailAuth}>
-              <CardContent className='space-y-4'>
+            <CardContent className='space-y-4'>
                 {!isLogin && (
                   <div className='space-y-2'>
                     <Label htmlFor='name'>Full Name</Label>
@@ -395,7 +460,7 @@ export function AdminWelcomeScreen() {
                   <Chrome className='mr-2 h-4 w-4' />
                   {isLogin ? 'Log in' : 'Sign up'} with Google
                 </Button>
-              </CardContent>
+            </CardContent>
             </form>
             <CardFooter className='flex flex-col space-y-4'>
               <div className='text-sm text-muted-foreground text-center'>
@@ -429,11 +494,11 @@ export function AdminWelcomeScreen() {
                   </>
                 )}
               </div>
-              <div className='text-center text-sm text-muted-foreground'>
-                <Link href='/' className='text-accent hover:underline'>
-                  ← Back to main site
-                </Link>
-              </div>
+          <div className='text-center text-sm text-muted-foreground'>
+            <Link href='/' className='text-accent hover:underline'>
+              ← Back to main site
+            </Link>
+          </div>
             </CardFooter>
           </Card>
         </div>

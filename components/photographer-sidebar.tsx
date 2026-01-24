@@ -33,9 +33,11 @@ import {
   Settings,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useViewMode } from '@/contexts/ViewModeContext';
 import { signOutUser } from '@/lib/firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 import { usePhotographerSidebar } from '@/contexts/PhotographerSidebarContext';
+import { Shield } from 'lucide-react';
 
 const navItems = [
   {
@@ -51,10 +53,14 @@ export function PhotographerSidebar() {
   const router = useRouter();
   const { toast } = useToast();
   const { user, userData } = useAuth();
+  const { viewMode, setViewMode, isAdminViewingAsPhotographer } = useViewMode();
   const { isCollapsed, setIsCollapsed, openProfileModal } =
     usePhotographerSidebar();
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  
+  // Check if user is an admin
+  const isAdmin = userData?.role === 'admin' || userData?.role === 'super admin';
 
   useEffect(() => {
     setMounted(true);
@@ -69,13 +75,23 @@ export function PhotographerSidebar() {
         variant: 'destructive',
       });
     } else {
-      // Clear photographer passkey verification
+      // Clear photographer passkey verification and view mode
       if (typeof window !== 'undefined') {
         sessionStorage.removeItem('photographerPasskeyVerified');
+        localStorage.removeItem('adminViewMode');
       }
       router.push('/');
       router.refresh();
     }
+  };
+
+  const handleSwitchToAdminView = () => {
+    setViewMode('admin');
+    router.push('/admin/dashboard');
+    toast({
+      title: 'Switched to Admin View',
+      description: 'You are now viewing the admin dashboard.',
+    });
   };
 
   const displayName =
@@ -204,6 +220,15 @@ export function PhotographerSidebar() {
                 <Settings className='h-4 w-4 mr-2' />
                 Profile Settings
               </DropdownMenuItem>
+              {isAdmin && isAdminViewingAsPhotographer && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSwitchToAdminView}>
+                    <Shield className='h-4 w-4 mr-2' />
+                    Switch to Admin View
+                  </DropdownMenuItem>
+                </>
+              )}
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className='h-4 w-4 mr-2' />

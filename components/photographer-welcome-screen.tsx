@@ -14,7 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Chrome, Loader2, Camera } from 'lucide-react';
+import { Chrome, Loader2, Camera, AlertCircle } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { PHOTOGRAPHER_PASSKEY } from '@/lib/config/photographer';
 import {
   signInEmailPassword,
@@ -38,6 +39,7 @@ export function PhotographerWelcomeScreen() {
     password: '',
   });
   const [signupError, setSignupError] = useState<string | null>(null);
+  const [passkeyError, setPasskeyError] = useState<string | null>(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
@@ -70,13 +72,19 @@ export function PhotographerWelcomeScreen() {
     e.preventDefault();
 
     if (passkey !== PHOTOGRAPHER_PASSKEY) {
+      const errorMessage = 'The passkey you entered is incorrect. Please check and try again, or contact an administrator if you believe this is an error.';
+      setPasskeyError(errorMessage);
       toast({
-        title: 'Invalid Passkey',
-        description: 'The photographer passkey is incorrect.',
+        title: 'Incorrect Passkey',
+        description: errorMessage,
         variant: 'destructive',
       });
+      setPasskey(''); // Clear the input
       return;
     }
+
+    // Clear error on successful passkey
+    setPasskeyError(null);
 
     // Store passkey verification in sessionStorage
     if (typeof window !== 'undefined') {
@@ -177,11 +185,20 @@ export function PhotographerWelcomeScreen() {
       const { user, error } = await signInWithGoogle('photographer-admin');
       
       if (error) {
-        toast({
-          title: 'Error',
-          description: error,
-          variant: 'destructive',
-        });
+        // Check for specific permission denied error
+        if (error === 'PERMISSION_DENIED_ROLE_UPGRADE') {
+          toast({
+            title: 'Access Denied',
+            description: 'Your account does not have photographer privileges. Please contact an administrator to upgrade your account role, or sign in with a different account that has photographer access.',
+            variant: 'destructive',
+          });
+        } else {
+          toast({
+            title: 'Error',
+            description: error,
+            variant: 'destructive',
+          });
+        }
         setLoading(false);
         return;
       }
@@ -240,6 +257,13 @@ export function PhotographerWelcomeScreen() {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handlePasskeySubmit} className='space-y-4'>
+                  {passkeyError && (
+                    <Alert variant='destructive'>
+                      <AlertCircle className='h-4 w-4' />
+                      <AlertTitle>Incorrect Passkey</AlertTitle>
+                      <AlertDescription>{passkeyError}</AlertDescription>
+                    </Alert>
+                  )}
                   <div className='space-y-2'>
                     <Label htmlFor='passkey'>Photographer Passkey</Label>
                     <Input
@@ -247,7 +271,13 @@ export function PhotographerWelcomeScreen() {
                       type='password'
                       placeholder='Enter passkey'
                       value={passkey}
-                      onChange={(e) => setPasskey(e.target.value)}
+                      onChange={(e) => {
+                        setPasskey(e.target.value);
+                        // Clear error when user starts typing
+                        if (passkeyError) {
+                          setPasskeyError(null);
+                        }
+                      }}
                       required
                       autoFocus
                     />

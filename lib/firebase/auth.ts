@@ -161,7 +161,31 @@ export async function signInWithGoogle(
       }
       // Otherwise keep existing role (don't downgrade admins)
 
-      await setDoc(doc(db, 'users', user.uid), updateData, { merge: true });
+      try {
+        await setDoc(doc(db, 'users', user.uid), updateData, { merge: true });
+      } catch (firestoreError: any) {
+        // Check if it's a permissions error when trying to upgrade role
+        if (
+          firestoreError.code === 'permission-denied' ||
+          firestoreError.message?.includes('permission') ||
+          firestoreError.message?.includes('insufficient permissions')
+        ) {
+          // User exists but can't update their role (likely trying to upgrade from 'user' to 'admin')
+          if (
+            existingData.role === 'user' &&
+            (finalRole === 'admin' ||
+              finalRole === 'super admin' ||
+              finalRole === 'photographer-admin')
+          ) {
+            return {
+              user: null,
+              error: 'PERMISSION_DENIED_ROLE_UPGRADE',
+            };
+          }
+        }
+        // Re-throw other Firestore errors
+        throw firestoreError;
+      }
     }
 
     return { user, error: null };
@@ -172,6 +196,19 @@ export async function signInWithGoogle(
       error.code === 'auth/cancelled-popup-request'
     ) {
       return { user: null, error: 'Sign-in popup was closed.' };
+    }
+
+    // Handle permission denied errors
+    if (
+      error.code === 'permission-denied' ||
+      error.message?.includes('permission') ||
+      error.message?.includes('insufficient permissions') ||
+      error.message?.includes('Missing or insufficient permissions')
+    ) {
+      return {
+        user: null,
+        error: 'PERMISSION_DENIED_ROLE_UPGRADE',
+      };
     }
 
     console.error('Google sign-in error:', error);

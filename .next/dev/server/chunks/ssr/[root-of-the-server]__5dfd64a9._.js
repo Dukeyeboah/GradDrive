@@ -280,9 +280,24 @@ async function signInWithGoogle(role = 'user') {
                 updateData.role = 'user';
             }
             // Otherwise keep existing role (don't downgrade admins)
-            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["setDoc"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["doc"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], 'users', user.uid), updateData, {
-                merge: true
-            });
+            try {
+                await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["setDoc"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["doc"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], 'users', user.uid), updateData, {
+                    merge: true
+                });
+            } catch (firestoreError) {
+                // Check if it's a permissions error when trying to upgrade role
+                if (firestoreError.code === 'permission-denied' || firestoreError.message?.includes('permission') || firestoreError.message?.includes('insufficient permissions')) {
+                    // User exists but can't update their role (likely trying to upgrade from 'user' to 'admin')
+                    if (existingData.role === 'user' && (finalRole === 'admin' || finalRole === 'super admin' || finalRole === 'photographer-admin')) {
+                        return {
+                            user: null,
+                            error: 'PERMISSION_DENIED_ROLE_UPGRADE'
+                        };
+                    }
+                }
+                // Re-throw other Firestore errors
+                throw firestoreError;
+            }
         }
         return {
             user,
@@ -294,6 +309,13 @@ async function signInWithGoogle(role = 'user') {
             return {
                 user: null,
                 error: 'Sign-in popup was closed.'
+            };
+        }
+        // Handle permission denied errors
+        if (error.code === 'permission-denied' || error.message?.includes('permission') || error.message?.includes('insufficient permissions') || error.message?.includes('Missing or insufficient permissions')) {
+            return {
+                user: null,
+                error: 'PERMISSION_DENIED_ROLE_UPGRADE'
             };
         }
         console.error('Google sign-in error:', error);

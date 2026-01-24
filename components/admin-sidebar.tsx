@@ -29,8 +29,11 @@ import {
   LogOut,
   UserCircle,
   GraduationCap,
+  Eye,
+  Shield,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useViewMode } from '@/contexts/ViewModeContext';
 import { signOutUser } from '@/lib/firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 
@@ -52,6 +55,7 @@ export function AdminSidebar() {
   const router = useRouter();
   const { toast } = useToast();
   const { user, userData } = useAuth();
+  const { viewMode, setViewMode, isAdminViewingAsUser, isAdminViewingAsPhotographer } = useViewMode();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -68,14 +72,33 @@ export function AdminSidebar() {
         variant: 'destructive',
       });
     } else {
-      // Clear admin passkey verification
+      // Clear admin passkey verification and view mode
       if (typeof window !== 'undefined') {
         sessionStorage.removeItem('adminPasskeyVerified');
         sessionStorage.removeItem('adminRole');
+        localStorage.removeItem('adminViewMode');
       }
       router.push('/');
       router.refresh();
     }
+  };
+
+  const handleSwitchToUserView = () => {
+    setViewMode('user');
+    router.push('/dashboard');
+    toast({
+      title: 'Switched to User View',
+      description: 'You are now viewing the site as a regular user. Your admin permissions remain active.',
+    });
+  };
+
+  const handleSwitchToPhotographerView = () => {
+    setViewMode('photographer-admin');
+    router.push('/photographer-admin/dashboard');
+    toast({
+      title: 'Switched to Photographer Admin View',
+      description: 'You are now viewing the photographer admin portal. Your admin permissions remain active.',
+    });
   };
 
   return (
@@ -201,6 +224,19 @@ export function AdminSidebar() {
                     Account Profile
                   </Link>
                 </DropdownMenuItem>
+                {!isAdminViewingAsUser && !isAdminViewingAsPhotographer && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSwitchToUserView}>
+                      <Eye className='h-4 w-4 mr-2' />
+                      Switch to User View
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleSwitchToPhotographerView}>
+                      <Camera className='h-4 w-4 mr-2' />
+                      Switch to Photographer Admin View
+                    </DropdownMenuItem>
+                  </>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
                   <LogOut className='h-4 w-4 mr-2' />

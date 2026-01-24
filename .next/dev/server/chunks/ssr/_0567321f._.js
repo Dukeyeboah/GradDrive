@@ -215,6 +215,7 @@ function AdminWelcomeScreen() {
     ;
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [selectedRole, setSelectedRole] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("admin");
+    const [passkeyError, setPasskeyError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         name: '',
         email: '',
@@ -242,13 +243,18 @@ function AdminWelcomeScreen() {
         } else if (passkey === __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$config$2f$admin$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ADMIN_PASSKEY"]) {
             role = "admin";
         } else {
+            const errorMessage = 'The passkey you entered is incorrect. Please check and try again, or contact an administrator if you believe this is an error.';
+            setPasskeyError(errorMessage);
             toast({
-                title: 'Invalid Passkey',
-                description: 'The admin passkey is incorrect.',
+                title: 'Incorrect Passkey',
+                description: errorMessage,
                 variant: 'destructive'
             });
+            setPasskey(''); // Clear the input
             return;
         }
+        // Clear error on successful passkey
+        setPasskeyError(null);
         // Store passkey verification and role in sessionStorage
         if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
         ;
@@ -281,49 +287,49 @@ function AdminWelcomeScreen() {
                                                 children: "GD"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                lineNumber: 91,
-                                                columnNumber: 19
+                                                lineNumber: 99,
+                                                columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 90,
-                                            columnNumber: 17
+                                            lineNumber: 98,
+                                            columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "font-bold text-2xl text-foreground",
                                             children: "Grad Drive"
                                         }, void 0, false, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 93,
-                                            columnNumber: 17
+                                            lineNumber: 101,
+                                            columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                    lineNumber: 89,
-                                    columnNumber: 15
+                                    lineNumber: 97,
+                                    columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                                     className: "font-bold text-3xl md:text-4xl text-balance text-foreground",
                                     children: "Admin Login"
                                 }, void 0, false, {
                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                    lineNumber: 95,
-                                    columnNumber: 15
+                                    lineNumber: 103,
+                                    columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-muted-foreground text-balance",
                                     children: "Access the admin panel to manage your Grad Drive platform"
                                 }, void 0, false, {
                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                    lineNumber: 98,
-                                    columnNumber: 15
+                                    lineNumber: 106,
+                                    columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                            lineNumber: 88,
-                            columnNumber: 13
+                            lineNumber: 96,
+                            columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
                             className: "border-border bg-card shadow-sm",
@@ -334,20 +340,20 @@ function AdminWelcomeScreen() {
                                             children: "Enter Admin Passkey"
                                         }, void 0, false, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 105,
+                                            lineNumber: 113,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
                                             children: "Please enter the admin passkey to continue"
                                         }, void 0, false, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 106,
+                                            lineNumber: 114,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                    lineNumber: 104,
+                                    lineNumber: 112,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -363,7 +369,7 @@ function AdminWelcomeScreen() {
                                                         children: "Admin Passkey"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                        lineNumber: 113,
+                                                        lineNumber: 121,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -376,13 +382,13 @@ function AdminWelcomeScreen() {
                                                         autoFocus: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                        lineNumber: 114,
+                                                        lineNumber: 122,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                lineNumber: 112,
+                                                lineNumber: 120,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -392,25 +398,25 @@ function AdminWelcomeScreen() {
                                                 children: "Continue"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                lineNumber: 124,
+                                                lineNumber: 132,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                        lineNumber: 111,
-                                        columnNumber: 17
+                                        lineNumber: 119,
+                                        columnNumber: 13
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                    lineNumber: 110,
+                                    lineNumber: 118,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                            lineNumber: 103,
-                            columnNumber: 13
+                            lineNumber: 111,
+                            columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "text-center text-sm text-muted-foreground",
@@ -420,29 +426,29 @@ function AdminWelcomeScreen() {
                                 children: "← Back to main site"
                             }, void 0, false, {
                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                lineNumber: 132,
+                                lineNumber: 140,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                            lineNumber: 131,
+                            lineNumber: 139,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                    lineNumber: 87,
-                    columnNumber: 11
+                    lineNumber: 95,
+                    columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                lineNumber: 86,
-                columnNumber: 9
+                lineNumber: 94,
+                columnNumber: 7
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/admin-welcome-screen.tsx",
-            lineNumber: 85,
-            columnNumber: 7
+            lineNumber: 93,
+            columnNumber: 5
         }, this);
     }
     const handleEmailAuth = async (e)=>{
@@ -467,8 +473,38 @@ function AdminWelcomeScreen() {
                     // Check if user is admin/super admin, if not, set them based on passkey
                     const currentRole = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$firestore$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getUserRole"])(authUser.uid);
                     const targetRole = roleFromPasskey || 'admin';
-                    if (currentRole !== targetRole) {
+                    // If user is trying to upgrade from 'user' to 'admin', check permissions
+                    if (currentRole === 'user' && (targetRole === 'admin' || targetRole === 'super admin')) {
+                        try {
+                            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$firestore$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["setUserRole"])(authUser.uid, targetRole);
+                        } catch (roleError) {
+                            // Permission denied - user can't upgrade their own role
+                            if (roleError.code === 'permission-denied' || roleError.message?.includes('permission') || roleError.message?.includes('insufficient permissions')) {
+                                toast({
+                                    title: 'Access Denied',
+                                    description: 'Your account does not have admin privileges. Please contact an administrator to upgrade your account role, or sign in with a different account that has admin access.',
+                                    variant: 'destructive'
+                                });
+                                setLoading(false);
+                                return;
+                            }
+                            throw roleError // Re-throw if it's a different error
+                            ;
+                        }
+                    } else if (currentRole !== targetRole && currentRole !== 'user') {
+                        // Only update if not trying to upgrade from user
                         await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$firestore$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["setUserRole"])(authUser.uid, targetRole);
+                    }
+                    // Check final role after update attempt
+                    const finalRole = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$firestore$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getUserRole"])(authUser.uid);
+                    if (finalRole !== 'admin' && finalRole !== 'super admin') {
+                        toast({
+                            title: 'Access Denied',
+                            description: 'Your account does not have admin privileges. Please contact an administrator to upgrade your account role.',
+                            variant: 'destructive'
+                        });
+                        setLoading(false);
+                        return;
                     }
                     toast({
                         title: 'Success',
@@ -521,11 +557,20 @@ function AdminWelcomeScreen() {
             const roleFromPasskey = ("TURBOPACK compile-time falsy", 0) ? "TURBOPACK unreachable" : null;
             const { user, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$auth$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signInWithGoogle"])(roleFromPasskey || 'admin');
             if (error) {
-                toast({
-                    title: 'Sign-in Error',
-                    description: error,
-                    variant: 'destructive'
-                });
+                // Check for specific permission denied error
+                if (error === 'PERMISSION_DENIED_ROLE_UPGRADE') {
+                    toast({
+                        title: 'Access Denied',
+                        description: 'Your account does not have admin privileges. Please contact an administrator to upgrade your account role, or sign in with a different account that has admin access.',
+                        variant: 'destructive'
+                    });
+                } else {
+                    toast({
+                        title: 'Sign-in Error',
+                        description: error,
+                        variant: 'destructive'
+                    });
+                }
                 setLoading(false);
                 return;
             }
@@ -576,12 +621,12 @@ function AdminWelcomeScreen() {
                                             children: "GD"
                                         }, void 0, false, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 285,
+                                            lineNumber: 337,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                        lineNumber: 284,
+                                        lineNumber: 336,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -589,13 +634,13 @@ function AdminWelcomeScreen() {
                                         children: "Grad Drive"
                                     }, void 0, false, {
                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                        lineNumber: 287,
+                                        lineNumber: 339,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                lineNumber: 283,
+                                lineNumber: 335,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -606,7 +651,7 @@ function AdminWelcomeScreen() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                lineNumber: 289,
+                                lineNumber: 341,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -614,13 +659,13 @@ function AdminWelcomeScreen() {
                                 children: isLogin ? 'Access the admin panel to manage your Grad Drive platform' : 'Create an admin account to get started'
                             }, void 0, false, {
                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                lineNumber: 292,
+                                lineNumber: 344,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                        lineNumber: 282,
+                        lineNumber: 334,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
@@ -643,7 +688,7 @@ function AdminWelcomeScreen() {
                                                 children: "Log In"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                lineNumber: 302,
+                                                lineNumber: 354,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -657,26 +702,26 @@ function AdminWelcomeScreen() {
                                                 children: "Sign Up"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                lineNumber: 313,
+                                                lineNumber: 365,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                        lineNumber: 301,
+                                        lineNumber: 353,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
                                         children: isLogin ? 'Log in to your admin account' : 'Create your admin account'
                                     }, void 0, false, {
                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                        lineNumber: 325,
+                                        lineNumber: 377,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                lineNumber: 300,
+                                lineNumber: 352,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -692,7 +737,7 @@ function AdminWelcomeScreen() {
                                                     children: "Full Name"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 335,
+                                                    lineNumber: 387,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -707,13 +752,13 @@ function AdminWelcomeScreen() {
                                                     required: !isLogin
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 336,
+                                                    lineNumber: 388,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 334,
+                                            lineNumber: 386,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -724,7 +769,7 @@ function AdminWelcomeScreen() {
                                                     children: "Email"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 347,
+                                                    lineNumber: 399,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -739,13 +784,13 @@ function AdminWelcomeScreen() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 348,
+                                                    lineNumber: 400,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 346,
+                                            lineNumber: 398,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -756,7 +801,7 @@ function AdminWelcomeScreen() {
                                                     children: "Password"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 358,
+                                                    lineNumber: 410,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -772,13 +817,13 @@ function AdminWelcomeScreen() {
                                                     minLength: isLogin ? undefined : 6
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 359,
+                                                    lineNumber: 411,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 357,
+                                            lineNumber: 409,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -792,7 +837,7 @@ function AdminWelcomeScreen() {
                                                         className: "mr-2 h-4 w-4 animate-spin"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                        lineNumber: 372,
+                                                        lineNumber: 424,
                                                         columnNumber: 23
                                                     }, this),
                                                     isLogin ? 'Logging in...' : 'Creating account...'
@@ -800,7 +845,7 @@ function AdminWelcomeScreen() {
                                             }, void 0, true) : isLogin ? 'Log In' : 'Create Admin Account'
                                         }, void 0, false, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 369,
+                                            lineNumber: 421,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -812,12 +857,12 @@ function AdminWelcomeScreen() {
                                                         className: "w-full border-t"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                        lineNumber: 381,
+                                                        lineNumber: 433,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 380,
+                                                    lineNumber: 432,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -827,18 +872,18 @@ function AdminWelcomeScreen() {
                                                         children: "Or continue with"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                        lineNumber: 384,
+                                                        lineNumber: 436,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 383,
+                                                    lineNumber: 435,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 379,
+                                            lineNumber: 431,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -853,7 +898,7 @@ function AdminWelcomeScreen() {
                                                     className: "mr-2 h-4 w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 395,
+                                                    lineNumber: 447,
                                                     columnNumber: 19
                                                 }, this),
                                                 isLogin ? 'Log in' : 'Sign up',
@@ -861,18 +906,18 @@ function AdminWelcomeScreen() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 387,
+                                            lineNumber: 439,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                    lineNumber: 332,
-                                    columnNumber: 15
+                                    lineNumber: 384,
+                                    columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                lineNumber: 331,
+                                lineNumber: 383,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardFooter"], {
@@ -894,7 +939,7 @@ function AdminWelcomeScreen() {
                                                     children: "Sign up"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 405,
+                                                    lineNumber: 457,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
@@ -912,14 +957,14 @@ function AdminWelcomeScreen() {
                                                     children: "Log in"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/admin-welcome-screen.tsx",
-                                                    lineNumber: 419,
+                                                    lineNumber: 471,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true)
                                     }, void 0, false, {
                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                        lineNumber: 401,
+                                        lineNumber: 453,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -930,40 +975,40 @@ function AdminWelcomeScreen() {
                                             children: "← Back to main site"
                                         }, void 0, false, {
                                             fileName: "[project]/components/admin-welcome-screen.tsx",
-                                            lineNumber: 433,
-                                            columnNumber: 17
+                                            lineNumber: 485,
+                                            columnNumber: 13
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                                        lineNumber: 432,
-                                        columnNumber: 15
+                                        lineNumber: 484,
+                                        columnNumber: 11
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                                lineNumber: 400,
+                                lineNumber: 452,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/admin-welcome-screen.tsx",
-                        lineNumber: 299,
+                        lineNumber: 351,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/admin-welcome-screen.tsx",
-                lineNumber: 281,
+                lineNumber: 333,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/admin-welcome-screen.tsx",
-            lineNumber: 280,
+            lineNumber: 332,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/admin-welcome-screen.tsx",
-        lineNumber: 279,
+        lineNumber: 331,
         columnNumber: 5
     }, this);
 }

@@ -28,15 +28,24 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useAuth } from '@/contexts/AuthContext';
+import { useViewMode } from '@/contexts/ViewModeContext';
 import { signOutUser } from '@/lib/firebase/auth';
+import { useToast } from '@/hooks/use-toast';
+import { Shield } from 'lucide-react';
 
 export function UserNav() {
   const isMobile = useIsMobile();
   const pathname = usePathname();
   const router = useRouter();
+  const { toast } = useToast();
   const { user, userData } = useAuth();
+  const { viewMode, setViewMode, isAdminViewingAsUser } = useViewMode();
   const isDashboard = pathname === '/dashboard';
   const showBackButton = !isDashboard && pathname.startsWith('/dashboard');
+
+  // Check if user is an admin
+  const isAdmin =
+    userData?.role === 'admin' || userData?.role === 'super admin';
 
   // Get first letter of name for avatar fallback
   const getInitial = () => {
@@ -321,10 +330,33 @@ export function UserNav() {
                   Account
                 </Link>
               </DropdownMenuItem>
+              {isAdmin && isAdminViewingAsUser && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setViewMode('admin');
+                      router.push('/admin/dashboard');
+                      toast({
+                        title: 'Switched to Admin View',
+                        description: 'You are now viewing the admin dashboard.',
+                      });
+                    }}
+                    className='flex items-center gap-2'
+                  >
+                    <Shield className='h-4 w-4' />
+                    Switch to Admin View
+                  </DropdownMenuItem>
+                </>
+              )}
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={async () => {
                   await signOutUser();
+                  // Clear view mode
+                  if (typeof window !== 'undefined') {
+                    localStorage.removeItem('adminViewMode');
+                  }
                   router.push('/');
                 }}
                 className='flex items-center gap-2'
