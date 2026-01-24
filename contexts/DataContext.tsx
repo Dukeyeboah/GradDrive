@@ -43,7 +43,12 @@ export function DataProvider({ children }: { children: ReactNode }) {
     try {
       const data = await getAnalytics();
       setAnalytics(data);
-    } catch (error) {
+    } catch (error: any) {
+      // Silently handle permission errors - user might not have admin role set yet
+      if (error?.code === 'permission-denied' || error?.message?.includes('permission')) {
+        console.warn('Analytics: Permission denied - user may not have admin role yet');
+        return;
+      }
       console.error('Error refreshing analytics:', error);
     }
   }, [user, userData]);
@@ -56,7 +61,12 @@ export function DataProvider({ children }: { children: ReactNode }) {
     try {
       const data = await getAllUsers();
       setUsers(data);
-    } catch (error) {
+    } catch (error: any) {
+      // Silently handle permission errors - user might not have admin role set yet
+      if (error?.code === 'permission-denied' || error?.message?.includes('permission')) {
+        console.warn('Users: Permission denied - user may not have admin role yet');
+        return;
+      }
       console.error('Error refreshing users:', error);
     }
   }, [user, userData]);

@@ -18,6 +18,22 @@ service cloud.firestore {
     function isOwner(userId) {
       return isAuthenticated() && request.auth.uid == userId;
     }
+    
+    // Helper function to check if user is a photographer (by email match)
+    function isPhotographer(photographerEmail) {
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.email == photographerEmail;
+    }
+    
+    // Helper function to check if user owns the photographer booking
+    function ownsBooking(photographerId) {
+      return isAuthenticated() && 
+             resource.data.photographerId == photographerId &&
+             exists(/databases/$(database)/documents/photographers/$(photographerId)) &&
+             get(/databases/$(database)/documents/photographers/$(photographerId)).data.email == 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.email;
+    }
 
     // Users collection
     match /users/{userId} {
@@ -35,7 +51,17 @@ service cloud.firestore {
     // Photographers collection
     match /photographers/{photographerId} {
       allow read: if true;
-      allow write: if isAdmin(); // Only authenticated admins can write
+      allow create: if isAdmin() || 
+                      (isAuthenticated() && 
+                       (request.resource.data.email == request.auth.token.email ||
+                        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                         request.resource.data.email == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.email)));
+      allow update: if isAdmin() || 
+                     (isAuthenticated() && 
+                      (resource.data.email == request.auth.token.email ||
+                       (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                        resource.data.email == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.email)));
+      allow delete: if isAdmin(); // Only admins can delete
     }
 
     // Posters collection
@@ -64,9 +90,22 @@ service cloud.firestore {
 
     // Photographer Bookings collection
     match /photographerBookings/{bookingId} {
-      allow read: if isAdmin();
+      allow read: if isAdmin() || 
+                    (isAuthenticated() && 
+                     exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                     resource.data.photographerId != null &&
+                     exists(/databases/$(database)/documents/photographers/$(resource.data.photographerId)) &&
+                     get(/databases/$(database)/documents/photographers/$(resource.data.photographerId)).data.email == 
+                     get(/databases/$(database)/documents/users/$(request.auth.uid)).data.email);
       allow create: if isAuthenticated(); // Any authenticated user can create bookings
-      allow update, delete: if isAdmin(); // Only admins can update/delete bookings
+      allow update: if isAdmin() || 
+                      (isAuthenticated() && 
+                       exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                       resource.data.photographerId != null &&
+                       exists(/databases/$(database)/documents/photographers/$(resource.data.photographerId)) &&
+                       get(/databases/$(database)/documents/photographers/$(resource.data.photographerId)).data.email == 
+                       get(/databases/$(database)/documents/users/$(request.auth.uid)).data.email);
+      allow delete: if isAdmin(); // Only admins can delete bookings
     }
 
     // Scholarship Submissions collection

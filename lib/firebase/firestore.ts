@@ -27,6 +27,7 @@ export interface Photographer {
   instagram?: string
   phone?: string
   address?: string
+  city?: string
   state?: string
   status: 'contacted' | 'not-contacted' | 'interested-follow-up' | 'not-interested/no-response'
   instagramContact: boolean
@@ -150,7 +151,33 @@ export async function getPhotographerBookings(photographerId?: string): Promise<
   try {
     let q
     if (photographerId) {
-      q = query(bookingsCollection, where("photographerId", "==", photographerId), orderBy("timestamp", "desc"))
+      // Try with orderBy first (requires index)
+      try {
+        q = query(bookingsCollection, where("photographerId", "==", photographerId), orderBy("timestamp", "desc"))
+        const snapshot = await getDocs(q)
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as PhotographerBooking[]
+      } catch (indexError: any) {
+        // If index doesn't exist, fall back to query without orderBy
+        if (indexError.code === 'failed-precondition' || indexError.message?.includes('index')) {
+          console.warn("Index not found, querying without orderBy. Please create the index:", indexError.message)
+          q = query(bookingsCollection, where("photographerId", "==", photographerId))
+          const snapshot = await getDocs(q)
+          const bookings = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as PhotographerBooking[]
+          // Sort in memory
+          return bookings.sort((a, b) => {
+            const aTime = a.timestamp?.toMillis?.() || 0
+            const bTime = b.timestamp?.toMillis?.() || 0
+            return bTime - aTime
+          })
+        }
+        throw indexError
+      }
     } else {
       q = query(bookingsCollection, orderBy("timestamp", "desc"))
     }
@@ -162,6 +189,17 @@ export async function getPhotographerBookings(photographerId?: string): Promise<
   } catch (error) {
     console.error("Error getting bookings:", error)
     return []
+  }
+}
+
+export async function updatePhotographerBooking(id: string, data: Partial<PhotographerBooking>): Promise<boolean> {
+  try {
+    const docRef = doc(db, "photographerBookings", id)
+    await updateDoc(docRef, data)
+    return true
+  } catch (error) {
+    console.error("Error updating booking:", error)
+    return false
   }
 }
 
@@ -256,6 +294,21 @@ export async function getPhotographer(id: string): Promise<Photographer | null> 
     return null
   } catch (error) {
     console.error("Error getting photographer:", error)
+    return null
+  }
+}
+
+export async function getPhotographerByEmail(email: string): Promise<Photographer | null> {
+  try {
+    const q = query(photographersCollection, where("email", "==", email), limit(1))
+    const snapshot = await getDocs(q)
+    if (!snapshot.empty) {
+      const doc = snapshot.docs[0]
+      return { id: doc.id, ...doc.data() } as Photographer
+    }
+    return null
+  } catch (error) {
+    console.error("Error getting photographer by email:", error)
     return null
   }
 }
@@ -725,7 +778,7 @@ export interface AnalyticsData {
 
 export async function getAnalytics(): Promise<AnalyticsData> {
   try {
-    // Get all users
+    // Get all users (requires admin permissions)
     const usersSnapshot = await getDocs(collection(db, "users"))
     // Total users = only users with role "user" (excludes admins)
     const totalUsers = usersSnapshot.docs.filter(

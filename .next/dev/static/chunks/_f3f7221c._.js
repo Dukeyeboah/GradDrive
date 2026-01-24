@@ -742,11 +742,33 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
     const handleGoogleAuth = async ()=>{
         setLoading(true);
         try {
-            // signInWithGoogle now uses redirect, so the page will reload
-            // The redirect result will be handled by AuthContext
-            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$auth$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signInWithGoogle"])("user");
-        // Note: User will be redirected to Google, then back to the app
-        // The AuthContext will handle the redirect result and navigation
+            const { user, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$auth$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signInWithGoogle"])("user");
+            if (error) {
+                toast({
+                    title: "Error",
+                    description: error,
+                    variant: "destructive"
+                });
+                setLoading(false);
+                return;
+            }
+            if (user) {
+                // Check user role and redirect accordingly
+                const role = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$firestore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getUserRole"])(user.uid);
+                toast({
+                    title: "Success",
+                    description: "Signed in successfully!"
+                });
+                onOpenChange(false);
+                if (role === "admin" || role === "super admin") {
+                    router.push("/admin/dashboard");
+                } else if (role === "photographer-admin") {
+                    router.push("/photographer-admin/dashboard");
+                } else {
+                    router.push("/dashboard");
+                }
+                router.refresh();
+            }
         } catch (error) {
             console.error("Google auth error:", error);
             toast({
@@ -754,6 +776,7 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                 description: error.message || "An unexpected error occurred. Please try again.",
                 variant: "destructive"
             });
+        } finally{
             setLoading(false);
         }
     };
@@ -769,20 +792,20 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                             children: mode === "login" ? "Welcome back" : "Create an account"
                         }, void 0, false, {
                             fileName: "[project]/components/auth-modals.tsx",
-                            lineNumber: 123,
+                            lineNumber: 148,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                             children: mode === "login" ? "Log in to your Grad Drive account" : "Get started with Grad Drive today"
                         }, void 0, false, {
                             fileName: "[project]/components/auth-modals.tsx",
-                            lineNumber: 124,
+                            lineNumber: 149,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/auth-modals.tsx",
-                    lineNumber: 122,
+                    lineNumber: 147,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -801,7 +824,7 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                                 children: "Full Name"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/auth-modals.tsx",
-                                                lineNumber: 133,
+                                                lineNumber: 158,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -816,13 +839,13 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                                 required: mode === "signup"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/auth-modals.tsx",
-                                                lineNumber: 134,
+                                                lineNumber: 159,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/auth-modals.tsx",
-                                        lineNumber: 132,
+                                        lineNumber: 157,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -833,7 +856,7 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                                 children: "Email"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/auth-modals.tsx",
-                                                lineNumber: 145,
+                                                lineNumber: 170,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -848,13 +871,13 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/components/auth-modals.tsx",
-                                                lineNumber: 146,
+                                                lineNumber: 171,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/auth-modals.tsx",
-                                        lineNumber: 144,
+                                        lineNumber: 169,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -865,7 +888,7 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                                 children: "Password"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/auth-modals.tsx",
-                                                lineNumber: 156,
+                                                lineNumber: 181,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -881,13 +904,13 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                                 minLength: 6
                                             }, void 0, false, {
                                                 fileName: "[project]/components/auth-modals.tsx",
-                                                lineNumber: 157,
+                                                lineNumber: 182,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/auth-modals.tsx",
-                                        lineNumber: 155,
+                                        lineNumber: 180,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -901,7 +924,7 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                                     className: "mr-2 h-4 w-4 animate-spin"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/auth-modals.tsx",
-                                                    lineNumber: 170,
+                                                    lineNumber: 195,
                                                     columnNumber: 21
                                                 }, this),
                                                 mode === "login" ? "Signing in..." : "Creating account..."
@@ -909,7 +932,7 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                         }, void 0, true) : mode === "login" ? "Log In" : "Create Account"
                                     }, void 0, false, {
                                         fileName: "[project]/components/auth-modals.tsx",
-                                        lineNumber: 167,
+                                        lineNumber: 192,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -921,12 +944,12 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                                     className: "w-full border-t"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/auth-modals.tsx",
-                                                    lineNumber: 179,
+                                                    lineNumber: 204,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/auth-modals.tsx",
-                                                lineNumber: 178,
+                                                lineNumber: 203,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -936,18 +959,18 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                                     children: "Or continue with"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/auth-modals.tsx",
-                                                    lineNumber: 182,
+                                                    lineNumber: 207,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/auth-modals.tsx",
-                                                lineNumber: 181,
+                                                lineNumber: 206,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/auth-modals.tsx",
-                                        lineNumber: 177,
+                                        lineNumber: 202,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -962,7 +985,7 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                                 className: "mr-2 h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/auth-modals.tsx",
-                                                lineNumber: 193,
+                                                lineNumber: 218,
                                                 columnNumber: 17
                                             }, this),
                                             mode === "login" ? "Log in" : "Sign up",
@@ -970,18 +993,18 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/auth-modals.tsx",
-                                        lineNumber: 185,
+                                        lineNumber: 210,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/auth-modals.tsx",
-                                lineNumber: 130,
+                                lineNumber: 155,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/auth-modals.tsx",
-                            lineNumber: 129,
+                            lineNumber: 154,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardFooter"], {
@@ -999,7 +1022,7 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                             children: "Sign up"
                                         }, void 0, false, {
                                             fileName: "[project]/components/auth-modals.tsx",
-                                            lineNumber: 203,
+                                            lineNumber: 228,
                                             columnNumber: 19
                                         }, this)
                                     ]
@@ -1014,36 +1037,36 @@ function AuthModals({ open, onOpenChange, mode, onModeChange }) {
                                             children: "Log in"
                                         }, void 0, false, {
                                             fileName: "[project]/components/auth-modals.tsx",
-                                            lineNumber: 214,
+                                            lineNumber: 239,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true)
                             }, void 0, false, {
                                 fileName: "[project]/components/auth-modals.tsx",
-                                lineNumber: 199,
+                                lineNumber: 224,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/auth-modals.tsx",
-                            lineNumber: 198,
+                            lineNumber: 223,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/auth-modals.tsx",
-                    lineNumber: 128,
+                    lineNumber: 153,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/auth-modals.tsx",
-            lineNumber: 121,
+            lineNumber: 146,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/auth-modals.tsx",
-        lineNumber: 120,
+        lineNumber: 145,
         columnNumber: 5
     }, this);
 }

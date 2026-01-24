@@ -223,12 +223,19 @@ export function AdminWelcomeScreen() {
   const handleGoogleAuth = async () => {
     setLoading(true)
     try {
+      // Ensure admin role is stored
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("adminPasskeyVerified", "true")
+        sessionStorage.setItem("adminRole", selectedRole)
+      }
+      
       // Get role from sessionStorage (set during passkey verification)
       const roleFromPasskey = typeof window !== "undefined" 
         ? (sessionStorage.getItem("adminRole") as "admin" | "super admin" | null)
         : null
       
-      const { user: authUser, error } = await signInWithGoogle(roleFromPasskey || 'admin')
+      const { user, error } = await signInWithGoogle(roleFromPasskey || 'admin')
+      
       if (error) {
         toast({
           title: 'Sign-in Error',
@@ -239,12 +246,10 @@ export function AdminWelcomeScreen() {
         return
       }
       
-      if (authUser) {
+      if (user) {
         toast({
           title: 'Success',
-          description: isLogin 
-            ? 'Logged in with Google successfully!'
-            : 'Admin account created with Google!',
+          description: 'Signed in successfully!',
         })
         router.push('/admin/dashboard')
         router.refresh()

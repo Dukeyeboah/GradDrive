@@ -290,6 +290,42 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../app/photographer-admin/bookings/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/photographer-admin/bookings">> = Specific
+  const handler = {} as typeof import("../../../app/photographer-admin/bookings/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/photographer-admin/dashboard/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/photographer-admin/dashboard">> = Specific
+  const handler = {} as typeof import("../../../app/photographer-admin/dashboard/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/photographer-admin/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/photographer-admin">> = Specific
+  const handler = {} as typeof import("../../../app/photographer-admin/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/photographer-admin/profile/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/photographer-admin/profile">> = Specific
+  const handler = {} as typeof import("../../../app/photographer-admin/profile/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../app/signup/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/signup">> = Specific
@@ -343,6 +379,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 {
   type __IsExpected<Specific extends LayoutConfig<"/">> = Specific
   const handler = {} as typeof import("../../../app/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/photographer-admin/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/photographer-admin">> = Specific
+  const handler = {} as typeof import("../../../app/photographer-admin/layout.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check

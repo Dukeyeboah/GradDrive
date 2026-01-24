@@ -1,6 +1,12 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -140,33 +146,35 @@ export default function AccountPage() {
         </div>
 
         {/* Access Information */}
-        <Card className="border-border bg-card shadow-sm">
-        <CardHeader>
-          <CardTitle>Access Summary</CardTitle>
-          <CardDescription>Your available perks and resources</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-2 text-sm">
-            <li className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-accent" />
-              <span>Full access to digital asset library</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-accent" />
-              <span>E-book downloads available</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-accent" />
-              <span>Photographer network access</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-accent" />
-              <span>Scholarship program eligibility</span>
-            </li>
-          </ul>
-        </CardContent>
-      </Card>
+        <Card className='border-border bg-card shadow-sm'>
+          <CardHeader>
+            <CardTitle>Access Summary</CardTitle>
+            <CardDescription>
+              Your available perks and resources
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className='space-y-2 text-sm'>
+              <li className='flex items-center gap-2'>
+                <div className='h-2 w-2 rounded-full bg-accent' />
+                <span>Full access to digital asset library</span>
+              </li>
+              <li className='flex items-center gap-2'>
+                <div className='h-2 w-2 rounded-full bg-accent' />
+                <span>E-book downloads available</span>
+              </li>
+              <li className='flex items-center gap-2'>
+                <div className='h-2 w-2 rounded-full bg-accent' />
+                <span>Photographer network access</span>
+              </li>
+              <li className='flex items-center gap-2'>
+                <div className='h-2 w-2 rounded-full bg-accent' />
+                <span>Scholarship program eligibility</span>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
       </div>
     </div>
-  )
+  );
 }

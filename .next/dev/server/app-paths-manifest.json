@@ -1,17 +1,9 @@
 {
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/admin/page": "app/admin/page.js",
-  "/admin/photographers/page": "app/admin/photographers/page.js",
-  "/admin/posters/page": "app/admin/posters/page.js",
-  "/dashboard/alum-club/page": "app/dashboard/alum-club/page.js",
-  "/dashboard/cap-designs/page": "app/dashboard/cap-designs/page.js",
-  "/dashboard/discounts/page": "app/dashboard/discounts/page.js",
   "/dashboard/ebooks/page": "app/dashboard/ebooks/page.js",
-  "/dashboard/grad-drive/page": "app/dashboard/grad-drive/page.js",
-  "/dashboard/kente-history/page": "app/dashboard/kente-history/page.js",
   "/dashboard/page": "app/dashboard/page.js",
   "/dashboard/photographers/page": "app/dashboard/photographers/page.js",
   "/dashboard/posters/page": "app/dashboard/posters/page.js",
-  "/dashboard/scholarship/page": "app/dashboard/scholarship/page.js",
   "/page": "app/page.js"
 }

@@ -4,8 +4,6 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInWithPopup,
-  signInWithRedirect,
-  getRedirectResult,
   GoogleAuthProvider,
   signOut,
   User,
@@ -30,7 +28,7 @@ export interface UserData {
   email: string | null;
   displayName: string | null;
   photoURL: string | null;
-  role?: 'user' | 'admin' | 'super admin';
+  role?: 'user' | 'admin' | 'super admin' | 'photographer-admin';
   createdAt?: any;
   updatedAt?: any;
 }
@@ -58,7 +56,7 @@ export async function signUpEmailPassword(
   email: string,
   password: string,
   displayName?: string,
-  role: 'user' | 'admin' | 'super admin' = 'user'
+  role: 'user' | 'admin' | 'super admin' | 'photographer-admin' = 'user'
 ) {
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -92,76 +90,95 @@ export async function signUpEmailPassword(
 }
 
 /**
- * Sign in with Google using redirect (avoids COOP issues)
+ * Sign in with Google using popup (like the working example)
+ * Handles user creation/update immediately
  */
 export async function signInWithGoogle(
-  role: 'user' | 'admin' | 'super admin' = 'user'
+  role: 'user' | 'admin' | 'super admin' | 'photographer-admin' = 'user'
 ) {
   try {
-    // Store role in sessionStorage for use after redirect
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('googleAuthRole', role);
-    }
-    // Use redirect instead of popup to avoid COOP issues
-    await signInWithRedirect(auth, googleProvider);
-    // Note: The actual result will be handled by getRedirectResult in AuthContext
-    return { user: null, error: null };
-  } catch (error: any) {
-    console.error('Google sign-in error:', error);
-    return { user: null, error: error.message || 'An error occurred during Google sign-in' };
-  }
-}
+    // Use popup instead of redirect
+    const userCredential = await signInWithPopup(auth, googleProvider);
+    const user = userCredential.user;
 
-/**
- * Handle Google redirect result and create/update user document
- */
-export async function handleGoogleRedirect() {
-  try {
-    const result = await getRedirectResult(auth);
-    if (!result) {
-      return { user: null, error: null };
-    }
+    // Determine role - check sessionStorage for special roles
+    let finalRole: 'user' | 'admin' | 'super admin' | 'photographer-admin' =
+      role;
 
-    const user = result.user;
-    
-    // Get role from sessionStorage (stored before redirect)
-    let role: 'user' | 'admin' | 'super admin' = 'user';
     if (typeof window !== 'undefined') {
-      const storedRole = sessionStorage.getItem('googleAuthRole');
-      if (storedRole === 'admin' || storedRole === 'super admin') {
-        role = storedRole;
+      const photographerVerified = sessionStorage.getItem(
+        'photographerPasskeyVerified'
+      );
+      const adminRole = sessionStorage.getItem('adminRole');
+      const adminVerified = sessionStorage.getItem('adminPasskeyVerified');
+
+      // Override with special roles if verified
+      if (
+        adminRole === 'admin' ||
+        adminRole === 'super admin' ||
+        adminVerified === 'true'
+      ) {
+        finalRole = (adminRole || 'admin') as 'admin' | 'super admin';
+      } else if (photographerVerified === 'true') {
+        finalRole = 'photographer-admin';
       }
-      sessionStorage.removeItem('googleAuthRole');
     }
 
     // Check if user document exists
     const userDoc = await getDoc(doc(db, 'users', user.uid));
 
     if (!userDoc.exists()) {
-      // Create user document if it doesn't exist
+      // New user - create with role
       const userData: UserData = {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
-        role: role,
+        role: finalRole,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       };
       await setDoc(doc(db, 'users', user.uid), userData);
     } else {
-      // Update last login and role if needed
-      const updateData: any = { updatedAt: serverTimestamp() };
-      if (role === 'admin' || role === 'super admin') {
-        updateData.role = role;
+      // Existing user - update info
+      const existingData = userDoc.data() as UserData;
+      const updateData: any = {
+        updatedAt: serverTimestamp(),
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      };
+
+      // Only update role if upgrading to admin/photographer, or if current role is user/null
+      if (
+        finalRole === 'admin' ||
+        finalRole === 'super admin' ||
+        finalRole === 'photographer-admin'
+      ) {
+        updateData.role = finalRole;
+      } else if (!existingData.role || existingData.role === 'user') {
+        updateData.role = 'user';
       }
+      // Otherwise keep existing role (don't downgrade admins)
+
       await setDoc(doc(db, 'users', user.uid), updateData, { merge: true });
     }
 
     return { user, error: null };
   } catch (error: any) {
-    console.error('Google redirect error:', error);
-    return { user: null, error: error.message || 'An error occurred during Google sign-in' };
+    // Handle popup closed by user
+    if (
+      error.code === 'auth/popup-closed-by-user' ||
+      error.code === 'auth/cancelled-popup-request'
+    ) {
+      return { user: null, error: 'Sign-in popup was closed.' };
+    }
+
+    console.error('Google sign-in error:', error);
+    return {
+      user: null,
+      error: error.message || 'An error occurred during Google sign-in',
+    };
   }
 }
 
