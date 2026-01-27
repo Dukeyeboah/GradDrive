@@ -115,6 +115,13 @@ service cloud.firestore {
       allow update, delete: if isAdmin(); // Only admins can update/delete submissions
     }
 
+    // Travel Interests collection (HoS Travel Experience)
+    match /travelInterests/{interestId} {
+      allow read: if isAdmin(); // Only admins can view all travel interests
+      allow create: if isAuthenticated(); // Any authenticated user can submit interest
+      allow update, delete: if isAdmin(); // Only admins can modify/delete
+    }
+
     // Default deny
     match /{document=**} {
       allow read, write: if false;

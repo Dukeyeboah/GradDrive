@@ -497,6 +497,10 @@ __turbopack_context__.s([
     ()=>setUserRole,
     "submitScholarshipInterest",
     ()=>submitScholarshipInterest,
+    "submitTravelInterest",
+    ()=>submitTravelInterest,
+    "travelInterestsCollection",
+    ()=>travelInterestsCollection,
     "updateCapDesign",
     ()=>updateCapDesign,
     "updateEbook",
@@ -516,6 +520,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e
 ;
 const bookingsCollection = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["collection"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], "photographerBookings");
 const scholarshipSubmissionsCollection = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["collection"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], "scholarshipSubmissions");
+const travelInterestsCollection = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["collection"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], "travelInterests");
 async function bookPhotographer(data) {
     try {
         const docRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["doc"])(bookingsCollection);
@@ -609,6 +614,19 @@ async function getScholarshipSubmissions() {
     } catch (error) {
         console.error("Error getting scholarship submissions:", error);
         return [];
+    }
+}
+async function submitTravelInterest(data) {
+    try {
+        const docRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["doc"])(travelInterestsCollection);
+        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["setDoc"])(docRef, {
+            ...data,
+            timestamp: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["serverTimestamp"])()
+        });
+        return true;
+    } catch (error) {
+        console.error("Error submitting travel interest:", error);
+        return false;
     }
 }
 const photographersCollection = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["collection"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], "photographers");
@@ -1355,16 +1373,14 @@ function ViewModeProvider({ children }) {
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         setMounted(true);
         // Load from localStorage
-        const saved = localStorage.getItem('adminViewMode');
-        if (saved === 'user' || saved === 'admin' || saved === 'photographer-admin') {
-            setViewModeState(saved);
-        }
+        const saved = ("TURBOPACK compile-time falsy", 0) ? "TURBOPACK unreachable" : null;
+        if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+        ;
     }, []);
     const setViewMode = (mode)=>{
         setViewModeState(mode);
-        if (mounted) {
-            localStorage.setItem('adminViewMode', mode);
-        }
+        if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+        ;
     };
     const isAdminViewingAsUser = viewMode === 'user';
     const isAdminViewingAsPhotographer = viewMode === 'photographer-admin';

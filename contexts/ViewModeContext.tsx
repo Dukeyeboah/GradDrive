@@ -20,7 +20,7 @@ export function ViewModeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setMounted(true);
     // Load from localStorage
-    const saved = localStorage.getItem('adminViewMode');
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('adminViewMode') : null;
     if (saved === 'user' || saved === 'admin' || saved === 'photographer-admin') {
       setViewModeState(saved as ViewMode);
     }
@@ -28,7 +28,7 @@ export function ViewModeProvider({ children }: { children: ReactNode }) {
 
   const setViewMode = (mode: ViewMode) => {
     setViewModeState(mode);
-    if (mounted) {
+    if (mounted && typeof window !== 'undefined') {
       localStorage.setItem('adminViewMode', mode);
     }
   };
@@ -37,7 +37,9 @@ export function ViewModeProvider({ children }: { children: ReactNode }) {
   const isAdminViewingAsPhotographer = viewMode === 'photographer-admin';
 
   return (
-    <ViewModeContext.Provider value={{ viewMode, setViewMode, isAdminViewingAsUser, isAdminViewingAsPhotographer }}>
+    <ViewModeContext.Provider
+      value={{ viewMode, setViewMode, isAdminViewingAsUser, isAdminViewingAsPhotographer }}
+    >
       {children}
     </ViewModeContext.Provider>
   );

@@ -122,6 +122,21 @@ export interface ScholarshipSubmission {
   timestamp: Timestamp
 }
 
+export interface TravelInterest {
+  id?: string
+  userId: string
+  userName: string
+  userEmail: string
+  graduationYear: string
+  school: string
+  interests: string
+  preferredTiming?: string
+  budgetRange?: string
+  travelExperience?: string
+  additionalInfo?: string
+  timestamp: Timestamp
+}
+
 /**
  * Photographer Bookings Collection
  */
@@ -131,6 +146,11 @@ export const bookingsCollection = collection(db, "photographerBookings")
  * Scholarship Submissions Collection
  */
 export const scholarshipSubmissionsCollection = collection(db, "scholarshipSubmissions")
+
+/**
+ * Travel Interests Collection
+ */
+export const travelInterestsCollection = collection(db, "travelInterests")
 
 export async function bookPhotographer(data: Omit<PhotographerBooking, "id" | "timestamp">): Promise<boolean> {
   try {
@@ -229,6 +249,22 @@ export async function getScholarshipSubmissions(): Promise<ScholarshipSubmission
   } catch (error) {
     console.error("Error getting scholarship submissions:", error)
     return []
+  }
+}
+
+export async function submitTravelInterest(
+  data: Omit<TravelInterest, "id" | "timestamp">
+): Promise<boolean> {
+  try {
+    const docRef = doc(travelInterestsCollection)
+    await setDoc(docRef, {
+      ...data,
+      timestamp: serverTimestamp(),
+    })
+    return true
+  } catch (error) {
+    console.error("Error submitting travel interest:", error)
+    return false
   }
 }
 

@@ -7,9 +7,9 @@ import {
   FileImage,
   GraduationCap,
   Award,
-  Gift,
   Users,
   History,
+  PlaneTakeoff,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -78,6 +78,14 @@ export default function DashboardPage() {
           />
 
           <PerkCard
+            icon={PlaneTakeoff}
+            title='The HoS Travel Experience'
+            description='Immerse yourself in Ghanaian culture, Kente heritage, food, art, and education with HoS in Ghana'
+            href='/dashboard/discounts'
+            buttonText='Register Interest'
+          />
+
+          <PerkCard
             icon={Users}
             title='HoS Alumni Club'
             description='Connect with alumni and join exclusive community events'
@@ -99,14 +107,6 @@ export default function DashboardPage() {
             description='Discover scholarship opportunities and programs'
             href='/dashboard/scholarship'
             buttonText='Learn More'
-          />
-
-          <PerkCard
-            icon={Gift}
-            title='Coming Soon'
-            description='Exciting new features and opportunities on the way'
-            href='/dashboard/discounts'
-            buttonText='View'
           />
         </div>
       </div>
