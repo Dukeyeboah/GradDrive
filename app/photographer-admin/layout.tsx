@@ -5,7 +5,9 @@ import { usePathname } from 'next/navigation';
 import { PhotographerSidebar } from '@/components/photographer-sidebar';
 import { PhotographerSidebarProvider } from '@/contexts/PhotographerSidebarContext';
 
-const authRoutes = ['/photographer-admin'];
+// Routes where we show only the passkey/login UI (no sidebar).
+// '/' is the path on fotmatic.app root (rewritten to photographer-admin); '/photographer-admin' is used on graddrive.com.
+const authRoutes = ['/photographer-admin', '/'];
 
 export default function PhotographerAdminLayout({
   children,
