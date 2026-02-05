@@ -94,7 +94,7 @@ export function PhotographerSidebar() {
   };
 
   const displayName =
-    userData?.displayName || user?.displayName || 'Photographer';
+    userData?.displayName || user?.displayName || 'User';
   const displayEmail = userData?.email || user?.email || '';
   const photoURL = userData?.photoURL || user?.photoURL;
 
@@ -117,7 +117,7 @@ export function PhotographerSidebar() {
               </div>
               <div>
                 <span className='font-bold text-sm block'>
-                  Photographer Portal
+                  Fotmatic
                 </span>
               </div>
             </Link>
@@ -214,7 +214,7 @@ export function PhotographerSidebar() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-56'>
-              <DropdownMenuLabel>Photographer Account</DropdownMenuLabel>
+              <DropdownMenuLabel>Your Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={openProfileModal}>
                 <Settings className='h-4 w-4 mr-2' />

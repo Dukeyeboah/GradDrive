@@ -239,15 +239,14 @@ export function PhotographerWelcomeScreen() {
                   <Camera className='h-6 w-6 text-primary-foreground' />
                 </div>
                 <span className='font-bold text-2xl text-foreground'>
-                  Grad Drive
+                  Fotmatic
                 </span>
               </div>
               <h1 className='font-bold text-3xl md:text-4xl text-balance text-foreground'>
-                HoS GradDrive Photographer Portal
+                Fotmatic
               </h1>
               <p className='text-muted-foreground text-balance'>
-                Access your photographer dashboard to manage your profile and
-                bookings
+                Access your dashboard to manage your profile and bookings
               </p>
             </div>
 
@@ -255,7 +254,7 @@ export function PhotographerWelcomeScreen() {
               <CardHeader>
                 <CardTitle>Enter Passkey</CardTitle>
                 <CardDescription>
-                  Please enter the photographer passkey to continue
+                  Please enter your passkey to continue
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -268,7 +267,7 @@ export function PhotographerWelcomeScreen() {
                     </Alert>
                   )}
                   <div className='space-y-2'>
-                    <Label htmlFor='passkey'>Photographer Passkey</Label>
+                    <Label htmlFor='passkey'>Passkey</Label>
                     <Input
                       id='passkey'
                       type='password'
@@ -316,8 +315,8 @@ export function PhotographerWelcomeScreen() {
             </h1>
             <p className='text-muted-foreground text-balance'>
               {isLogin
-                ? 'Sign in to access your photographer dashboard'
-                : 'Create an account to access your photographer dashboard'}
+                ? 'Sign in to access your Fotmatic dashboard'
+                : 'Create an account to access Fotmatic'}
             </p>
           </div>
 

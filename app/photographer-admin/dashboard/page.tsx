@@ -255,7 +255,7 @@ export default function PhotographerDashboardPage() {
           <CardHeader>
             <CardTitle>Manage Profile</CardTitle>
             <CardDescription>
-              Update your photographer information and details
+              Update your information and details
             </CardDescription>
           </CardHeader>
           <CardContent>
