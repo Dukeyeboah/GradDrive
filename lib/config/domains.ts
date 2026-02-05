@@ -1,11 +1,19 @@
 /**
  * Domain configuration for multi-domain routing.
- * fotmatic.app serves the photographer-admin app as its own site (same codebase, same Firebase).
+ * fotmatic.app (and fotomatic.app) serve the photographer-admin app as its own site (same codebase, same Firebase).
  */
 
-export const FOTMATIC_HOSTS = ['fotmatic.app', 'www.fotmatic.app'] as const;
+export const FOTMATIC_HOSTS = [
+  'fotmatic.app',
+  'www.fotmatic.app',
+  'fotomatic.app',
+  'www.fotomatic.app',
+] as const;
 
 export function isFotmaticHost(host: string | null): boolean {
   if (!host) return false;
-  return FOTMATIC_HOSTS.some((h) => host === h || host.endsWith('.' + h));
+  const hostname = host.split(':')[0].toLowerCase();
+  return FOTMATIC_HOSTS.some(
+    (h) => hostname === h || hostname.endsWith('.' + h)
+  );
 }

@@ -55,13 +55,15 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Run middleware only on paths we care about (fotmatic root and photographer paths)
+  // Run middleware on all page requests (excluding static files and API).
+  // We only rewrite when host is fotmatic/fotomatic; other hosts pass through.
   matcher: [
-    '/',
-    '/dashboard',
-    '/bookings',
-    '/profile',
-    '/photographer-admin',
-    '/photographer-admin/:path*',
+    /*
+     * Match all pathnames except:
+     * - _next/static (static files)
+     * - _next/image (image optimization)
+     * - favicon.ico, etc.
+     */
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],
 };
