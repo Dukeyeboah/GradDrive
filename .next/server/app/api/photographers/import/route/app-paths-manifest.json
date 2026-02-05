@@ -1,0 +1,3 @@
+{
+  "/api/photographers/import/route": "app/api/photographers/import/route.js"
+}

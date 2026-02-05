@@ -926,4 +926,3 @@ export async function getDownloadBreakdown(): Promise<{
     return { posters: [], ebooks: [], capDesigns: [] }
   }
 }
-

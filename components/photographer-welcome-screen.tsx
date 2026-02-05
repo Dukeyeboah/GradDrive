@@ -24,9 +24,12 @@ import {
 } from '@/lib/firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { usePhotographerBasePath } from '@/hooks/use-photographer-base-path';
 
 export function PhotographerWelcomeScreen() {
   const router = useRouter();
+  const basePath = usePhotographerBasePath();
+  const photographerRoot = basePath || '/';
   const { toast } = useToast();
   const { user, userData } = useAuth();
   const [passkey, setPasskey] = useState('');
@@ -64,9 +67,9 @@ export function PhotographerWelcomeScreen() {
       typeof window !== 'undefined' &&
       sessionStorage.getItem('photographerPasskeyVerified') === 'true'
     ) {
-      router.push('/photographer-admin/dashboard');
+      router.push(`${basePath}/dashboard`);
     }
-  }, [user, userData, router]);
+  }, [user, userData, router, basePath]);
 
   const handlePasskeySubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,7 +164,7 @@ export function PhotographerWelcomeScreen() {
             ? 'Signed in successfully!'
             : 'Account created successfully!',
         });
-        router.push('/photographer-admin/dashboard');
+        router.push(`${basePath}/dashboard`);
       }
     } catch (error: any) {
       toast({
@@ -208,7 +211,7 @@ export function PhotographerWelcomeScreen() {
           title: 'Success',
           description: 'Signed in successfully!',
         });
-        router.push('/photographer-admin/dashboard');
+        router.push(`${basePath}/dashboard`);
         router.refresh();
       }
     } catch (error: any) {

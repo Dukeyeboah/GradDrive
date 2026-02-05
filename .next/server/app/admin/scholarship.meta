@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/admin/layout,_N_T_/admin/scholarship/layout,_N_T_/admin/scholarship/page,_N_T_/admin/scholarship"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/admin/scholarship/__PAGE__",
+    "/admin/scholarship",
+    "/admin",
+    "/_index",
+    "/_head"
+  ]
+}

@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Camera, LogOut, Home } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { signOutUser } from '@/lib/firebase/auth';
+import { usePhotographerBasePath } from '@/hooks/use-photographer-base-path';
 
 export function PhotographerHeader() {
   const router = useRouter();
+  const basePath = usePhotographerBasePath();
   const { user } = useAuth();
 
   const handleSignOut = async () => {
@@ -24,7 +26,7 @@ export function PhotographerHeader() {
       <div className='container flex h-16 items-center justify-between'>
         <div className='flex items-center gap-6 pl-8'>
           <Link
-            href='/photographer-admin/dashboard'
+            href={`${basePath}/dashboard`}
             className='flex items-center gap-2'
           >
             <Camera className='h-6 w-6' />
@@ -33,17 +35,17 @@ export function PhotographerHeader() {
             </span>
           </Link>
           <nav className='hidden md:flex items-center gap-4'>
-            <Link href='/photographer-admin/dashboard'>
+            <Link href={`${basePath}/dashboard`}>
               <Button variant='ghost' size='sm'>
                 Dashboard
               </Button>
             </Link>
-            <Link href='/photographer-admin/profile'>
+            <Link href={`${basePath}/profile`}>
               <Button variant='ghost' size='sm'>
                 Profile
               </Button>
             </Link>
-            <Link href='/photographer-admin/bookings'>
+            <Link href={`${basePath}/bookings`}>
               <Button variant='ghost' size='sm'>
                 Bookings
               </Button>

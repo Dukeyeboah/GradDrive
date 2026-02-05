@@ -38,10 +38,13 @@ import {
 } from '@/lib/firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { usePhotographerSidebar } from '@/contexts/PhotographerSidebarContext';
+import { usePhotographerBasePath } from '@/hooks/use-photographer-base-path';
 
 export default function PhotographerBookingsPage() {
   const { user, userData } = useAuth();
   const router = useRouter();
+  const basePath = usePhotographerBasePath();
+  const photographerRoot = basePath || '/';
   const { toast } = useToast();
   const { isCollapsed } = usePhotographerSidebar();
   const [photographer, setPhotographer] = useState<Photographer | null>(null);
@@ -56,7 +59,7 @@ export default function PhotographerBookingsPage() {
     if (typeof window !== 'undefined') {
       const verified = sessionStorage.getItem('photographerPasskeyVerified');
       if (verified !== 'true') {
-        router.push('/photographer-admin');
+        router.push(photographerRoot);
         return;
       }
     }
@@ -68,13 +71,13 @@ export default function PhotographerBookingsPage() {
 
     // Check if user is logged in
     if (!user || !userData?.email) {
-      router.push('/photographer-admin');
+      router.push(photographerRoot);
       return;
     }
 
     setAuthChecked(true);
     loadBookings();
-  }, [user, userData, router]);
+  }, [user, userData, router, photographerRoot]);
 
   const loadBookings = async () => {
     if (!userData?.email) return;

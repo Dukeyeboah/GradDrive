@@ -34,12 +34,15 @@ import {
 } from '@/lib/firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { usePhotographerSidebar } from '@/contexts/PhotographerSidebarContext';
+import { usePhotographerBasePath } from '@/hooks/use-photographer-base-path';
 import Link from 'next/link';
 import { PhotographerProfileModal } from '@/components/photographer-profile-modal';
 
 export default function PhotographerDashboardPage() {
   const { user, userData } = useAuth();
   const router = useRouter();
+  const basePath = usePhotographerBasePath();
+  const photographerRoot = basePath || '/';
   const { toast } = useToast();
   const { isCollapsed, setOpenProfileModal } = usePhotographerSidebar();
   const [photographer, setPhotographer] = useState<Photographer | null>(null);
@@ -66,7 +69,7 @@ export default function PhotographerDashboardPage() {
     if (typeof window !== 'undefined') {
       const verified = sessionStorage.getItem('photographerPasskeyVerified');
       if (verified !== 'true') {
-        router.push('/photographer-admin');
+        router.push(photographerRoot);
         return;
       }
     }
@@ -78,13 +81,13 @@ export default function PhotographerDashboardPage() {
 
     // Check if user is logged in
     if (!user || !userData?.email) {
-      router.push('/photographer-admin');
+      router.push(photographerRoot);
       return;
     }
 
     setAuthChecked(true);
     loadPhotographerData();
-  }, [user, userData, router]);
+  }, [user, userData, router, photographerRoot]);
 
   const loadPhotographerData = async () => {
     if (!userData?.email) return;
@@ -274,7 +277,7 @@ export default function PhotographerDashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href='/photographer-admin/bookings'>
+            <Link href={`${basePath}/bookings`}>
               <Button className='w-full gap-2' variant='outline'>
                 <Bell className='h-4 w-4' />
                 View Bookings (
@@ -388,7 +391,7 @@ export default function PhotographerDashboardPage() {
               <CardTitle>Recent Booking Requests</CardTitle>
               <CardDescription>Latest requests from users</CardDescription>
             </div>
-            <Link href='/photographer-admin/bookings'>
+            <Link href={`${basePath}/bookings`}>
               <Button variant='outline' size='sm'>
                 View All
               </Button>

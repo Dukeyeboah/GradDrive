@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/dashboard/layout,_N_T_/dashboard/alum-club/layout,_N_T_/dashboard/alum-club/page,_N_T_/dashboard/alum-club"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/dashboard/alum-club/__PAGE__",
+    "/dashboard/alum-club",
+    "/dashboard",
+    "/_index",
+    "/_head"
+  ]
+}

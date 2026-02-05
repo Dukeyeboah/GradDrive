@@ -1,0 +1,53 @@
+{
+  "version": 3,
+  "middleware": {
+    "/": {
+      "files": [
+        "server/edge/chunks/edge-wrapper_fb189923.js",
+        "server/edge/chunks/[root-of-the-server]__972426bb._.js",
+        "server/edge/chunks/turbopack-edge-wrapper_b7cca833.js"
+      ],
+      "name": "middleware",
+      "page": "/",
+      "matchers": [
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?(?:\\/(\\/?index|\\/?index\\\\.json))?[\\/#\\?]?$",
+          "originalSource": "/"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/dashboard(\\\\.json)?[\\/#\\?]?$",
+          "originalSource": "/dashboard"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/bookings(\\\\.json)?[\\/#\\?]?$",
+          "originalSource": "/bookings"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/profile(\\\\.json)?[\\/#\\?]?$",
+          "originalSource": "/profile"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/photographer-admin(\\\\.json)?[\\/#\\?]?$",
+          "originalSource": "/photographer-admin"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/photographer-admin(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
+          "originalSource": "/photographer-admin/:path*"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "8lgVWI73Roraicagox2SV",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "bzu4wZvGNVQ2F0L5eugII27UA6Czop+9yXNVoGJ8bz8=",
+        "__NEXT_PREVIEW_MODE_ID": "d737776bacc207366ea54e4ace0998b0",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "a8a7f4270c92b63e0b8249453205ab6c0548daf2089471f806c47a81e41d04c0",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "d918cc43991f4e1e26878e278983289c1618fb256903d360ece2003a4d54a7c3"
+      }
+    }
+  },
+  "sortedMiddleware": [
+    "/"
+  ],
+  "functions": {}
+}

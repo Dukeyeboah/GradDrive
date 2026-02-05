@@ -31,11 +31,14 @@ import {
 } from '@/lib/firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { usePhotographerSidebar } from '@/contexts/PhotographerSidebarContext';
+import { usePhotographerBasePath } from '@/hooks/use-photographer-base-path';
 import Link from 'next/link';
 
 export default function PhotographerProfilePage() {
   const { user, userData } = useAuth();
   const router = useRouter();
+  const basePath = usePhotographerBasePath();
+  const photographerRoot = basePath || '/';
   const { toast } = useToast();
   const { isCollapsed } = usePhotographerSidebar();
   const [photographer, setPhotographer] = useState<Photographer | null>(null);
@@ -62,7 +65,7 @@ export default function PhotographerProfilePage() {
     if (typeof window !== 'undefined') {
       const verified = sessionStorage.getItem('photographerPasskeyVerified');
       if (verified !== 'true') {
-        router.push('/photographer-admin');
+        router.push(photographerRoot);
         return;
       }
     }
@@ -74,13 +77,13 @@ export default function PhotographerProfilePage() {
 
     // Check if user is logged in
     if (!user || !userData?.email) {
-      router.push('/photographer-admin');
+      router.push(photographerRoot);
       return;
     }
 
     setAuthChecked(true);
     loadPhotographerData();
-  }, [user, userData, router]);
+  }, [user, userData, router, photographerRoot]);
 
   const loadPhotographerData = async () => {
     if (!userData?.email) return;
@@ -431,7 +434,7 @@ export default function PhotographerProfilePage() {
         </Card> */}
 
         <div className='flex justify-end gap-4'>
-          <Link href='/photographer-admin/dashboard'>
+          <Link href={`${basePath}/dashboard`}>
             <Button type='button' variant='outline'>
               Cancel
             </Button>

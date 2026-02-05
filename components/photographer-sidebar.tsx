@@ -37,20 +37,19 @@ import { useViewMode } from '@/contexts/ViewModeContext';
 import { signOutUser } from '@/lib/firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 import { usePhotographerSidebar } from '@/contexts/PhotographerSidebarContext';
+import { usePhotographerBasePath } from '@/hooks/use-photographer-base-path';
 import { Shield } from 'lucide-react';
 
+const PHOTOGRAPHER_PREFIX = '/photographer-admin';
 const navItems = [
-  {
-    href: '/photographer-admin/dashboard',
-    label: 'Dashboard',
-    icon: LayoutDashboard,
-  },
-  { href: '/photographer-admin/bookings', label: 'Bookings', icon: Bell },
+  { path: `${PHOTOGRAPHER_PREFIX}/dashboard`, slug: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { path: `${PHOTOGRAPHER_PREFIX}/bookings`, slug: '/bookings', label: 'Bookings', icon: Bell },
 ];
 
 export function PhotographerSidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const basePath = usePhotographerBasePath();
   const { toast } = useToast();
   const { user, userData } = useAuth();
   const { viewMode, setViewMode, isAdminViewingAsPhotographer } = useViewMode();
@@ -110,7 +109,7 @@ export function PhotographerSidebar() {
         <div className='flex items-center justify-between'>
           {!isCollapsed && (
             <Link
-              href='/photographer-admin/dashboard'
+              href={`${basePath}/dashboard`}
               className='flex items-center gap-2'
             >
               <div className='flex h-7 w-7 items-center justify-center rounded-md bg-primary'>
@@ -125,7 +124,7 @@ export function PhotographerSidebar() {
           )}
           {isCollapsed && !isMobile && (
             <Link
-              href='/photographer-admin/dashboard'
+              href={`${basePath}/dashboard`}
               className='flex items-center justify-center w-full'
             >
               <div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary'>
@@ -156,12 +155,13 @@ export function PhotographerSidebar() {
         )}
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.href;
+          const href = `${basePath}${item.slug}`;
+          const isActive = pathname === item.path;
 
           return (
             <Link
-              key={item.href}
-              href={item.href}
+              key={item.path}
+              href={href}
               onClick={() => isMobile && setMobileOpen(false)}
               className={cn(
                 'flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors',
