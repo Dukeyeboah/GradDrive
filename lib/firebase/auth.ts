@@ -11,7 +11,7 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { auth } from './config';
-import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from './config';
 
 const googleProvider = new GoogleAuthProvider();
@@ -31,6 +31,10 @@ export interface UserData {
   role?: 'user' | 'admin' | 'super admin' | 'photographer-admin';
   createdAt?: any;
   updatedAt?: any;
+  collegeName?: string | null;
+  collegeGroup?: string | null;
+  major?: string | null;
+  graduationYear?: string | null;
 }
 
 /**
@@ -127,7 +131,8 @@ export async function signInWithGoogle(
     // Check if user document exists
     const userDoc = await getDoc(doc(db, 'users', user.uid));
 
-    if (!userDoc.exists()) {
+    const isNewUser = !userDoc.exists();
+    if (isNewUser) {
       // New user - create with role
       const userData: UserData = {
         uid: user.uid,
@@ -180,6 +185,7 @@ export async function signInWithGoogle(
             return {
               user: null,
               error: 'PERMISSION_DENIED_ROLE_UPGRADE',
+              isNewUser: false,
             };
           }
         }
@@ -188,14 +194,14 @@ export async function signInWithGoogle(
       }
     }
 
-    return { user, error: null };
+    return { user, error: null, isNewUser };
   } catch (error: any) {
     // Handle popup closed by user
     if (
       error.code === 'auth/popup-closed-by-user' ||
       error.code === 'auth/cancelled-popup-request'
     ) {
-      return { user: null, error: 'Sign-in popup was closed.' };
+      return { user: null, error: 'Sign-in popup was closed.', isNewUser: false };
     }
 
     // Handle permission denied errors
@@ -208,6 +214,7 @@ export async function signInWithGoogle(
       return {
         user: null,
         error: 'PERMISSION_DENIED_ROLE_UPGRADE',
+        isNewUser: false,
       };
     }
 
@@ -215,7 +222,33 @@ export async function signInWithGoogle(
     return {
       user: null,
       error: error.message || 'An error occurred during Google sign-in',
+      isNewUser: false,
     };
+  }
+}
+
+/**
+ * Update user profile (college, major, graduation year, etc.)
+ */
+export async function updateUserProfile(
+  uid: string,
+  data: {
+    displayName?: string | null;
+    collegeName?: string | null;
+    collegeGroup?: string | null;
+    major?: string | null;
+    graduationYear?: string | null;
+  }
+) {
+  try {
+    const ref = doc(db, 'users', uid);
+    await updateDoc(ref, {
+      ...data,
+      updatedAt: serverTimestamp(),
+    });
+    return { error: null };
+  } catch (error: any) {
+    return { error: error.message };
   }
 }
 

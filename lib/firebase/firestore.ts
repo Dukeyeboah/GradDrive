@@ -772,12 +772,12 @@ export async function addSystemLog(
 /**
  * Users Collection
  */
-export async function getUserRole(uid: string): Promise<"user" | "admin" | "super admin" | null> {
+export async function getUserRole(uid: string): Promise<"user" | "admin" | "super admin" | "photographer-admin" | null> {
   try {
     const userDoc = await getDoc(doc(db, "users", uid))
     if (userDoc.exists()) {
       const data = userDoc.data()
-      return data.role || "user"
+      return (data.role as "user" | "admin" | "super admin" | "photographer-admin") || "user"
     }
     return null
   } catch (error) {

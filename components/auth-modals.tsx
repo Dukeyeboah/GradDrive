@@ -14,9 +14,10 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Chrome, Loader2 } from "lucide-react"
-import { signInEmailPassword, signUpEmailPassword, signInWithGoogle } from "@/lib/firebase/auth"
+import { signInEmailPassword, signUpEmailPassword, signInWithGoogle, getUserData } from "@/lib/firebase/auth"
 import { getUserRole } from "@/lib/firebase/firestore"
 import { useToast } from "@/hooks/use-toast"
+import { FirstTimeProfileModal } from "@/components/first-time-profile-modal"
 
 interface AuthModalsProps {
   open: boolean
@@ -34,6 +35,9 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
     email: "",
     password: "",
   })
+  const [showProfileModal, setShowProfileModal] = useState(false)
+  const [newUserUid, setNewUserUid] = useState<string | null>(null)
+  const [newUserName, setNewUserName] = useState<string | null>(null)
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -56,8 +60,10 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
             description: "Signed in successfully!",
           })
           onOpenChange(false)
-          if (role === "admin") {
+          if (role === "admin" || role === "super admin") {
             router.push("/admin/dashboard")
+          } else if (role === "photographer-admin") {
+            router.push("/photographer-admin/dashboard")
           } else {
             router.push("/dashboard")
           }
@@ -82,8 +88,15 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
             description: "Account created successfully!",
           })
           onOpenChange(false)
-          router.push("/dashboard")
-          router.refresh()
+          const existing = await getUserData(user.uid)
+          if (existing?.collegeName != null || existing?.graduationYear != null) {
+            router.push("/dashboard")
+            router.refresh()
+          } else {
+            setNewUserUid(user.uid)
+            setNewUserName(formData.name || null)
+            setShowProfileModal(true)
+          }
         }
       }
     } catch (error: any) {
@@ -100,7 +113,7 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
   const handleGoogleAuth = async () => {
     setLoading(true)
     try {
-      const { user, error } = await signInWithGoogle("user")
+      const { user, error, isNewUser } = await signInWithGoogle("user")
       
       if (error) {
         toast({
@@ -113,21 +126,32 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
       }
       
       if (user) {
-        // Check user role and redirect accordingly
-        const role = await getUserRole(user.uid)
         toast({
           title: "Success",
-          description: "Signed in successfully!",
+          description: isNewUser ? "Account created! Set up your profile." : "Signed in successfully!",
         })
         onOpenChange(false)
-        if (role === "admin" || role === "super admin") {
-          router.push("/admin/dashboard")
-        } else if (role === "photographer-admin") {
-          router.push("/photographer-admin/dashboard")
+        if (isNewUser) {
+          const existing = await getUserData(user.uid)
+          if (existing?.collegeName != null || existing?.graduationYear != null) {
+            router.push("/dashboard")
+            router.refresh()
+          } else {
+            setNewUserUid(user.uid)
+            setNewUserName(user.displayName || null)
+            setShowProfileModal(true)
+          }
         } else {
-          router.push("/dashboard")
+          const role = await getUserRole(user.uid)
+          if (role === "admin" || role === "super admin") {
+            router.push("/admin/dashboard")
+          } else if (role === "photographer-admin") {
+            router.push("/photographer-admin/dashboard")
+          } else {
+            router.push("/dashboard")
+          }
+          router.refresh()
         }
-        router.refresh()
       }
     } catch (error: any) {
       console.error("Google auth error:", error)
@@ -249,6 +273,20 @@ export function AuthModals({ open, onOpenChange, mode, onModeChange }: AuthModal
           </CardFooter>
         </Card>
       </DialogContent>
+      {newUserUid && (
+        <FirstTimeProfileModal
+          open={showProfileModal}
+          onOpenChange={setShowProfileModal}
+          uid={newUserUid}
+          initialName={newUserName}
+          onComplete={() => {
+            setNewUserUid(null)
+            setNewUserName(null)
+            router.push("/dashboard")
+            router.refresh()
+          }}
+        />
+      )}
     </Dialog>
   )
 }

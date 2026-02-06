@@ -5,10 +5,17 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { User } from 'lucide-react';
 import { AuthModals } from '@/components/auth-modals';
+import { UserPasskeyModal } from '@/components/user-passkey-modal';
 
 export function PublicNav() {
+  const [passkeyModalOpen, setPasskeyModalOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+
+  const openAuthAfterPasskey = () => {
+    setPasskeyModalOpen(false);
+    setAuthOpen(true);
+  };
 
   return (
     <>
@@ -31,7 +38,11 @@ export function PublicNav() {
               size='sm'
               onClick={() => {
                 setAuthMode('login');
-                setAuthOpen(true);
+                if (typeof window !== 'undefined' && localStorage.getItem('userPasskeyVerified') === 'true') {
+                  setAuthOpen(true);
+                } else {
+                  setPasskeyModalOpen(true);
+                }
               }}
             >
               Log in
@@ -41,7 +52,11 @@ export function PublicNav() {
               className='gap-2'
               onClick={() => {
                 setAuthMode('signup');
-                setAuthOpen(true);
+                if (typeof window !== 'undefined' && localStorage.getItem('userPasskeyVerified') === 'true') {
+                  setAuthOpen(true);
+                } else {
+                  setPasskeyModalOpen(true);
+                }
               }}
             >
               <User className='h-4 w-4' />
@@ -50,6 +65,11 @@ export function PublicNav() {
           </div>
         </div>
       </nav>
+      <UserPasskeyModal
+        open={passkeyModalOpen}
+        onOpenChange={setPasskeyModalOpen}
+        onVerified={openAuthAfterPasskey}
+      />
       <AuthModals
         open={authOpen}
         onOpenChange={setAuthOpen}

@@ -12,8 +12,10 @@ import {
   Award,
 } from 'lucide-react';
 import { AuthModals } from '@/components/auth-modals';
+import { UserPasskeyModal } from '@/components/user-passkey-modal';
 
 export function WelcomeScreen() {
+  const [passkeyModalOpen, setPasskeyModalOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('signup');
   const benefits = [
@@ -72,12 +74,16 @@ export function WelcomeScreen() {
           </p>
 
           <div className='flex items-center justify-center gap-4 pt-4'>
-            <Button 
-              size='lg' 
+            <Button
+              size='lg'
               className='gap-2'
               onClick={() => {
                 setAuthMode('signup');
-                setAuthOpen(true);
+                if (typeof window !== 'undefined' && localStorage.getItem('userPasskeyVerified') === 'true') {
+                  setAuthOpen(true);
+                } else {
+                  setPasskeyModalOpen(true);
+                }
               }}
             >
               Get Started
@@ -129,6 +135,14 @@ export function WelcomeScreen() {
           </Link>
         </div>
       </section> */}
+      <UserPasskeyModal
+        open={passkeyModalOpen}
+        onOpenChange={setPasskeyModalOpen}
+        onVerified={() => {
+          setPasskeyModalOpen(false);
+          setAuthOpen(true);
+        }}
+      />
       <AuthModals
         open={authOpen}
         onOpenChange={setAuthOpen}
