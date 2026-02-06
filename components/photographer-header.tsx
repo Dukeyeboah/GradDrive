@@ -31,7 +31,7 @@ export function PhotographerHeader() {
           >
             <Camera className='h-6 w-6' />
             <span className='font-bold text-lg'>
-              Fotmatic
+              Fotomatic
             </span>
           </Link>
           <nav className='hidden md:flex items-center gap-4'>

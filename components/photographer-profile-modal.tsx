@@ -200,7 +200,7 @@ export function PhotographerProfileModal({
           <DialogDescription>
             {photographer
               ? 'Update your information'
-              : 'Create your Fotmatic profile to get started'}
+              : 'Create your Fotomatic profile to get started'}
           </DialogDescription>
         </DialogHeader>
 

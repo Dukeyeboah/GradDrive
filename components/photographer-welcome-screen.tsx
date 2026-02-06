@@ -239,11 +239,11 @@ export function PhotographerWelcomeScreen() {
                   <Camera className='h-6 w-6 text-primary-foreground' />
                 </div>
                 <span className='font-bold text-2xl text-foreground'>
-                  Fotmatic
+                  Fotomatic
                 </span>
               </div>
               <h1 className='font-bold text-3xl md:text-4xl text-balance text-foreground'>
-                Fotmatic
+                Fotomatic
               </h1>
               <p className='text-muted-foreground text-balance'>
                 Access your dashboard to manage your profile and bookings
@@ -315,8 +315,8 @@ export function PhotographerWelcomeScreen() {
             </h1>
             <p className='text-muted-foreground text-balance'>
               {isLogin
-                ? 'Sign in to access your Fotmatic dashboard'
-                : 'Create an account to access Fotmatic'}
+                ? 'Sign in to access your Fotomatic dashboard'
+                : 'Create an account to access Fotomatic'}
             </p>
           </div>
 

@@ -117,7 +117,7 @@ export function PhotographerSidebar() {
               </div>
               <div>
                 <span className='font-bold text-sm block'>
-                  Fotmatic
+                  Fotomatic
                 </span>
               </div>
             </Link>
