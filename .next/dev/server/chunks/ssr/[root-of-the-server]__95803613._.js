@@ -176,7 +176,9 @@ __turbopack_context__.s([
     "signOutUser",
     ()=>signOutUser,
     "signUpEmailPassword",
-    ()=>signUpEmailPassword
+    ()=>signUpEmailPassword,
+    "updateUserProfile",
+    ()=>updateUserProfile
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$firebase$40$11$2e$0$2e$0$2f$node_modules$2f$firebase$2f$auth$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/firebase@11.0.0/node_modules/firebase/auth/dist/index.mjs [app-ssr] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$auth$40$1$2e$8$2e$0_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$auth$2f$dist$2f$node$2d$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@firebase+auth@1.8.0_@firebase+app@0.10.14/node_modules/@firebase/auth/dist/node-esm/index.js [app-ssr] (ecmascript)");
@@ -252,7 +254,8 @@ async function signInWithGoogle(role = 'user') {
         ;
         // Check if user document exists
         const userDoc = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getDoc"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["doc"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], 'users', user.uid));
-        if (!userDoc.exists()) {
+        const isNewUser = !userDoc.exists();
+        if (isNewUser) {
             // New user - create with role
             const userData = {
                 uid: user.uid,
@@ -291,7 +294,8 @@ async function signInWithGoogle(role = 'user') {
                     if (existingData.role === 'user' && (finalRole === 'admin' || finalRole === 'super admin' || finalRole === 'photographer-admin')) {
                         return {
                             user: null,
-                            error: 'PERMISSION_DENIED_ROLE_UPGRADE'
+                            error: 'PERMISSION_DENIED_ROLE_UPGRADE',
+                            isNewUser: false
                         };
                     }
                 }
@@ -301,27 +305,47 @@ async function signInWithGoogle(role = 'user') {
         }
         return {
             user,
-            error: null
+            error: null,
+            isNewUser
         };
     } catch (error) {
         // Handle popup closed by user
         if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
             return {
                 user: null,
-                error: 'Sign-in popup was closed.'
+                error: 'Sign-in popup was closed.',
+                isNewUser: false
             };
         }
         // Handle permission denied errors
         if (error.code === 'permission-denied' || error.message?.includes('permission') || error.message?.includes('insufficient permissions') || error.message?.includes('Missing or insufficient permissions')) {
             return {
                 user: null,
-                error: 'PERMISSION_DENIED_ROLE_UPGRADE'
+                error: 'PERMISSION_DENIED_ROLE_UPGRADE',
+                isNewUser: false
             };
         }
         console.error('Google sign-in error:', error);
         return {
             user: null,
-            error: error.message || 'An error occurred during Google sign-in'
+            error: error.message || 'An error occurred during Google sign-in',
+            isNewUser: false
+        };
+    }
+}
+async function updateUserProfile(uid, data) {
+    try {
+        const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["doc"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["db"], 'users', uid);
+        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["updateDoc"])(ref, {
+            ...data,
+            updatedAt: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$firebase$2b$firestore$40$4$2e$7$2e$4_$40$firebase$2b$app$40$0$2e$10$2e$14$2f$node_modules$2f40$firebase$2f$firestore$2f$dist$2f$index$2e$node$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["serverTimestamp"])()
+        });
+        return {
+            error: null
+        };
+    } catch (error) {
+        return {
+            error: error.message
         };
     }
 }

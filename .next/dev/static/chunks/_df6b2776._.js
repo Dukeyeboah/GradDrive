@@ -298,6 +298,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$config$2f$photographe
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$auth$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/firebase/auth.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/hooks/use-toast.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/contexts/AuthContext.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$photographer$2d$base$2d$path$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/hooks/use-photographer-base-path.ts [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
@@ -314,9 +315,12 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+;
 function PhotographerWelcomeScreen() {
     _s();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const basePath = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$photographer$2d$base$2d$path$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePhotographerBasePath"])();
+    const photographerRoot = basePath || '/';
     const { toast } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"])();
     const { user, userData } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"])();
     const [passkey, setPasskey] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
@@ -347,13 +351,14 @@ function PhotographerWelcomeScreen() {
             setCheckingAuth(false);
             // If user is already logged in and passkey is verified, redirect to dashboard immediately
             if (user && ("TURBOPACK compile-time value", "object") !== 'undefined' && sessionStorage.getItem('photographerPasskeyVerified') === 'true') {
-                router.push('/photographer-admin/dashboard');
+                router.push(`${basePath}/dashboard`);
             }
         }
     }["PhotographerWelcomeScreen.useEffect"], [
         user,
         userData,
-        router
+        router,
+        basePath
     ]);
     const handlePasskeySubmit = (e)=>{
         e.preventDefault();
@@ -427,7 +432,7 @@ function PhotographerWelcomeScreen() {
                     title: 'Success',
                     description: isLogin ? 'Signed in successfully!' : 'Account created successfully!'
                 });
-                router.push('/photographer-admin/dashboard');
+                router.push(`${basePath}/dashboard`);
             }
         } catch (error) {
             toast({
@@ -470,7 +475,7 @@ function PhotographerWelcomeScreen() {
                     title: 'Success',
                     description: 'Signed in successfully!'
                 });
-                router.push('/photographer-admin/dashboard');
+                router.push(`${basePath}/dashboard`);
                 router.refresh();
             }
         } catch (error) {
@@ -505,48 +510,48 @@ function PhotographerWelcomeScreen() {
                                                 className: "h-6 w-6 text-primary-foreground"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 236,
+                                                lineNumber: 239,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                            lineNumber: 235,
+                                            lineNumber: 238,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "font-bold text-2xl text-foreground",
-                                            children: "Grad Drive"
+                                            children: "Fotomatic"
                                         }, void 0, false, {
                                             fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                            lineNumber: 238,
+                                            lineNumber: 241,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                    lineNumber: 234,
+                                    lineNumber: 237,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                                     className: "font-bold text-3xl md:text-4xl text-balance text-foreground",
-                                    children: "HoS GradDrive Photographer Portal"
+                                    children: "Fotomatic"
                                 }, void 0, false, {
                                     fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                    lineNumber: 242,
+                                    lineNumber: 245,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-muted-foreground text-balance",
-                                    children: "Access your photographer dashboard to manage your profile and bookings"
+                                    children: "Access your dashboard to manage your profile and bookings"
                                 }, void 0, false, {
                                     fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                    lineNumber: 245,
+                                    lineNumber: 248,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/photographer-welcome-screen.tsx",
-                            lineNumber: 233,
+                            lineNumber: 236,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -557,20 +562,20 @@ function PhotographerWelcomeScreen() {
                                             children: "Enter Passkey"
                                         }, void 0, false, {
                                             fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                            lineNumber: 253,
+                                            lineNumber: 255,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
-                                            children: "Please enter the photographer passkey to continue"
+                                            children: "Please enter your passkey to continue"
                                         }, void 0, false, {
                                             fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                            lineNumber: 254,
+                                            lineNumber: 256,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                    lineNumber: 252,
+                                    lineNumber: 254,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -585,27 +590,27 @@ function PhotographerWelcomeScreen() {
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 262,
+                                                        lineNumber: 264,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertTitle"], {
                                                         children: "Incorrect Passkey"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 263,
+                                                        lineNumber: 265,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDescription"], {
                                                         children: passkeyError
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 264,
+                                                        lineNumber: 266,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 261,
+                                                lineNumber: 263,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -613,10 +618,10 @@ function PhotographerWelcomeScreen() {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
                                                         htmlFor: "passkey",
-                                                        children: "Photographer Passkey"
+                                                        children: "Passkey"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 268,
+                                                        lineNumber: 270,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -635,13 +640,13 @@ function PhotographerWelcomeScreen() {
                                                         autoFocus: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 269,
+                                                        lineNumber: 271,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 267,
+                                                lineNumber: 269,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -650,40 +655,40 @@ function PhotographerWelcomeScreen() {
                                                 children: "Verify Passkey"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 285,
+                                                lineNumber: 287,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                        lineNumber: 259,
+                                        lineNumber: 261,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                    lineNumber: 258,
+                                    lineNumber: 260,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/photographer-welcome-screen.tsx",
-                            lineNumber: 251,
+                            lineNumber: 253,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/photographer-welcome-screen.tsx",
-                    lineNumber: 232,
+                    lineNumber: 235,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                lineNumber: 231,
+                lineNumber: 234,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/photographer-welcome-screen.tsx",
-            lineNumber: 230,
+            lineNumber: 233,
             columnNumber: 7
         }, this);
     }
@@ -707,12 +712,12 @@ function PhotographerWelcomeScreen() {
                                             className: "h-6 w-6 text-primary-foreground"
                                         }, void 0, false, {
                                             fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                            lineNumber: 305,
+                                            lineNumber: 307,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                        lineNumber: 304,
+                                        lineNumber: 306,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -720,13 +725,13 @@ function PhotographerWelcomeScreen() {
                                         children: "Grad Drive"
                                     }, void 0, false, {
                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                        lineNumber: 307,
+                                        lineNumber: 309,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                lineNumber: 303,
+                                lineNumber: 305,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -734,21 +739,21 @@ function PhotographerWelcomeScreen() {
                                 children: isLogin ? 'Photographer Login' : 'Photographer Sign Up'
                             }, void 0, false, {
                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                lineNumber: 311,
+                                lineNumber: 313,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 className: "text-muted-foreground text-balance",
-                                children: isLogin ? 'Sign in to access your photographer dashboard' : 'Create an account to access your photographer dashboard'
+                                children: isLogin ? 'Sign in to access your Fotomatic dashboard' : 'Create an account to access Fotomatic'
                             }, void 0, false, {
                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                lineNumber: 314,
+                                lineNumber: 316,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                        lineNumber: 302,
+                        lineNumber: 304,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -759,20 +764,20 @@ function PhotographerWelcomeScreen() {
                                         children: isLogin ? 'Sign In' : 'Sign Up'
                                     }, void 0, false, {
                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                        lineNumber: 323,
+                                        lineNumber: 325,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
                                         children: isLogin ? 'Enter your credentials to access your dashboard' : 'Create your account to get started'
                                     }, void 0, false, {
                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                        lineNumber: 324,
+                                        lineNumber: 326,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                lineNumber: 322,
+                                lineNumber: 324,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -789,7 +794,7 @@ function PhotographerWelcomeScreen() {
                                                         children: "Full Name *"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 334,
+                                                        lineNumber: 336,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -807,7 +812,7 @@ function PhotographerWelcomeScreen() {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 335,
+                                                        lineNumber: 337,
                                                         columnNumber: 21
                                                     }, this),
                                                     signupError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -815,13 +820,13 @@ function PhotographerWelcomeScreen() {
                                                         children: signupError
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 347,
+                                                        lineNumber: 349,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 333,
+                                                lineNumber: 335,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -832,7 +837,7 @@ function PhotographerWelcomeScreen() {
                                                         children: "Email"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 352,
+                                                        lineNumber: 354,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -847,13 +852,13 @@ function PhotographerWelcomeScreen() {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 353,
+                                                        lineNumber: 355,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 351,
+                                                lineNumber: 353,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -864,7 +869,7 @@ function PhotographerWelcomeScreen() {
                                                         children: "Password"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 365,
+                                                        lineNumber: 367,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -879,13 +884,13 @@ function PhotographerWelcomeScreen() {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                        lineNumber: 366,
+                                                        lineNumber: 368,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 364,
+                                                lineNumber: 366,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -898,7 +903,7 @@ function PhotographerWelcomeScreen() {
                                                             className: "mr-2 h-4 w-4 animate-spin"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                            lineNumber: 380,
+                                                            lineNumber: 382,
                                                             columnNumber: 23
                                                         }, this),
                                                         isLogin ? 'Signing in...' : 'Creating account...'
@@ -906,13 +911,13 @@ function PhotographerWelcomeScreen() {
                                                 }, void 0, true) : isLogin ? 'Sign In' : 'Sign Up'
                                             }, void 0, false, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 377,
+                                                lineNumber: 379,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                        lineNumber: 331,
+                                        lineNumber: 333,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -924,12 +929,12 @@ function PhotographerWelcomeScreen() {
                                                     className: "w-full border-t"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                    lineNumber: 393,
+                                                    lineNumber: 395,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 392,
+                                                lineNumber: 394,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -939,18 +944,18 @@ function PhotographerWelcomeScreen() {
                                                     children: "Or continue with"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                    lineNumber: 396,
+                                                    lineNumber: 398,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 395,
+                                                lineNumber: 397,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                        lineNumber: 391,
+                                        lineNumber: 393,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -964,20 +969,20 @@ function PhotographerWelcomeScreen() {
                                                 className: "mr-2 h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                                lineNumber: 409,
+                                                lineNumber: 411,
                                                 columnNumber: 17
                                             }, this),
                                             "Google"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                        lineNumber: 402,
+                                        lineNumber: 404,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                lineNumber: 330,
+                                lineNumber: 332,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardFooter"], {
@@ -990,7 +995,7 @@ function PhotographerWelcomeScreen() {
                                         children: isLogin ? "Don't have an account? Sign up" : 'Already have an account? Sign in'
                                     }, void 0, false, {
                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                        lineNumber: 414,
+                                        lineNumber: 416,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -999,41 +1004,42 @@ function PhotographerWelcomeScreen() {
                                         children: "← Back to home"
                                     }, void 0, false, {
                                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                        lineNumber: 423,
+                                        lineNumber: 425,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                                lineNumber: 413,
+                                lineNumber: 415,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/photographer-welcome-screen.tsx",
-                        lineNumber: 321,
+                        lineNumber: 323,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/photographer-welcome-screen.tsx",
-                lineNumber: 301,
+                lineNumber: 303,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/photographer-welcome-screen.tsx",
-            lineNumber: 300,
+            lineNumber: 302,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/photographer-welcome-screen.tsx",
-        lineNumber: 299,
+        lineNumber: 301,
         columnNumber: 5
     }, this);
 }
-_s(PhotographerWelcomeScreen, "g/SzNGDmGMREUz55mTydGhkdFpE=", false, function() {
+_s(PhotographerWelcomeScreen, "qHIYf41sUb3LpzxG+BBJP3ZYJPQ=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$photographer$2d$base$2d$path$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePhotographerBasePath"],
         __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"],
         __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"]
     ];

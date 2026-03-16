@@ -602,7 +602,7 @@ function PhotographerProfileModal({ open, onOpenChange, onSuccess }) {
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
-                            children: photographer ? 'Update your photographer information' : 'Create your photographer profile to get started'
+                            children: photographer ? 'Update your information' : 'Create your Fotomatic profile to get started'
                         }, void 0, false, {
                             fileName: "[project]/components/photographer-profile-modal.tsx",
                             lineNumber: 200,
@@ -1310,6 +1310,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$AuthContext$2e$t
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$firestore$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/firebase/firestore.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/hooks/use-toast.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$PhotographerSidebarContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/contexts/PhotographerSidebarContext.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$photographer$2d$base$2d$path$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/hooks/use-photographer-base-path.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/next@16.0.10_react-dom@19.2.0_react@19.2.0/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$photographer$2d$profile$2d$modal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/photographer-profile-modal.tsx [app-ssr] (ecmascript)");
 'use client';
@@ -1327,9 +1328,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$photographer$2
 ;
 ;
 ;
+;
 function PhotographerDashboardPage() {
     const { user, userData } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$AuthContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAuth"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    const basePath = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$photographer$2d$base$2d$path$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePhotographerBasePath"])();
+    const photographerRoot = basePath || '/';
     const { toast } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useToast"])();
     const { isCollapsed, setOpenProfileModal } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$PhotographerSidebarContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePhotographerSidebar"])();
     const [photographer, setPhotographer] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
@@ -1359,7 +1363,7 @@ function PhotographerDashboardPage() {
         }
         // Check if user is logged in
         if (!user || !userData?.email) {
-            router.push('/photographer-admin');
+            router.push(photographerRoot);
             return;
         }
         setAuthChecked(true);
@@ -1367,7 +1371,8 @@ function PhotographerDashboardPage() {
     }, [
         user,
         userData,
-        router
+        router,
+        photographerRoot
     ]);
     const loadPhotographerData = async ()=>{
         if (!userData?.email) return;
@@ -1433,7 +1438,7 @@ function PhotographerDashboardPage() {
                     className: "h-8 w-8 animate-spin text-muted-foreground"
                 }, void 0, false, {
                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                    lineNumber: 157,
+                    lineNumber: 160,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1441,13 +1446,13 @@ function PhotographerDashboardPage() {
                     children: "Loading your dashboard..."
                 }, void 0, false, {
                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                    lineNumber: 158,
+                    lineNumber: 161,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-            lineNumber: 156,
+            lineNumber: 159,
             columnNumber: 7
         }, this);
     }
@@ -1466,7 +1471,7 @@ function PhotographerDashboardPage() {
                         children: "Dashboard"
                     }, void 0, false, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 184,
+                        lineNumber: 187,
                         columnNumber: 9
                     }, this),
                     !photographer && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1478,25 +1483,25 @@ function PhotographerDashboardPage() {
                                     children: "Note:"
                                 }, void 0, false, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 188,
+                                    lineNumber: 191,
                                     columnNumber: 15
                                 }, this),
                                 " No photographer profile found. You can create one in the Profile section."
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                            lineNumber: 187,
+                            lineNumber: 190,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 186,
+                        lineNumber: 189,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                lineNumber: 183,
+                lineNumber: 186,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1512,20 +1517,20 @@ function PhotographerDashboardPage() {
                                         children: "Total Bookings"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 199,
+                                        lineNumber: 202,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Calendar$3e$__["Calendar"], {
                                         className: "h-4 w-4 text-muted-foreground"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 202,
+                                        lineNumber: 205,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 198,
+                                lineNumber: 201,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1535,7 +1540,7 @@ function PhotographerDashboardPage() {
                                         children: totalBookings
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 205,
+                                        lineNumber: 208,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1543,19 +1548,19 @@ function PhotographerDashboardPage() {
                                         children: "All-time booking requests"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 206,
+                                        lineNumber: 209,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 204,
+                                lineNumber: 207,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 197,
+                        lineNumber: 200,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
@@ -1568,20 +1573,20 @@ function PhotographerDashboardPage() {
                                         children: "Pending Requests"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 214,
+                                        lineNumber: 217,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bell$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Bell$3e$__["Bell"], {
                                         className: "h-4 w-4 text-muted-foreground"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 217,
+                                        lineNumber: 220,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 213,
+                                lineNumber: 216,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1591,7 +1596,7 @@ function PhotographerDashboardPage() {
                                         children: pendingBookings.length
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 220,
+                                        lineNumber: 223,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1599,19 +1604,19 @@ function PhotographerDashboardPage() {
                                         children: "Awaiting your response"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 221,
+                                        lineNumber: 224,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 219,
+                                lineNumber: 222,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 212,
+                        lineNumber: 215,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
@@ -1624,20 +1629,20 @@ function PhotographerDashboardPage() {
                                         children: "Status"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 229,
+                                        lineNumber: 232,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$camera$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Camera$3e$__["Camera"], {
                                         className: "h-4 w-4 text-muted-foreground"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 230,
+                                        lineNumber: 233,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 228,
+                                lineNumber: 231,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1647,7 +1652,7 @@ function PhotographerDashboardPage() {
                                         children: photographer?.status || 'Not set'
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 233,
+                                        lineNumber: 236,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1655,25 +1660,25 @@ function PhotographerDashboardPage() {
                                         children: "Your current status"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 242,
+                                        lineNumber: 245,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 232,
+                                lineNumber: 235,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 227,
+                        lineNumber: 230,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                lineNumber: 196,
+                lineNumber: 199,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1687,20 +1692,20 @@ function PhotographerDashboardPage() {
                                         children: "Manage Profile"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 253,
+                                        lineNumber: 256,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
-                                        children: "Update your photographer information and details"
+                                        children: "Update your information and details"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 254,
+                                        lineNumber: 257,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 252,
+                                lineNumber: 255,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1712,25 +1717,25 @@ function PhotographerDashboardPage() {
                                             className: "h-4 w-4"
                                         }, void 0, false, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 263,
+                                            lineNumber: 266,
                                             columnNumber: 15
                                         }, this),
                                         photographer ? 'Edit Profile' : 'Create Profile'
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 259,
+                                    lineNumber: 262,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 258,
+                                lineNumber: 261,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 251,
+                        lineNumber: 254,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
@@ -1741,25 +1746,25 @@ function PhotographerDashboardPage() {
                                         children: "View Bookings"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 271,
+                                        lineNumber: 274,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
                                         children: "See all booking requests from users"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 272,
+                                        lineNumber: 275,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 270,
+                                lineNumber: 273,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                    href: "/photographer-admin/bookings",
+                                    href: `${basePath}/bookings`,
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
                                         className: "w-full gap-2",
                                         variant: "outline",
@@ -1768,7 +1773,7 @@ function PhotographerDashboardPage() {
                                                 className: "h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                lineNumber: 279,
+                                                lineNumber: 282,
                                                 columnNumber: 17
                                             }, this),
                                             "View Bookings (",
@@ -1778,29 +1783,29 @@ function PhotographerDashboardPage() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 278,
+                                        lineNumber: 281,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 277,
+                                    lineNumber: 280,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 276,
+                                lineNumber: 279,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 269,
+                        lineNumber: 272,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                lineNumber: 250,
+                lineNumber: 253,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
@@ -1811,20 +1816,20 @@ function PhotographerDashboardPage() {
                                 children: "Your Profile"
                             }, void 0, false, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 292,
+                                lineNumber: 295,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
                                 children: "How you appear to users"
                             }, void 0, false, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 293,
+                                lineNumber: 296,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 291,
+                        lineNumber: 294,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1839,7 +1844,7 @@ function PhotographerDashboardPage() {
                                             children: "Name"
                                         }, void 0, false, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 299,
+                                            lineNumber: 302,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1847,13 +1852,13 @@ function PhotographerDashboardPage() {
                                             children: getPhotographerName()
                                         }, void 0, false, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 302,
+                                            lineNumber: 305,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 298,
+                                    lineNumber: 301,
                                     columnNumber: 15
                                 }, this),
                                 photographer.email && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1865,14 +1870,14 @@ function PhotographerDashboardPage() {
                                                     className: "h-4 w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                    lineNumber: 307,
+                                                    lineNumber: 310,
                                                     columnNumber: 21
                                                 }, this),
                                                 "Email"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 306,
+                                            lineNumber: 309,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1880,13 +1885,13 @@ function PhotographerDashboardPage() {
                                             children: photographer.email
                                         }, void 0, false, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 310,
+                                            lineNumber: 313,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 305,
+                                    lineNumber: 308,
                                     columnNumber: 17
                                 }, this),
                                 photographer.phone && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1898,14 +1903,14 @@ function PhotographerDashboardPage() {
                                                     className: "h-4 w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                    lineNumber: 316,
+                                                    lineNumber: 319,
                                                     columnNumber: 21
                                                 }, this),
                                                 "Phone"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 315,
+                                            lineNumber: 318,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1913,13 +1918,13 @@ function PhotographerDashboardPage() {
                                             children: photographer.phone
                                         }, void 0, false, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 319,
+                                            lineNumber: 322,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 314,
+                                    lineNumber: 317,
                                     columnNumber: 17
                                 }, this),
                                 (photographer.address || photographer.state) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1931,14 +1936,14 @@ function PhotographerDashboardPage() {
                                                     className: "h-4 w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                    lineNumber: 325,
+                                                    lineNumber: 328,
                                                     columnNumber: 21
                                                 }, this),
                                                 "Location"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 324,
+                                            lineNumber: 327,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1946,13 +1951,13 @@ function PhotographerDashboardPage() {
                                             children: photographer.address && photographer.state ? `${photographer.address}, ${photographer.state}` : photographer.address || photographer.state || 'Not specified'
                                         }, void 0, false, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 328,
+                                            lineNumber: 331,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 323,
+                                    lineNumber: 326,
                                     columnNumber: 17
                                 }, this),
                                 photographer.website && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1964,14 +1969,14 @@ function PhotographerDashboardPage() {
                                                     className: "h-4 w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                    lineNumber: 340,
+                                                    lineNumber: 343,
                                                     columnNumber: 21
                                                 }, this),
                                                 "Website"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 339,
+                                            lineNumber: 342,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -1982,13 +1987,13 @@ function PhotographerDashboardPage() {
                                             children: photographer.website
                                         }, void 0, false, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 343,
+                                            lineNumber: 346,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 338,
+                                    lineNumber: 341,
                                     columnNumber: 17
                                 }, this),
                                 photographer.instagram && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2000,14 +2005,14 @@ function PhotographerDashboardPage() {
                                                     className: "h-4 w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                    lineNumber: 356,
+                                                    lineNumber: 359,
                                                     columnNumber: 21
                                                 }, this),
                                                 "Instagram"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 355,
+                                            lineNumber: 358,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -2018,19 +2023,19 @@ function PhotographerDashboardPage() {
                                             children: photographer.instagram
                                         }, void 0, false, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 359,
+                                            lineNumber: 362,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 354,
+                                    lineNumber: 357,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                            lineNumber: 297,
+                            lineNumber: 300,
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "text-center py-8",
@@ -2040,7 +2045,7 @@ function PhotographerDashboardPage() {
                                     children: "No profile found. Create one to get started!"
                                 }, void 0, false, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 372,
+                                    lineNumber: 375,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -2048,24 +2053,24 @@ function PhotographerDashboardPage() {
                                     children: "Create Profile"
                                 }, void 0, false, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 375,
+                                    lineNumber: 378,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                            lineNumber: 371,
+                            lineNumber: 374,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 295,
+                        lineNumber: 298,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                lineNumber: 290,
+                lineNumber: 293,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
@@ -2080,47 +2085,47 @@ function PhotographerDashboardPage() {
                                             children: "Recent Booking Requests"
                                         }, void 0, false, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 388,
+                                            lineNumber: 391,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
                                             children: "Latest requests from users"
                                         }, void 0, false, {
                                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                            lineNumber: 389,
+                                            lineNumber: 392,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 387,
+                                    lineNumber: 390,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                    href: "/photographer-admin/bookings",
+                                    href: `${basePath}/bookings`,
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
                                         variant: "outline",
                                         size: "sm",
                                         children: "View All"
                                     }, void 0, false, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 392,
+                                        lineNumber: 395,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 391,
+                                    lineNumber: 394,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                            lineNumber: 386,
+                            lineNumber: 389,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 385,
+                        lineNumber: 388,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -2130,12 +2135,12 @@ function PhotographerDashboardPage() {
                                 className: "h-6 w-6 animate-spin text-muted-foreground"
                             }, void 0, false, {
                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                lineNumber: 401,
+                                lineNumber: 404,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                            lineNumber: 400,
+                            lineNumber: 403,
                             columnNumber: 13
                         }, this) : bookings.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "text-center py-8",
@@ -2144,7 +2149,7 @@ function PhotographerDashboardPage() {
                                     className: "h-12 w-12 text-muted-foreground mx-auto mb-4"
                                 }, void 0, false, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 405,
+                                    lineNumber: 408,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2152,13 +2157,13 @@ function PhotographerDashboardPage() {
                                     children: "No booking requests yet"
                                 }, void 0, false, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 406,
+                                    lineNumber: 409,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                            lineNumber: 404,
+                            lineNumber: 407,
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "space-y-3",
@@ -2175,7 +2180,7 @@ function PhotographerDashboardPage() {
                                                         children: booking.userName
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                        lineNumber: 417,
+                                                        lineNumber: 420,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
@@ -2183,13 +2188,13 @@ function PhotographerDashboardPage() {
                                                         children: booking.status || 'pending'
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                        lineNumber: 418,
+                                                        lineNumber: 421,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                lineNumber: 416,
+                                                lineNumber: 419,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2197,7 +2202,7 @@ function PhotographerDashboardPage() {
                                                 children: booking.userEmail
                                             }, void 0, false, {
                                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                lineNumber: 422,
+                                                lineNumber: 425,
                                                 columnNumber: 21
                                             }, this),
                                             booking.timestamp && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2205,34 +2210,34 @@ function PhotographerDashboardPage() {
                                                 children: formatDate(booking.timestamp)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                                lineNumber: 426,
+                                                lineNumber: 429,
                                                 columnNumber: 23
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                        lineNumber: 415,
+                                        lineNumber: 418,
                                         columnNumber: 19
                                     }, this)
                                 }, booking.id, false, {
                                     fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                                    lineNumber: 411,
+                                    lineNumber: 414,
                                     columnNumber: 17
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                            lineNumber: 409,
+                            lineNumber: 412,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                        lineNumber: 398,
+                        lineNumber: 401,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                lineNumber: 384,
+                lineNumber: 387,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$photographer$2d$profile$2d$modal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["PhotographerProfileModal"], {
@@ -2243,13 +2248,13 @@ function PhotographerDashboardPage() {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-                lineNumber: 438,
+                lineNumber: 441,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/photographer-admin/dashboard/page.tsx",
-        lineNumber: 176,
+        lineNumber: 179,
         columnNumber: 5
     }, this);
 }
