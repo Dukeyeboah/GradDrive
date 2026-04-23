@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -112,30 +113,40 @@ export function AdminSidebar() {
         <div className={cn('p-5 border-b border-border', isCollapsed && 'p-4')}>
           <div className='flex items-center justify-between'>
             {!isCollapsed && (
-              <Link href='/admin/dashboard' className='flex items-center gap-2'>
-                <div className='flex h-7 w-7 items-center justify-center rounded-md bg-primary'>
-                  <span className='font-bold text-primary-foreground text-lg'>
-                    GD
-                  </span>
-                </div>
-                <div>
-                  <span className='font-bold text-lg block'>Grad Drive</span>
-                  {/* <span className='text-xs text-muted-foreground'>
-                    Admin Portal
-                  </span> */}
-                </div>
+              <Link
+                href='/admin/dashboard'
+                className='flex items-center gap-2 min-w-0'
+                aria-label='Grad Drive admin home'
+              >
+                <Image
+                  src='/images/logo.png'
+                  alt=''
+                  width={40}
+                  height={40}
+                  className='h-8 w-8 shrink-0 object-contain'
+                />
+                <Image
+                  src='/images/graddrive.png'
+                  alt='Grad Drive'
+                  width={140}
+                  height={36}
+                  className='h-6 w-auto max-w-[120px] object-contain object-left'
+                />
               </Link>
             )}
             {isCollapsed && (
               <Link
                 href='/admin/dashboard'
                 className='flex items-center justify-center w-full'
+                aria-label='Grad Drive admin home'
               >
-                <div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary'>
-                  <span className='font-bold text-primary-foreground text-lg'>
-                    GD
-                  </span>
-                </div>
+                <Image
+                  src='/images/logo.png'
+                  alt=''
+                  width={36}
+                  height={36}
+                  className='h-8 w-8 object-contain'
+                />
               </Link>
             )}
           </div>

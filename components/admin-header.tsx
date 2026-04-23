@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -34,14 +35,29 @@ export function AdminHeader() {
           </Button>
         )}
 
-        <div className='flex-1 md:hidden'>
-          <Link href='/admin/dashboard' className='flex items-center gap-2'>
-            <div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary'>
-              <span className='font-bold text-primary-foreground text-lg'>
-                GD
-              </span>
-            </div>
-            <span className='font-bold text-lg'>Admin</span>
+        <div className='flex-1 md:hidden min-w-0'>
+          <Link
+            href='/admin/dashboard'
+            className='flex items-center gap-2 min-w-0'
+            aria-label='Grad Drive admin home'
+          >
+            <Image
+              src='/images/logo.png'
+              alt=''
+              width={36}
+              height={36}
+              className='h-18 w-18 shrink-0 object-contain'
+            />
+            <Image
+              src='/images/graddrive.png'
+              alt='Grad Drive'
+              width={120}
+              height={32}
+              className='h-6 w-auto max-w-[100px] object-contain object-left'
+            />
+            <span className='text-xs font-medium text-muted-foreground shrink-0'>
+              Admin
+            </span>
           </Link>
         </div>
       </div>

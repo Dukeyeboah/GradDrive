@@ -11,7 +11,13 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { auth } from './config';
-import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  serverTimestamp,
+} from 'firebase/firestore';
 import { db } from './config';
 
 const googleProvider = new GoogleAuthProvider();
@@ -45,7 +51,7 @@ export async function signInEmailPassword(email: string, password: string) {
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
-      password
+      password,
     );
     return { user: userCredential.user, error: null };
   } catch (error: any) {
@@ -60,13 +66,13 @@ export async function signUpEmailPassword(
   email: string,
   password: string,
   displayName?: string,
-  role: 'user' | 'admin' | 'super admin' | 'photographer-admin' = 'user'
+  role: 'user' | 'admin' | 'super admin' | 'photographer-admin' = 'user',
 ) {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
-      password
+      password,
     );
 
     // Update profile with display name if provided
@@ -98,7 +104,7 @@ export async function signUpEmailPassword(
  * Handles user creation/update immediately
  */
 export async function signInWithGoogle(
-  role: 'user' | 'admin' | 'super admin' | 'photographer-admin' = 'user'
+  role: 'user' | 'admin' | 'super admin' | 'photographer-admin' = 'user',
 ) {
   try {
     // Use popup instead of redirect
@@ -111,7 +117,7 @@ export async function signInWithGoogle(
 
     if (typeof window !== 'undefined') {
       const photographerVerified = sessionStorage.getItem(
-        'photographerPasskeyVerified'
+        'photographerPasskeyVerified',
       );
       const adminRole = sessionStorage.getItem('adminRole');
       const adminVerified = sessionStorage.getItem('adminPasskeyVerified');
@@ -201,7 +207,11 @@ export async function signInWithGoogle(
       error.code === 'auth/popup-closed-by-user' ||
       error.code === 'auth/cancelled-popup-request'
     ) {
-      return { user: null, error: 'Sign-in popup was closed.', isNewUser: false };
+      return {
+        user: null,
+        error: 'Sign-in popup was closed.',
+        isNewUser: false,
+      };
     }
 
     // Handle permission denied errors
@@ -238,7 +248,7 @@ export async function updateUserProfile(
     collegeGroup?: string | null;
     major?: string | null;
     graduationYear?: string | null;
-  }
+  },
 ) {
   try {
     const ref = doc(db, 'users', uid);
