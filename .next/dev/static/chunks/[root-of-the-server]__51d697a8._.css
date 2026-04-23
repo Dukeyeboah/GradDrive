@@ -5584,6 +5584,12 @@
   }
 
   @media (min-width: 40rem) {
+    .sm\:text-center {
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 40rem) {
     .sm\:text-left {
       text-align: left;
     }

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -94,11 +95,23 @@ export function AdminWelcomeScreen() {
       <div className='container py-20'>
         <div className='mx-auto max-w-md space-y-6'>
           <div className='text-center space-y-4'>
-            <div className='flex items-center justify-center gap-2 mb-4'>
-              <div className='flex h-12 w-12 items-center justify-center rounded-md bg-primary'>
-                <span className='font-bold text-primary-foreground text-xl'>GD</span>
-              </div>
-              <span className='font-bold text-2xl text-foreground'>Grad Drive</span>
+            <div className='flex items-center justify-center gap-2 sm:gap-3 mb-4'>
+              <Image
+                src='/images/logo.png'
+                alt=''
+                width={44}
+                height={44}
+                className='h-9 w-9 sm:h-10 sm:w-10 object-contain'
+                priority
+              />
+              <Image
+                src='/images/graddrive.png'
+                alt='Grad Drive'
+                width={160}
+                height={40}
+                className='h-7 sm:h-8 w-auto max-w-[140px] sm:max-w-[180px] object-contain object-left'
+                priority
+              />
             </div>
             <h1 className='font-bold text-3xl md:text-4xl text-balance text-foreground'>
               Admin Login
@@ -345,11 +358,23 @@ export function AdminWelcomeScreen() {
       <div className='container py-20'>
         <div className='mx-auto max-w-md space-y-6'>
           <div className='text-center space-y-4'>
-            <div className='flex items-center justify-center gap-2 mb-4'>
-              <div className='flex h-12 w-12 items-center justify-center rounded-md bg-primary'>
-                <span className='font-bold text-primary-foreground text-xl'>GD</span>
-              </div>
-              <span className='font-bold text-2xl text-foreground'>Grad Drive</span>
+            <div className='flex items-center justify-center gap-2 sm:gap-3 mb-4'>
+              <Image
+                src='/images/logo.png'
+                alt=''
+                width={44}
+                height={44}
+                className='h-9 w-9 sm:h-10 sm:w-10 object-contain'
+                priority
+              />
+              <Image
+                src='/images/graddrive.png'
+                alt='Grad Drive'
+                width={160}
+                height={40}
+                className='h-7 sm:h-8 w-auto max-w-[140px] sm:max-w-[180px] object-contain object-left'
+                priority
+              />
             </div>
             <h1 className='font-bold text-3xl md:text-4xl text-balance text-foreground'>
               Admin {isLogin ? 'Log In' : 'Sign Up'}

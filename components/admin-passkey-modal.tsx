@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import {
   Dialog,
@@ -56,13 +57,31 @@ export function AdminPasskeyModal({ open, onOpenChange, onVerified, mode }: Admi
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Admin Access Required</DialogTitle>
-          <DialogDescription>
-            Please enter the admin passkey to {mode === "login" ? "sign in" : "create an account"}
-          </DialogDescription>
-        </DialogHeader>
-        <form onSubmit={handleVerify} className="space-y-4">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-center gap-2 sm:gap-3">
+            <Image
+              src="/images/logo.png"
+              alt=""
+              width={44}
+              height={44}
+              className="h-9 w-9 sm:h-10 sm:w-10 object-contain"
+            />
+            <Image
+              src="/images/graddrive.png"
+              alt="Grad Drive"
+              width={160}
+              height={40}
+              className="h-7 sm:h-8 w-auto max-w-[140px] sm:max-w-[180px] object-contain object-left"
+            />
+          </div>
+          <DialogHeader className="text-center sm:text-center space-y-2">
+            <DialogTitle>Admin Access Required</DialogTitle>
+            <DialogDescription>
+              Please enter the admin passkey to {mode === "login" ? "sign in" : "create an account"}
+            </DialogDescription>
+          </DialogHeader>
+        </div>
+        <form onSubmit={handleVerify} className="space-y-4 pt-2">
           <div className="space-y-2">
             <Label htmlFor="passkey">Admin Passkey</Label>
             <Input
