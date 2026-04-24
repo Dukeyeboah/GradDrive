@@ -385,7 +385,6 @@ export default function AdminPostersPage() {
       setUploading(false);
     }
   };
-
   const resetForm = () => {
     setFormData({
       name: '',
