@@ -25,7 +25,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Plus, FileImage, MoreVertical, Eye, Edit, Upload, Trash2 } from 'lucide-react';
+import {
+  Plus,
+  FileImage,
+  MoreVertical,
+  Eye,
+  Edit,
+  Upload,
+  Trash2,
+} from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import {
   getPosters,
@@ -159,7 +167,7 @@ export default function AdminPostersPage() {
       // Upload high-res PNG image to Firebase Storage (posters/ folder)
       const { url, error: uploadError } = await uploadImage(
         imageFile,
-        'posters'
+        'posters',
       );
       if (uploadError || !url) {
         toast({
@@ -184,18 +192,26 @@ export default function AdminPostersPage() {
           // Pattern: starts with digits, followed by underscore
           const filenameWithoutPrefix = highResFilename.replace(/^\d+_/, '');
           // Convert PNG to JPG - remove timestamp prefix, change extension
-          const jpgFilename = filenameWithoutPrefix.replace(/\.(png|PNG)$/, '.jpg');
+          const jpgFilename = filenameWithoutPrefix.replace(
+            /\.(png|PNG)$/,
+            '.jpg',
+          );
           const jpgPath = `posters/${jpgFilename}`;
-          
-          console.log(`🔍 Looking for JPG: ${jpgPath} (from PNG: ${highResFilename})`);
-          
+
+          console.log(
+            `🔍 Looking for JPG: ${jpgPath} (from PNG: ${highResFilename})`,
+          );
+
           // Try to get the download URL for the JPG file
           const { url: jpgUrl, error: jpgError } = await getFileURL(jpgPath);
           if (jpgUrl && !jpgError) {
             displayImageUrl = jpgUrl;
             console.log('✅ Found JPG file for display:', formData.name);
           } else {
-            console.warn('⚠️ JPG file not found (will use PNG for display):', jpgPath);
+            console.warn(
+              '⚠️ JPG file not found (will use PNG for display):',
+              jpgPath,
+            );
           }
         }
       } catch (error) {
@@ -240,7 +256,7 @@ export default function AdminPostersPage() {
           userData.displayName || user.email || 'Unknown',
           userData.email || '',
           { posterId, posterName: formData.name },
-          userData.role
+          userData.role,
         );
 
         toast({
@@ -281,7 +297,7 @@ export default function AdminPostersPage() {
       if (imageFile) {
         const { url, error: uploadError } = await uploadImage(
           imageFile,
-          'posters'
+          'posters',
         );
         if (uploadError || !url) {
           toast({
@@ -302,7 +318,10 @@ export default function AdminPostersPage() {
             const highResFilename = decodeURIComponent(urlMatch[1]);
             // Remove timestamp prefix (format: {timestamp}_{filename}.png)
             const filenameWithoutPrefix = highResFilename.replace(/^\d+_/, '');
-            const jpgFilename = filenameWithoutPrefix.replace(/\.(png|PNG)$/, '.jpg');
+            const jpgFilename = filenameWithoutPrefix.replace(
+              /\.(png|PNG)$/,
+              '.jpg',
+            );
             const jpgPath = `posters/${jpgFilename}`;
             const { url: jpgUrlResult } = await getFileURL(jpgPath);
             if (jpgUrlResult) {
@@ -356,7 +375,7 @@ export default function AdminPostersPage() {
           userData.displayName || user.email || 'Unknown',
           userData.email || '',
           { posterId: selectedPoster.id, posterName: formData.name },
-          userData.role
+          userData.role,
         );
 
         toast({
@@ -423,7 +442,11 @@ export default function AdminPostersPage() {
     if (!poster.id || !user || !userData) return;
 
     // Confirm deletion
-    if (!confirm(`Are you sure you want to delete "${poster.name}"? This action cannot be undone.`)) {
+    if (
+      !confirm(
+        `Are you sure you want to delete "${poster.name}"? This action cannot be undone.`,
+      )
+    ) {
       return;
     }
 
@@ -454,7 +477,7 @@ export default function AdminPostersPage() {
           userData.displayName || 'Unknown',
           userData.email || 'unknown@example.com',
           { posterName: poster.name, posterId: poster.id },
-          userData.role
+          userData.role,
         );
 
         toast({
@@ -521,7 +544,7 @@ export default function AdminPostersPage() {
                   src={poster.lowResImageUrl || poster.imageUrl}
                   alt={poster.name}
                   className='w-full h-full object-cover'
-                  loading="lazy"
+                  loading='lazy'
                   onError={(e) => {
                     // Fallback to high-res if low-res fails
                     if (poster.lowResImageUrl && poster.imageUrl) {
@@ -742,12 +765,17 @@ export default function AdminPostersPage() {
               {selectedPoster.imageUrl ? (
                 <div className='w-full h-64 rounded-lg overflow-hidden'>
                   <img
-                    src={selectedPoster.lowResImageUrl || selectedPoster.imageUrl}
+                    src={
+                      selectedPoster.lowResImageUrl || selectedPoster.imageUrl
+                    }
                     alt={selectedPoster.name}
                     className='w-full h-full object-cover'
                     onError={(e) => {
                       // Fallback to high-res if low-res fails
-                      if (selectedPoster.lowResImageUrl && selectedPoster.imageUrl) {
+                      if (
+                        selectedPoster.lowResImageUrl &&
+                        selectedPoster.imageUrl
+                      ) {
                         const img = e.currentTarget;
                         if (img.src === selectedPoster.lowResImageUrl) {
                           img.src = selectedPoster.imageUrl;
