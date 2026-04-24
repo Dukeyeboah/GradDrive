@@ -53,6 +53,9 @@ function isFotmaticHost(host) {
  * We use it so that fotmatic.app and fotmatic.app/bookings actually serve the
  * photographer-admin app (which lives at /photographer-admin and /photographer-admin/bookings
  * in the codebase) while the URL bar still shows fotmatic.app and fotmatic.app/bookings.
+ *
+ * Same for fotomatic.app: e.g. fotomatic.app/photographers rewrites internally to
+ * /photographer-admin/photographers (browser URL stays /photographers).
  */ __turbopack_context__.s([
     "config",
     ()=>config,

@@ -2,8 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Camera, LogOut, Home } from 'lucide-react';
+import { LogOut, Home } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { signOutUser } from '@/lib/firebase/auth';
 import { usePhotographerBasePath } from '@/hooks/use-photographer-base-path';
@@ -27,12 +28,23 @@ export function PhotographerHeader() {
         <div className='flex items-center gap-6 pl-8'>
           <Link
             href={`${basePath}/dashboard`}
-            className='flex items-center gap-2'
+            className='flex items-center gap-2 sm:gap-3 shrink-0'
+            aria-label='Grad Drive photographer home'
           >
-            <Camera className='h-6 w-6' />
-            <span className='font-bold text-lg'>
-              Fotomatic
-            </span>
+            <Image
+              src='/images/logo.png'
+              alt=''
+              width={40}
+              height={40}
+              className='h-8 w-8 sm:h-9 sm:w-9 object-contain'
+            />
+            <Image
+              src='/images/graddrive.png'
+              alt='Grad Drive'
+              width={160}
+              height={40}
+              className='h-7 sm:h-8 w-auto max-w-[140px] sm:max-w-[180px] object-contain object-left'
+            />
           </Link>
           <nav className='hidden md:flex items-center gap-4'>
             <Link href={`${basePath}/dashboard`}>

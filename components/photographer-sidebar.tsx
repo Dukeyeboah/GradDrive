@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -28,7 +29,6 @@ import {
   ChevronRight,
   LogOut,
   UserCircle,
-  Camera,
   Menu,
   Settings,
 } from 'lucide-react';
@@ -110,26 +110,38 @@ export function PhotographerSidebar() {
           {!isCollapsed && (
             <Link
               href={`${basePath}/dashboard`}
-              className='flex items-center gap-2'
+              className='flex items-center gap-2 min-w-0'
+              aria-label='Grad Drive photographer home'
             >
-              <div className='flex h-7 w-7 items-center justify-center rounded-md bg-primary'>
-                <Camera className='h-4 w-4 text-primary-foreground' />
-              </div>
-              <div>
-                <span className='font-bold text-sm block'>
-                  Fotomatic
-                </span>
-              </div>
+              <Image
+                src='/images/logo.png'
+                alt=''
+                width={40}
+                height={40}
+                className='h-8 w-8 shrink-0 object-contain'
+              />
+              <Image
+                src='/images/graddrive.png'
+                alt='Grad Drive'
+                width={140}
+                height={36}
+                className='h-6 w-auto max-w-[120px] object-contain object-left'
+              />
             </Link>
           )}
           {isCollapsed && !isMobile && (
             <Link
               href={`${basePath}/dashboard`}
               className='flex items-center justify-center w-full'
+              aria-label='Grad Drive photographer home'
             >
-              <div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary'>
-                <Camera className='h-4 w-4 text-primary-foreground' />
-              </div>
+              <Image
+                src='/images/logo.png'
+                alt=''
+                width={36}
+                height={36}
+                className='h-8 w-8 object-contain'
+              />
             </Link>
           )}
         </div>

@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/admin/layout,_N_T_/admin/photographers/layout,_N_T_/admin/photographers/page,_N_T_/admin/photographers"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/admin/photographers/__PAGE__",
+    "/admin/photographers",
+    "/admin",
+    "/_index",
+    "/_head"
+  ]
+}

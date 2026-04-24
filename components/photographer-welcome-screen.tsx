@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,7 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Chrome, Loader2, Camera, AlertCircle } from 'lucide-react';
+import { Chrome, Loader2, AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { PHOTOGRAPHER_PASSKEY } from '@/lib/config/photographer';
 import {
@@ -22,14 +23,14 @@ import {
   signUpEmailPassword,
   signInWithGoogle,
 } from '@/lib/firebase/auth';
+import { getUserRole } from '@/lib/firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import { usePhotographerBasePath } from '@/hooks/use-photographer-base-path';
+
+const PHOTOGRAPHER_BASE = '/photographer-admin';
 
 export function PhotographerWelcomeScreen() {
   const router = useRouter();
-  const basePath = usePhotographerBasePath();
-  const photographerRoot = basePath || '/';
   const { toast } = useToast();
   const { user, userData } = useAuth();
   const [passkey, setPasskey] = useState('');
@@ -43,57 +44,45 @@ export function PhotographerWelcomeScreen() {
   });
   const [signupError, setSignupError] = useState<string | null>(null);
   const [passkeyError, setPasskeyError] = useState<string | null>(null);
-  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
-    // Check if passkey was verified
     if (typeof window !== 'undefined') {
-      const verified = sessionStorage.getItem('photographerPasskeyVerified');
-      if (verified === 'true') {
+      if (sessionStorage.getItem('photographerPasskeyVerified') === 'true') {
         setPasskeyVerified(true);
       }
     }
 
-    // Wait for auth to be ready
-    if (user === undefined) {
-      return; // Still loading auth state
-    }
+    if (user === undefined) return;
 
-    setCheckingAuth(false);
-
-    // If user is already logged in and passkey is verified, redirect to dashboard immediately
     if (
       user &&
       typeof window !== 'undefined' &&
       sessionStorage.getItem('photographerPasskeyVerified') === 'true'
     ) {
-      router.push(`${basePath}/dashboard`);
+      router.push(`${PHOTOGRAPHER_BASE}/dashboard`);
     }
-  }, [user, userData, router, basePath]);
+  }, [user, userData, router]);
 
   const handlePasskeySubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (passkey !== PHOTOGRAPHER_PASSKEY) {
-      const errorMessage = 'The passkey you entered is incorrect. Please check and try again, or contact an administrator if you believe this is an error.';
+      const errorMessage =
+        'The passkey you entered is incorrect. Please check and try again, or contact an administrator if you believe this is an error.';
       setPasskeyError(errorMessage);
       toast({
         title: 'Incorrect Passkey',
         description: errorMessage,
         variant: 'destructive',
       });
-      setPasskey(''); // Clear the input
+      setPasskey('');
       return;
     }
 
-    // Clear error on successful passkey
     setPasskeyError(null);
-
-    // Store passkey verification in sessionStorage
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('photographerPasskeyVerified', 'true');
     }
-
     setPasskeyVerified(true);
     toast({
       title: 'Passkey Verified',
@@ -106,7 +95,6 @@ export function PhotographerWelcomeScreen() {
     setLoading(true);
     setSignupError(null);
 
-    // Validate signup form
     if (!isLogin && !formData.name.trim()) {
       setSignupError('Name is required for sign up');
       setLoading(false);
@@ -118,21 +106,15 @@ export function PhotographerWelcomeScreen() {
       if (isLogin) {
         result = await signInEmailPassword(formData.email, formData.password);
       } else {
-        if (!formData.name.trim()) {
-          setSignupError('Please enter your name');
-          setLoading(false);
-          return;
-        }
         result = await signUpEmailPassword(
           formData.email,
           formData.password,
           formData.name,
-          'photographer-admin' as any
+          'photographer-admin' as const,
         );
       }
 
       if (result.error) {
-        // Check if it's a "user not found" error for login
         const isUserNotFound =
           result.error.includes('user-not-found') ||
           result.error.includes('User not found') ||
@@ -157,19 +139,31 @@ export function PhotographerWelcomeScreen() {
       }
 
       if (result.user) {
-        // For testing: allow access without checking photographer profile
+        const role = await getUserRole(result.user.uid);
+        if (role !== 'photographer-admin') {
+          toast({
+            title: 'Wrong account type',
+            description:
+              'This login is not a photographer account. Use the main site to sign in as a member.',
+            variant: 'destructive',
+          });
+          setLoading(false);
+          return;
+        }
         toast({
           title: 'Success',
           description: isLogin
             ? 'Signed in successfully!'
             : 'Account created successfully!',
         });
-        router.push(`${basePath}/dashboard`);
+        router.push(`${PHOTOGRAPHER_BASE}/dashboard`);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : 'An unexpected error occurred.';
       toast({
         title: 'Error',
-        description: error.message || 'An unexpected error occurred.',
+        description: message,
         variant: 'destructive',
       });
     } finally {
@@ -180,19 +174,18 @@ export function PhotographerWelcomeScreen() {
   const handleGoogleAuth = async () => {
     setLoading(true);
     try {
-      // Ensure passkey verification is stored
       if (typeof window !== 'undefined') {
         sessionStorage.setItem('photographerPasskeyVerified', 'true');
       }
-      
-      const { user, error } = await signInWithGoogle('photographer-admin');
-      
+
+      const { user: gUser, error } = await signInWithGoogle('photographer-admin');
+
       if (error) {
-        // Check for specific permission denied error
         if (error === 'PERMISSION_DENIED_ROLE_UPGRADE') {
           toast({
             title: 'Access Denied',
-            description: 'Your account does not have photographer privileges. Please contact an administrator to upgrade your account role, or sign in with a different account that has photographer access.',
+            description:
+              'Your account does not have photographer privileges. Please contact an administrator.',
             variant: 'destructive',
           });
         } else {
@@ -205,21 +198,34 @@ export function PhotographerWelcomeScreen() {
         setLoading(false);
         return;
       }
-      
-      if (user) {
+
+      if (gUser) {
+        const role = await getUserRole(gUser.uid);
+        if (role !== 'photographer-admin') {
+          toast({
+            title: 'Wrong account type',
+            description:
+              'This Google account is not registered as a photographer here.',
+            variant: 'destructive',
+          });
+          setLoading(false);
+          return;
+        }
         toast({
           title: 'Success',
           description: 'Signed in successfully!',
         });
-        router.push(`${basePath}/dashboard`);
+        router.push(`${PHOTOGRAPHER_BASE}/dashboard`);
         router.refresh();
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Google auth error:', error);
       toast({
         title: 'Error',
         description:
-          error.message || 'An unexpected error occurred. Please try again.',
+          error instanceof Error
+            ? error.message
+            : 'An unexpected error occurred.',
         variant: 'destructive',
       });
     } finally {
@@ -227,26 +233,36 @@ export function PhotographerWelcomeScreen() {
     }
   };
 
-  // Show passkey form if not verified
   if (!passkeyVerified) {
     return (
-      <main className='flex-col flex justify-center items-center min-h-screen bg-muted/30'>
+      <main className='flex min-h-screen flex-col items-center justify-center bg-muted/30'>
         <div className='container py-20'>
           <div className='mx-auto max-w-md space-y-6'>
-            <div className='text-center space-y-4'>
-              <div className='flex items-center justify-center gap-2 mb-4'>
-                <div className='flex h-12 w-12 items-center justify-center rounded-md bg-primary'>
-                  <Camera className='h-6 w-6 text-primary-foreground' />
-                </div>
-                <span className='font-bold text-2xl text-foreground'>
-                  Fotomatic
-                </span>
+            <div className='space-y-4 text-center'>
+              <div className='mb-4 flex items-center justify-center gap-2 sm:gap-3'>
+                <Image
+                  src='/images/logo.png'
+                  alt=''
+                  width={44}
+                  height={44}
+                  className='h-9 w-9 sm:h-10 sm:w-10 object-contain'
+                  priority
+                />
+                <Image
+                  src='/images/graddrive.png'
+                  alt='Grad Drive'
+                  width={160}
+                  height={40}
+                  className='h-7 sm:h-8 w-auto max-w-[140px] sm:max-w-[180px] object-contain object-left'
+                  priority
+                />
               </div>
-              <h1 className='font-bold text-3xl md:text-4xl text-balance text-foreground'>
-                Fotomatic
+              <h1 className='text-balance text-3xl font-bold text-foreground md:text-4xl'>
+                Photographer access
               </h1>
-              <p className='text-muted-foreground text-balance'>
-                Access your dashboard to manage your profile and bookings
+              <p className='text-balance text-muted-foreground'>
+                Enter your photographer passkey to manage your profile and
+                bookings on Grad Drive.
               </p>
             </div>
 
@@ -275,10 +291,7 @@ export function PhotographerWelcomeScreen() {
                       value={passkey}
                       onChange={(e) => {
                         setPasskey(e.target.value);
-                        // Clear error when user starts typing
-                        if (passkeyError) {
-                          setPasskeyError(null);
-                        }
+                        if (passkeyError) setPasskeyError(null);
                       }}
                       required
                       autoFocus
@@ -296,27 +309,36 @@ export function PhotographerWelcomeScreen() {
     );
   }
 
-  // Show login/signup form after passkey verification
   return (
-    <main className='flex-col flex justify-center items-center min-h-screen bg-muted/30'>
+    <main className='flex min-h-screen flex-col items-center justify-center bg-muted/30'>
       <div className='container py-20'>
         <div className='mx-auto max-w-md space-y-6'>
-          <div className='text-center space-y-4'>
-            <div className='flex items-center justify-center gap-2 mb-4'>
-              <div className='flex h-12 w-12 items-center justify-center rounded-md bg-primary'>
-                <Camera className='h-6 w-6 text-primary-foreground' />
-              </div>
-              <span className='font-bold text-2xl text-foreground'>
-                Grad Drive
-              </span>
+          <div className='space-y-4 text-center'>
+            <div className='mb-4 flex items-center justify-center gap-2 sm:gap-3'>
+              <Image
+                src='/images/logo.png'
+                alt=''
+                width={44}
+                height={44}
+                className='h-9 w-9 sm:h-10 sm:w-10 object-contain'
+                priority
+              />
+              <Image
+                src='/images/graddrive.png'
+                alt='Grad Drive'
+                width={160}
+                height={40}
+                className='h-7 sm:h-8 w-auto max-w-[140px] sm:max-w-[180px] object-contain object-left'
+                priority
+              />
             </div>
-            <h1 className='font-bold text-3xl md:text-4xl text-balance text-foreground'>
+            <h1 className='text-balance text-3xl font-bold text-foreground md:text-4xl'>
               {isLogin ? 'Photographer Login' : 'Photographer Sign Up'}
             </h1>
-            <p className='text-muted-foreground text-balance'>
+            <p className='text-balance text-muted-foreground'>
               {isLogin
-                ? 'Sign in to access your Fotomatic dashboard'
-                : 'Create an account to access Fotomatic'}
+                ? 'Sign in to access your photographer dashboard'
+                : 'Create an account to access the photographer portal'}
             </p>
           </div>
 

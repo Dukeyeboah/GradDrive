@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -11,7 +12,6 @@ import {
   BookOpen,
   Camera,
   Award,
-  Gift,
   FileImage,
   Users,
   History,
@@ -39,7 +39,7 @@ export function UserNav() {
   const router = useRouter();
   const { toast } = useToast();
   const { user, userData } = useAuth();
-  const { viewMode, setViewMode, isAdminViewingAsUser } = useViewMode();
+  const { setViewMode, isAdminViewingAsUser } = useViewMode();
   const isDashboard = pathname === '/dashboard';
   const showBackButton = !isDashboard && pathname.startsWith('/dashboard');
 
@@ -62,15 +62,25 @@ export function UserNav() {
     <nav className='flex justify-center items-center sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
       <div className='container flex h-16 items-center justify-between px-4 md:px-6'>
         <div className='flex items-center gap-6'>
-          <Link href='/dashboard' className='flex items-center gap-2'>
-            <div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary'>
-              <span className='font-bold text-primary-foreground text-lg'>
-                GD
-              </span>
-            </div>
-            <span className='font-bold text-xl text-foreground'>
-              Grad Drive
-            </span>
+          <Link
+            href='/dashboard'
+            className='flex items-center gap-2 sm:gap-3 shrink-0'
+            aria-label='Grad Drive home'
+          >
+            <Image
+              src='/images/logo.png'
+              alt=''
+              width={40}
+              height={40}
+              className='h-8 w-8 sm:h-9 sm:w-9 object-contain'
+            />
+            <Image
+              src='/images/graddrive.png'
+              alt='Grad Drive'
+              width={160}
+              height={40}
+              className='h-7 sm:h-8 w-auto max-w-[140px] sm:max-w-[180px] object-contain object-left'
+            />
           </Link>
 
           {showBackButton && (

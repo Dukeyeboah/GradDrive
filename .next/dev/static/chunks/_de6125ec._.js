@@ -714,10 +714,11 @@ async function importPhotographers(jsonData) {
                 phoneContact: item["Phone-contact"] === true || item.Column12 === true || false
             };
             // Remove empty strings and convert to undefined
-            Object.keys(photographerData).forEach((key)=>{
-                const value = photographerData[key];
+            const mutablePhotographerData = photographerData;
+            Object.keys(mutablePhotographerData).forEach((key)=>{
+                const value = mutablePhotographerData[key];
                 if (value === "" || value === " " || value === null) {
-                    photographerData[key] = undefined;
+                    mutablePhotographerData[key] = undefined;
                 }
             });
             // Ensure firstName is not empty

@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/photographer-admin/layout,_N_T_/photographer-admin/page,_N_T_/photographer-admin"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/photographer-admin/__PAGE__",
+    "/photographer-admin",
+    "/_index",
+    "/_head"
+  ]
+}

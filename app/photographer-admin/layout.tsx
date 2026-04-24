@@ -7,8 +7,7 @@ import { PhotographerSidebarProvider } from '@/contexts/PhotographerSidebarConte
 import { PhotographerAdminTitle } from '@/components/photographer-admin-title';
 
 // Routes where we show only the passkey/login UI (no sidebar).
-// '/' is the path on fotomatic.app root (rewritten to photographer-admin); '/photographer-admin' is used on graddrive.com.
-const authRoutes = ['/photographer-admin', '/'];
+const authRoutes = ['/photographer-admin'];
 
 export default function PhotographerAdminLayout({
   children,
