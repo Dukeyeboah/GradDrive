@@ -166,7 +166,6 @@ export async function bookPhotographer(data: Omit<PhotographerBooking, "id" | "t
     return false
   }
 }
-
 export async function getPhotographerBookings(photographerId?: string): Promise<PhotographerBooking[]> {
   try {
     let q
