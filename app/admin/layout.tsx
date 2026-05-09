@@ -20,11 +20,11 @@ export default function AdminLayout({
   }
 
   return (
-    <div className='flex h-screen'>
+    <div className='min-h-screen bg-muted/30'>
       <AdminSidebar />
-      <div className='flex-1 flex flex-col overflow-hidden'>
+      <div className='flex min-h-screen flex-col md:pl-64'>
         <AdminHeader />
-        <main className='flex-1 overflow-y-auto bg-muted/30'>{children}</main>
+        <main className='flex-1 overflow-y-auto'>{children}</main>
       </div>
     </div>
   );

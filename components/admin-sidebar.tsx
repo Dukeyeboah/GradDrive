@@ -1,19 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import {
   LayoutDashboard,
   Users,
@@ -21,48 +12,37 @@ import {
   FileImage,
   BookOpen,
   Award,
-  Palette,
   Settings,
-  ChevronLeft,
-  ChevronRight,
-  User,
-  FileText,
   LogOut,
-  UserCircle,
   GraduationCap,
-  Eye,
-  Shield,
+  FileText,
 } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useViewMode } from '@/contexts/ViewModeContext';
 import { signOutUser } from '@/lib/firebase/auth';
 import { useToast } from '@/hooks/use-toast';
+// import { AdminSidebarPromo } from '@/components/admin/admin-sidebar-promo';
 
 const navItems = [
-  { href: '/admin/dashboard', label: 'Overview', icon: LayoutDashboard },
+  { href: '/admin/dashboard', label: 'Overview', icon: LayoutDashboard, end: true },
   { href: '/admin/users', label: 'Users', icon: Users },
   { href: '/admin/photographers', label: 'Photographers', icon: Camera },
   { href: '/admin/posters', label: 'Posters', icon: FileImage },
   { href: '/admin/cap-designs', label: 'Cap Designs', icon: GraduationCap },
   { href: '/admin/ebooks', label: 'E-books', icon: BookOpen },
-  { href: '/admin/scholarship', label: 'Scholarship', icon: Award },
-  { href: '/admin/customizer', label: 'Customizer', icon: Palette },
+  { href: '/admin/scholarship', label: 'Scholarships', icon: Award },
+  // { href: '/admin/customizer', label: 'Customizer', icon: Palette },
   { href: '/admin/logs', label: 'System Logs', icon: FileText },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
-export function AdminSidebar() {
+function navActive(pathname: string, href: string, end?: boolean) {
+  if (end) return pathname === href;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export function AdminSidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const router = useRouter();
   const { toast } = useToast();
-  const { user, userData } = useAuth();
-  const { viewMode, setViewMode, isAdminViewingAsUser, isAdminViewingAsPhotographer } = useViewMode();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleLogout = async () => {
     const { error } = await signOutUser();
@@ -73,7 +53,6 @@ export function AdminSidebar() {
         variant: 'destructive',
       });
     } else {
-      // Clear admin passkey verification and view mode
       if (typeof window !== 'undefined') {
         sessionStorage.removeItem('adminPasskeyVerified');
         sessionStorage.removeItem('adminRole');
@@ -82,213 +61,78 @@ export function AdminSidebar() {
       router.push('/');
       router.refresh();
     }
-  };
-
-  const handleSwitchToUserView = () => {
-    setViewMode('user');
-    router.push('/dashboard');
-    toast({
-      title: 'Switched to User View',
-      description: 'You are now viewing the site as a regular user. Your admin permissions remain active.',
-    });
-  };
-
-  const handleSwitchToPhotographerView = () => {
-    setViewMode('photographer-admin');
-    router.push('/photographer-admin/dashboard');
-    toast({
-      title: 'Switched to Photographer Admin View',
-      description: 'You are now viewing the photographer admin portal. Your admin permissions remain active.',
-    });
+    onNavigate?.();
   };
 
   return (
-    <div className='hidden md:flex relative'>
-      <aside
-        className={cn(
-          'flex flex-col border-r border-border bg-card transition-all duration-300',
-          isCollapsed ? 'w-16' : 'w-64'
-        )}
-      >
-        <div className={cn('p-5 border-b border-border', isCollapsed && 'p-4')}>
-          <div className='flex items-center justify-between'>
-            {!isCollapsed && (
-              <Link
-                href='/admin/dashboard'
-                className='flex items-center gap-2 min-w-0'
-                aria-label='Grad Drive admin home'
-              >
-                <Image
-                  src='/images/logo.png'
-                  alt=''
-                  width={40}
-                  height={40}
-                  className='h-8 w-8 shrink-0 object-contain'
-                />
-                <Image
-                  src='/images/graddrive.png'
-                  alt='Grad Drive'
-                  width={140}
-                  height={36}
-                  className='h-6 w-auto max-w-[120px] object-contain object-left'
-                />
-              </Link>
-            )}
-            {isCollapsed && (
-              <Link
-                href='/admin/dashboard'
-                className='flex items-center justify-center w-full'
-                aria-label='Grad Drive admin home'
-              >
-                <Image
-                  src='/images/logo.png'
-                  alt=''
-                  width={36}
-                  height={36}
-                  className='h-8 w-8 object-contain'
-                />
-              </Link>
-            )}
-          </div>
-        </div>
+    <div className='flex h-full flex-col bg-muted/50'>
+      <div className='flex h-16 items-center border-b border-border px-4'>
+        <Link
+          href='/admin/dashboard'
+          className='flex items-center gap-2 min-w-0'
+          onClick={onNavigate}
+          aria-label='Grad Drive admin home'
+        >
+          <Image
+            src='/images/logo.png'
+            alt=''
+            width={36}
+            height={36}
+            className='h-9 w-9 shrink-0 object-contain'
+          />
+          <Image
+            src='/images/graddrive.png'
+            alt='Grad Drive'
+            width={140}
+            height={36}
+            className='h-7 w-auto max-w-[120px] object-contain object-left'
+          />
+        </Link>
+      </div>
 
-        <nav className='flex-1 p-4 space-y-1 relative'>
-          <Button
-            variant='ghost'
-            size='icon'
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className={cn(
-              'absolute -right-3 -top-4 h-6 w-6 rounded-full border border-border bg-card shadow-sm z-[100] hover:bg-accent transition-all',
-              isCollapsed ? '-right-3' : '-right-3'
-            )}
-          >
-            {isCollapsed ? (
-              <ChevronRight className='h-3 w-3' />
-            ) : (
-              <ChevronLeft className='h-3 w-3' />
-            )}
-          </Button>
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  'flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors',
-                  isCollapsed && 'justify-center',
-                  isActive
-                    ? 'bg-accent text-accent-foreground font-medium'
-                    : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
-                )}
-                title={isCollapsed ? item.label : undefined}
-              >
-                <Icon className='h-4 w-4 flex-shrink-0' />
-                {!isCollapsed && <span>{item.label}</span>}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className='p-4 border-t border-border'>
-          {mounted ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant='ghost'
-                  className={cn(
-                    'w-full justify-start gap-3',
-                    isCollapsed && 'justify-center px-2'
-                  )}
-                >
-                  {userData?.photoURL ? (
-                    <img
-                      src={userData.photoURL}
-                      alt={userData.displayName || 'User'}
-                      className='h-8 w-8 rounded-full object-cover'
-                    />
-                  ) : (
-                    <div className='flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600'>
-                      <User className='h-4 w-4 text-white' />
-                    </div>
-                  )}
-                  {!isCollapsed && (
-                    <div className='flex flex-col items-start'>
-                      <span className='text-sm font-medium'>
-                        {userData?.displayName || 'Admin User'}
-                      </span>
-                      <span className='text-xs text-muted-foreground'>
-                        {userData?.email || 'admin@graddrive.com'}
-                      </span>
-                    </div>
-                  )}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align='end' className='w-56'>
-                <DropdownMenuLabel>Admin Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href='/admin/settings'>
-                    <UserCircle className='h-4 w-4 mr-2' />
-                    Account Profile
-                  </Link>
-                </DropdownMenuItem>
-                {!isAdminViewingAsUser && !isAdminViewingAsPhotographer && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleSwitchToUserView}>
-                      <Eye className='h-4 w-4 mr-2' />
-                      Switch to User View
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleSwitchToPhotographerView}>
-                      <Camera className='h-4 w-4 mr-2' />
-                      Switch to Photographer Admin View
-                    </DropdownMenuItem>
-                  </>
-                )}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className='h-4 w-4 mr-2' />
-                  Log Out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Button
-              variant='ghost'
+      <nav className='flex-1 space-y-1 overflow-y-auto p-3'>
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const active = navActive(pathname, item.href, item.end);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={onNavigate}
               className={cn(
-                'w-full justify-start gap-3',
-                isCollapsed && 'justify-center px-2'
+                'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium',
+                'transition-all duration-200 ease-out',
+                active
+                  ? 'bg-accent text-accent-foreground shadow-sm'
+                  : 'text-muted-foreground hover:bg-background hover:text-foreground hover:translate-x-0.5',
               )}
-              disabled
             >
-              {userData?.photoURL ? (
-                <img
-                  src={userData.photoURL}
-                  alt={userData.displayName || 'User'}
-                  className='h-8 w-8 rounded-full object-cover'
-                />
-              ) : (
-                <div className='flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600'>
-                  <User className='h-4 w-4 text-white' />
-                </div>
-              )}
-              {!isCollapsed && (
-                <div className='flex flex-col items-start'>
-                  <span className='text-sm font-medium'>
-                    {userData?.displayName || 'Admin User'}
-                  </span>
-                  <span className='text-xs text-muted-foreground'>
-                    {userData?.email || 'admin@graddrive.com'}
-                  </span>
-                </div>
-              )}
-            </Button>
-          )}
-        </div>
-      </aside>
+              <Icon className='h-4 w-4 shrink-0' strokeWidth={1.75} />
+              {item.label}
+            </Link>
+          );
+        })}
+      </nav>
+
+      <div className='space-y-3 border-t border-border p-3'>
+        {/* <AdminSidebarPromo /> */}
+        <Button
+          variant='outline'
+          className='w-full justify-center gap-2 rounded-xl border-border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-sm'
+          onClick={handleLogout}
+        >
+          <LogOut className='h-4 w-4' />
+          Logout
+        </Button>
+      </div>
     </div>
+  );
+}
+
+export function AdminSidebar() {
+  return (
+    <aside className='hidden md:fixed md:inset-y-0 md:left-0 md:z-30 md:flex md:w-64 md:flex-col md:border-r md:border-border'>
+      <AdminSidebarNav />
+    </aside>
   );
 }

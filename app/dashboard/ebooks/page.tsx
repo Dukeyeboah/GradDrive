@@ -72,11 +72,11 @@ export default function EbooksPage() {
                 className='p-0 border-border bg-card shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden'
               >
                 {ebook.thumbnailUrl ? (
-                  <div className='w-full relative overflow-hidden flex-shrink-0'>
+                  <div className='relative h-48 w-full flex-shrink-0 overflow-hidden bg-muted'>
                     <img
                       src={ebook.thumbnailUrl}
                       alt={ebook.title}
-                      className='w-full h-full object-cover'
+                      className='h-full w-full object-cover'
                     />
                   </div>
                 ) : (

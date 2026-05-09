@@ -1,10 +1,3 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -16,49 +9,50 @@ interface PerkCardProps {
   description: string;
   href: string;
   buttonText?: string;
-  gradient?: string;
 }
 
-// Map each card to a unique soft pastel gradient
-const getIconGradient = (title: string): string => {
-  const titleLower = title.toLowerCase();
-  if (titleLower.includes('photographer') || titleLower.includes('camera')) {
-    return 'from-pink-200 to-rose-300';
-  }
-  if (titleLower.includes('book') || titleLower.includes('ebook')) {
-    return 'from-emerald-200 to-teal-300';
-  }
-  if (
-    titleLower.includes('digital') ||
-    titleLower.includes('asset') ||
-    titleLower.includes('poster')
-  ) {
-    return 'from-blue-200 to-purple-300';
-  }
-  if (titleLower.includes('cap') || titleLower.includes('graduation')) {
-    return 'from-violet-200 to-indigo-300';
-  }
-  if (
-    titleLower.includes('alumni') ||
-    titleLower.includes('club') ||
-    titleLower.includes('users')
-  ) {
-    return 'from-cyan-200 to-blue-300';
-  }
-  if (titleLower.includes('history') || titleLower.includes('kente')) {
-    return 'from-amber-200 to-orange-300';
-  }
-  if (titleLower.includes('scholarship') || titleLower.includes('award')) {
-    return 'from-yellow-200 to-amber-300';
-  }
-  if (
-    titleLower.includes('discount') ||
-    titleLower.includes('gift') ||
-    titleLower.includes('coming soon')
-  ) {
-    return 'from-purple-200 to-pink-300';
-  }
-  return 'from-blue-200 to-purple-300';
+/** Match welcome-screen feature strip palette by route. */
+const accentByHref: Record<
+  string,
+  { box: string; icon: string }
+> = {
+  '/dashboard/photographers': {
+    box: 'bg-rose-100/90 dark:bg-rose-950/40 border-rose-200/80 dark:border-rose-800/50',
+    icon: 'text-rose-700 dark:text-rose-400',
+  },
+  '/dashboard/ebooks': {
+    box: 'bg-sky-100/90 dark:bg-sky-950/40 border-sky-200/80 dark:border-sky-800/50',
+    icon: 'text-sky-700 dark:text-sky-400',
+  },
+  '/dashboard/posters': {
+    box: 'bg-amber-100/90 dark:bg-amber-950/40 border-amber-200/80 dark:border-amber-800/50',
+    icon: 'text-amber-700 dark:text-amber-400',
+  },
+  '/dashboard/cap-designs': {
+    box: 'bg-orange-100/90 dark:bg-orange-950/40 border-orange-200/80 dark:border-orange-800/50',
+    icon: 'text-orange-700 dark:text-orange-400',
+  },
+  '/dashboard/discounts': {
+    box: 'bg-violet-100/90 dark:bg-violet-950/40 border-violet-200/80 dark:border-violet-800/50',
+    icon: 'text-violet-700 dark:text-violet-400',
+  },
+  '/dashboard/alum-club': {
+    box: 'bg-cyan-100/90 dark:bg-cyan-950/40 border-cyan-200/80 dark:border-cyan-800/50',
+    icon: 'text-cyan-700 dark:text-cyan-400',
+  },
+  '/dashboard/kente-history': {
+    box: 'bg-violet-100/90 dark:bg-violet-950/40 border-violet-200/80 dark:border-violet-800/50',
+    icon: 'text-violet-700 dark:text-violet-400',
+  },
+  '/dashboard/scholarship': {
+    box: 'bg-emerald-100/90 dark:bg-emerald-950/40 border-emerald-200/80 dark:border-emerald-800/50',
+    icon: 'text-emerald-700 dark:text-emerald-400',
+  },
+};
+
+const defaultAccent = {
+  box: 'bg-accent/15 border-border/80',
+  icon: 'text-accent',
 };
 
 export function PerkCard({
@@ -67,36 +61,42 @@ export function PerkCard({
   description,
   href,
   buttonText = 'View',
-  gradient,
 }: PerkCardProps) {
-  const defaultGradient = getIconGradient(title);
-  const finalGradient = gradient || defaultGradient;
+  const { box, icon: iconClass } = accentByHref[href] ?? defaultAccent;
 
   return (
-    <Card className='border-border bg-card shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col h-full'>
-      <CardHeader className='flex-1'>
-        <div className='flex items-center gap-3 mb-3'>
+    <div
+      className={cn(
+        'group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card',
+        'shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 h-full',
+      )}
+    >
+      <div className='p-6 flex flex-col gap-3 flex-1'>
+        <div className='flex items-start gap-3'>
           <div
             className={cn(
-              'flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br flex-shrink-0',
-              finalGradient
+              'flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border shadow-sm',
+              box,
             )}
           >
-            <Icon className='h-4 w-4 text-white' />
+            <Icon className={cn('h-5 w-5', iconClass)} strokeWidth={1.75} />
           </div>
-          <CardTitle className='text-lg leading-tight'>{title}</CardTitle>
+          <h3 className='font-bold text-lg text-foreground leading-snug pt-1.5'>
+            {title}
+          </h3>
         </div>
-        <CardDescription className='leading-relaxed'>
+        <p className='text-sm text-muted-foreground leading-relaxed flex-1'>
           {description}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className='pt-0 mt-auto'>
-        <Link href={href}>
-          <Button variant='outline' className='w-full bg-transparent'>
-            {buttonText}
-          </Button>
-        </Link>
-      </CardContent>
-    </Card>
+        </p>
+      </div>
+      <div className='px-6 pb-6 pt-0 mt-auto'>
+        <Button
+          asChild
+          className='w-full rounded-xl font-semibold bg-accent text-accent-foreground shadow-sm hover:bg-accent/90'
+        >
+          <Link href={href}>{buttonText}</Link>
+        </Button>
+      </div>
+    </div>
   );
 }

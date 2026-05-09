@@ -1,114 +1,107 @@
 'use client';
 
-import { PerkCard } from '@/components/perk-card';
-import {
-  BookOpen,
-  Camera,
-  FileImage,
-  GraduationCap,
-  Award,
-  Users,
-  History,
-  PlaneTakeoff,
-} from 'lucide-react';
+import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
+import { DashboardHeroSection } from '@/components/dashboard/dashboard-hero-section';
+import { DashboardCategoryCard } from '@/components/dashboard/dashboard-category-card';
+import { DashboardEventCard } from '@/components/dashboard/dashboard-event-card';
+import { DashboardContinueCard } from '@/components/dashboard/dashboard-continue-card';
+import {
+  DASHBOARD_HOME_OFFERING_CARDS,
+  DASHBOARD_UPCOMING_EVENTS,
+} from '@/lib/config/user-dashboard';
+import { Button } from '@/components/ui/button';
+import { CalendarDays } from 'lucide-react';
 
 export default function DashboardPage() {
   const { userData } = useAuth();
 
-  // Get first name from displayName or email
   const getFirstName = () => {
     if (userData?.displayName) {
-      const firstName = userData.displayName.split(' ')[0];
-      return firstName;
+      return userData.displayName.split(' ')[0];
     }
     if (userData?.email) {
-      const emailName = userData.email.split('@')[0];
-      return emailName;
+      return userData.email.split('@')[0];
     }
     return null;
   };
 
   const firstName = getFirstName();
-  const greeting = firstName ? `Hello ${firstName}! 👋` : 'Hello! 👋';
+  const greetingLine =
+    'Explore tools, resources, and opportunities designed to support your journey beyond graduation.';
+
+  const primaryEvent = DASHBOARD_UPCOMING_EVENTS[0];
 
   return (
-    <div className='flex flex-col justify-start items-center w-full py-4'>
-      <div className='container max-w-7xl space-y-8'>
-        <div className='space-y-2 text-center'>
-          <p className='text-base md:text-lg text-muted-foreground text-balance'>
-            {greeting}
-          </p>
-          <h2 className='text-xl md:text-2xl font-semibold text-balance'>
-            Welcome to Grad Dashboard. Explore these exciting features
-          </h2>
-        </div>
+    <div className='w-full px-4 py-8 sm:px-6 lg:px-8 lg:py-10'>
+      <div className='mx-auto max-w-7xl space-y-10 lg:space-y-12'>
+        <DashboardHeroSection
+          greetingLine={greetingLine}
+          userName={firstName}
+        />
 
-        <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4'>
-          <PerkCard
-            icon={Camera}
-            title='Book Photographer'
-            description='Find and book professional photographers for your graduation'
-            href='/dashboard/photographers'
-            buttonText='Browse'
-          />
+        <section id='offerings' className='scroll-mt-24 space-y-6'>
+          <div className='flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between'>
+            <h2 className='text-2xl font-bold tracking-tight text-foreground md:text-3xl'>
+              Grad Drive offerings
+            </h2>
+            <Button
+              variant='ghost'
+              asChild
+              className='w-fit gap-1 px-0 text-accent hover:text-accent/90 hover:bg-transparent font-semibold'
+            >
+              <Link href='/dashboard/grad-drive'>View All →</Link>
+            </Button>
+          </div>
+          <div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-4'>
+            {DASHBOARD_HOME_OFFERING_CARDS.map((card) => (
+              <DashboardCategoryCard key={card.href + card.title} {...card} />
+            ))}
+          </div>
+        </section>
 
-          <PerkCard
-            icon={BookOpen}
-            title='Life after graduation E-books'
-            description='Access comprehensive guides for your post-graduation journey'
-            href='/dashboard/ebooks'
-            buttonText='View'
-          />
+        <section className='grid gap-8 lg:grid-cols-2 lg:gap-10'>
+          <div className='space-y-4'>
+            <div className='flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between'>
+              <h2 className='text-2xl font-bold tracking-tight text-foreground md:text-3xl'>
+                Upcoming Events
+              </h2>
+              <Button
+                variant='ghost'
+                asChild
+                className='w-fit gap-1 px-0 text-accent hover:text-accent/90 hover:bg-transparent font-semibold'
+              >
+                <Link href='/dashboard/alum-club'>View All →</Link>
+              </Button>
+            </div>
+            {primaryEvent ? (
+              <DashboardEventCard event={primaryEvent} />
+            ) : (
+              <div className='flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-card/60 px-6 py-14 text-center shadow-sm'>
+                <CalendarDays className='mb-3 h-10 w-10 text-muted-foreground' />
+                <p className='font-medium text-foreground'>No upcoming events yet</p>
+                <p className='mt-2 max-w-sm text-sm text-muted-foreground leading-relaxed'>
+                  When new alumni and community events are scheduled, they will
+                  show up here. You can always visit the alumni club for the
+                  latest.
+                </p>
+                <Button
+                  asChild
+                  className='mt-6 rounded-xl font-semibold bg-accent text-accent-foreground hover:bg-accent/90'
+                >
+                  <Link href='/dashboard/alum-club'>Go to Events</Link>
+                </Button>
+              </div>
+            )}
+          </div>
 
-          <PerkCard
-            icon={FileImage}
-            title='Digital Posters & Artwork'
-            description='Download free graduation posters and digital artwork'
-            href='/dashboard/posters'
-            buttonText='Browse'
-          />
-
-          <PerkCard
-            icon={GraduationCap}
-            title='Graduation Cap Designs'
-            description='Explore and download cap design templates'
-            href='/dashboard/cap-designs'
-            buttonText='View'
-          />
-
-          <PerkCard
-            icon={PlaneTakeoff}
-            title='The HoS Travel Experience'
-            description='Immerse yourself in Ghanaian culture, Kente heritage, food, art, and education with HoS in Ghana'
-            href='/dashboard/discounts'
-            buttonText='Register Interest'
-          />
-
-          <PerkCard
-            icon={Users}
-            title='HoS Alumni Club'
-            description='Connect with alumni and join exclusive community events'
-            href='/dashboard/alum-club'
-            buttonText='Join'
-          />
-
-          <PerkCard
-            icon={History}
-            title='Kente & Graduation History'
-            description='Learn about Kente traditions and graduation history'
-            href='/dashboard/kente-history'
-            buttonText='Explore'
-          />
-
-          <PerkCard
-            icon={Award}
-            title='Scholarships'
-            description='Discover scholarship opportunities and programs'
-            href='/dashboard/scholarship'
-            buttonText='Learn More'
-          />
-        </div>
+          <div className='space-y-4'>
+            <h2 className='text-2xl font-bold tracking-tight text-foreground md:text-3xl'>
+              Continue where you left off
+            </h2>
+            <DashboardContinueCard />
+          </div>
+        </section>
       </div>
     </div>
   );

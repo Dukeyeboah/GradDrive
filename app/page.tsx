@@ -1,13 +1,5 @@
-import { PublicNav } from '@/components/public-nav';
-// import { PublicFooter } from "@/components/public-footer"
-import { WelcomeScreen } from '@/components/welcome-screen';
+import { HomePageClient } from '@/components/home-page-client';
 
 export default function HomePage() {
-  return (
-    <>
-      <PublicNav />
-      <WelcomeScreen />
-      {/* <PublicFooter /> */}
-    </>
-  );
+  return <HomePageClient />;
 }

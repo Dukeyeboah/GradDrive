@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { AuthModals } from '@/components/auth-modals';
-import { UserPasskeyModal } from '@/components/user-passkey-modal';
 
 /**
  * Navbar brand assets (on disk):
@@ -15,14 +14,8 @@ import { UserPasskeyModal } from '@/components/user-passkey-modal';
  */
 
 export function PublicNav() {
-  const [passkeyModalOpen, setPasskeyModalOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
-
-  const openAuthAfterPasskey = () => {
-    setPasskeyModalOpen(false);
-    setAuthOpen(true);
-  };
 
   return (
     <>
@@ -57,11 +50,7 @@ export function PublicNav() {
               className='cursor-pointer text-sm font-medium text-foreground hover:text-accent transition-colors'
               onClick={() => {
                 setAuthMode('login');
-                if (typeof window !== 'undefined' && localStorage.getItem('userPasskeyVerified') === 'true') {
-                  setAuthOpen(true);
-                } else {
-                  setPasskeyModalOpen(true);
-                }
+                setAuthOpen(true);
               }}
             >
               Login
@@ -71,11 +60,7 @@ export function PublicNav() {
               className='cursor-pointer rounded-xl px-5 font-semibold bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm'
               onClick={() => {
                 setAuthMode('signup');
-                if (typeof window !== 'undefined' && localStorage.getItem('userPasskeyVerified') === 'true') {
-                  setAuthOpen(true);
-                } else {
-                  setPasskeyModalOpen(true);
-                }
+                setAuthOpen(true);
               }}
             >
               Sign Up
@@ -83,11 +68,6 @@ export function PublicNav() {
           </div>
         </div>
       </nav>
-      <UserPasskeyModal
-        open={passkeyModalOpen}
-        onOpenChange={setPasskeyModalOpen}
-        onVerified={openAuthAfterPasskey}
-      />
       <AuthModals
         open={authOpen}
         onOpenChange={setAuthOpen}

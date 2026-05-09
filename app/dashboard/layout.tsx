@@ -1,17 +1,10 @@
 import type React from 'react';
-import { UserNav } from '@/components/user-nav';
+import { UserDashboardShell } from '@/components/dashboard/user-dashboard-shell';
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      <UserNav />
-      <main className='flex-1 flex justify-center items-start min-h-[calc(100vh-4rem)]'>
-        {children}
-      </main>
-    </>
-  );
+  return <UserDashboardShell>{children}</UserDashboardShell>;
 }

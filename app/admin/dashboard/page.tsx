@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
@@ -18,59 +17,34 @@ import {
   Download,
   UserCog,
   GraduationCap,
-  X,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useData } from '@/contexts/DataContext';
-import { Loader2 } from 'lucide-react';
+import { AdminStatCard } from '@/components/admin/admin-stat-card';
+import { AdminRecentActivity } from '@/components/admin/admin-recent-activity';
+import { AdminPlatformHealthCard } from '@/components/admin/admin-platform-health-card';
+import { AdminQuickAccessGrid } from '@/components/admin/admin-quick-access-grid';
+import { derivePlatformHealthScores } from '@/lib/admin/derive-platform-health';
 
 export default function AdminDashboardPage() {
   const { userData } = useAuth();
-  const { analytics, users, downloadBreakdown, loading, refreshAnalytics, refreshUsers, refreshDownloadBreakdown } = useData();
+  const {
+    analytics,
+    users,
+    downloadBreakdown,
+    loading,
+    refreshUsers,
+    refreshDownloadBreakdown,
+  } = useData();
   const [selectedModal, setSelectedModal] = useState<string | null>(null);
   const [modalData, setModalData] = useState<any>(null);
   const [modalLoading, setModalLoading] = useState(false);
   const role = userData?.role || 'admin';
   const roleDisplay = role === 'super admin' ? 'Super Admin' : 'Admin';
+  const displayName = userData?.displayName?.split(' ')[0] || 'there';
 
-  // Format number with commas
-  const formatNumber = (num: number) => {
-    return num.toLocaleString();
-  };
+  const formatNumber = (num: number) => num.toLocaleString();
 
-  // Format time ago
-  const formatTimeAgo = (timestamp: any) => {
-    if (!timestamp) return 'Unknown';
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-    const now = new Date();
-    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-    
-    if (diffInSeconds < 60) return 'Just now';
-    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
-    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-    return `${Math.floor(diffInSeconds / 86400)} days ago`;
-  };
-
-  // Format activity action text
-  const formatActivityAction = (action: string) => {
-    const actionMap: Record<string, string> = {
-      'user_signup': 'New user registration',
-      'user_login': 'User logged in',
-      'download_poster': 'Asset downloaded',
-      'download_ebook': 'E-book accessed',
-      'download_cap_design': 'Cap design downloaded',
-      'contact_photographer': 'Photographer contacted',
-      'add_poster': 'Poster uploaded',
-      'add_ebook': 'E-book uploaded',
-      'add_cap_design': 'Cap design uploaded',
-      'delete_poster': 'Poster deleted',
-      'update_poster': 'Poster updated',
-    };
-    return actionMap[action] || action.replace(/_/g, ' ');
-  };
-
-  // Format date
   const formatDate = (timestamp: any) => {
     if (!timestamp) return 'Unknown';
     const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
@@ -83,7 +57,6 @@ export default function AdminDashboardPage() {
     });
   };
 
-  // Handle card click
   const handleCardClick = async (cardType: string) => {
     setSelectedModal(cardType);
     setModalLoading(true);
@@ -92,22 +65,15 @@ export default function AdminDashboardPage() {
     try {
       switch (cardType) {
         case 'users':
-          // Use cached data if available, otherwise refresh
-          // Filter to only show users with role "user" (exclude admins)
           if (users && users.length > 0) {
-            const regularUsers = users.filter(
-              (u) => !u.role || u.role === 'user'
-            );
-            setModalData(regularUsers);
+            setModalData(users.filter((u) => !u.role || u.role === 'user'));
             setModalLoading(false);
           } else {
             await refreshUsers();
-            // Data will be available in next render via context
             setModalLoading(false);
           }
           break;
         case 'downloads':
-          // Use cached data if available, otherwise refresh
           if (downloadBreakdown) {
             setModalData(downloadBreakdown);
             setModalLoading(false);
@@ -117,12 +83,12 @@ export default function AdminDashboardPage() {
           }
           break;
         case 'admins':
-          // Use cached users data
           if (users && users.length > 0) {
-            const admins = users.filter(
-              (u) => u.role === 'admin' || u.role === 'super admin'
+            setModalData(
+              users.filter(
+                (u) => u.role === 'admin' || u.role === 'super admin',
+              ),
             );
-            setModalData(admins);
             setModalLoading(false);
           } else {
             await refreshUsers();
@@ -130,17 +96,14 @@ export default function AdminDashboardPage() {
           }
           break;
         case 'photographers':
-          // For now, just show count - can add detailed view later
           setModalData({ count: analytics?.photographersListed || 0 });
           setModalLoading(false);
           break;
         case 'posters':
-          // For now, just show count - can add detailed view later
           setModalData({ count: analytics?.postersUploaded || 0 });
           setModalLoading(false);
           break;
         case 'capDesigns':
-          // For now, just show count - can add detailed view later
           setModalData({ count: analytics?.capDesigns || 0 });
           setModalLoading(false);
           break;
@@ -151,18 +114,13 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // Update modal data when context data changes
   useEffect(() => {
     if (!selectedModal || !modalLoading) return;
 
     switch (selectedModal) {
       case 'users':
         if (users && users.length > 0) {
-          // Filter to only show users with role "user" (exclude admins)
-          const regularUsers = users.filter(
-            (u) => !u.role || u.role === 'user'
-          );
-          setModalData(regularUsers);
+          setModalData(users.filter((u) => !u.role || u.role === 'user'));
           setModalLoading(false);
         }
         break;
@@ -174,264 +132,124 @@ export default function AdminDashboardPage() {
         break;
       case 'admins':
         if (users && users.length > 0) {
-          const admins = users.filter(
-            (u) => u.role === 'admin' || u.role === 'super admin'
+          setModalData(
+            users.filter(
+              (u) => u.role === 'admin' || u.role === 'super admin',
+            ),
           );
-          setModalData(admins);
           setModalLoading(false);
         }
         break;
     }
   }, [users, downloadBreakdown, selectedModal, modalLoading]);
 
-  const stats = analytics
-    ? [
-        {
-          label: 'Total Grad Users',
-          value: formatNumber(analytics.totalUsers),
-          icon: Users,
-          change: 'Registered users',
-          gradient: 'from-blue-500 to-purple-600',
-        },
-        {
-          label: 'Total Downloads',
-          value: formatNumber(analytics.totalDownloads),
-          icon: Download,
-          change: 'All time downloads',
-          gradient: 'from-green-500 to-emerald-600',
-        },
-        {
-          label: 'Total Admins',
-          value: formatNumber(analytics.totalAdmins),
-          icon: UserCog,
-          change: 'Admin accounts',
-          gradient: 'from-amber-500 to-orange-600',
-        },
-        {
-          label: 'Photographers Listed',
-          value: formatNumber(analytics.photographersListed),
-          icon: Camera,
-          change: 'Active photographers',
-          gradient: 'from-pink-500 to-rose-600',
-        },
-        {
-          label: 'Posters Uploaded',
-          value: formatNumber(analytics.postersUploaded),
-          icon: FileImage,
-          change: 'Available posters',
-          gradient: 'from-violet-500 to-indigo-600',
-        },
-        {
-          label: 'Cap Designs',
-          value: formatNumber(analytics.capDesigns),
-          icon: GraduationCap,
-          change: 'Available designs',
-          gradient: 'from-cyan-500 to-blue-600',
-        },
-      ]
-    : [
-        {
-          label: 'Total Grad Users',
-          value: '...',
-          icon: Users,
-          change: 'Loading...',
-          gradient: 'from-blue-500 to-purple-600',
-        },
-        {
-          label: 'Total Downloads',
-          value: '...',
-          icon: Download,
-          change: 'Loading...',
-          gradient: 'from-green-500 to-emerald-600',
-        },
-        {
-          label: 'Total Admins',
-          value: '...',
-          icon: UserCog,
-          change: 'Loading...',
-          gradient: 'from-amber-500 to-orange-600',
-        },
-        {
-          label: 'Photographers Listed',
-          value: '...',
-          icon: Camera,
-          change: 'Loading...',
-          gradient: 'from-pink-500 to-rose-600',
-        },
-        {
-          label: 'Posters Uploaded',
-          value: '...',
-          icon: FileImage,
-          change: 'Loading...',
-          gradient: 'from-violet-500 to-indigo-600',
-        },
-        {
-          label: 'Cap Designs',
-          value: '...',
-          icon: GraduationCap,
-          change: 'Loading...',
-          gradient: 'from-cyan-500 to-blue-600',
-        },
-      ];
+  const health = derivePlatformHealthScores(analytics);
+
+  const statDefs = [
+    {
+      key: 'users' as const,
+      label: 'Total Grad Users',
+      icon: Users,
+      iconBg: 'bg-gradient-to-br from-orange-500 to-amber-600',
+      value: analytics ? formatNumber(analytics.totalUsers) : '…',
+      descriptor: 'Registered users',
+    },
+    {
+      key: 'downloads' as const,
+      label: 'Total Downloads',
+      icon: Download,
+      iconBg: 'bg-gradient-to-br from-emerald-500 to-green-600',
+      value: analytics ? formatNumber(analytics.totalDownloads) : '…',
+      descriptor: 'All time downloads',
+    },
+    {
+      key: 'admins' as const,
+      label: 'Total Admins',
+      icon: UserCog,
+      iconBg: 'bg-gradient-to-br from-amber-500 to-orange-600',
+      value: analytics ? formatNumber(analytics.totalAdmins) : '…',
+      descriptor: 'Admin accounts',
+    },
+    {
+      key: 'photographers' as const,
+      label: 'Photographers Listed',
+      icon: Camera,
+      iconBg: 'bg-gradient-to-br from-rose-500 to-pink-600',
+      value: analytics ? formatNumber(analytics.photographersListed) : '…',
+      descriptor: 'Active photographers',
+    },
+    {
+      key: 'posters' as const,
+      label: 'Posters Uploaded',
+      icon: FileImage,
+      iconBg: 'bg-gradient-to-br from-violet-500 to-indigo-600',
+      value: analytics ? formatNumber(analytics.postersUploaded) : '…',
+      descriptor: 'Available posters',
+    },
+    {
+      key: 'capDesigns' as const,
+      label: 'Cap Designs',
+      icon: GraduationCap,
+      iconBg: 'bg-gradient-to-br from-sky-500 to-cyan-600',
+      value: analytics ? formatNumber(analytics.capDesigns) : '…',
+      descriptor: 'Available designs',
+    },
+  ];
+
+  const statLoading = loading || !analytics;
 
   return (
-    <div className='p-6 space-y-8'>
-      <div className='flex items-center justify-between'>
-        <div className='space-y-2'>
-          <div className='flex items-center gap-3'>
-            <h1 className='font-bold text-3xl md:text-4xl'>Admin Overview</h1>
-            <Badge variant='secondary' className='text-sm'>
-              {roleDisplay}
-            </Badge>
-          </div>
-          <p className='text-muted-foreground'>
-            Monitor and manage your Grad Drive platform
-          </p>
+    <div className='space-y-10 p-4 sm:p-6 lg:p-8'>
+      <div className='space-y-2'>
+        <div className='flex flex-wrap items-center gap-3'>
+          <h1 className='text-3xl font-bold tracking-tight text-foreground md:text-4xl'>
+            Welcome back, {displayName}! 👋
+          </h1>
+          <Badge
+            variant='secondary'
+            className='rounded-full border border-border bg-background text-xs font-medium'
+          >
+            {roleDisplay}
+          </Badge>
         </div>
+        <p className='max-w-2xl text-muted-foreground text-pretty leading-relaxed'>
+          Here&apos;s what&apos;s happening with your Grad Drive platform.
+        </p>
       </div>
 
-      <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-        {stats.map((stat, idx) => {
-          const Icon = stat.icon;
-          const cardTypes = ['users', 'downloads', 'admins', 'photographers', 'posters', 'capDesigns'];
-          const cardType = cardTypes[idx];
-          const isLoading = loading || stat.value === '...';
-          return (
-            <Card
-              key={idx}
-              className={cn(
-                'border-border bg-card shadow-sm transition-shadow',
-                !isLoading && 'cursor-pointer hover:shadow-md'
-              )}
-              onClick={() => !isLoading && handleCardClick(cardType)}
-            >
-              <CardHeader className='flex flex-row items-center justify-between pb-2'>
-                <CardTitle className='text-sm font-medium text-muted-foreground'>
-                  {stat.label}
-                </CardTitle>
-                <div
-                  className={cn(
-                    'flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br',
-                    stat.gradient
-                  )}
-                >
-                  {isLoading ? (
-                    <Loader2 className='h-4 w-4 text-white animate-spin' />
-                  ) : (
-                    <Icon className='h-4 w-4 text-white' />
-                  )}
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className='font-bold text-2xl'>
-                  {isLoading ? (
-                    <span className='flex items-center gap-2'>
-                      <Loader2 className='h-5 w-5 animate-spin' />
-                      Loading...
-                    </span>
-                  ) : (
-                    stat.value
-                  )}
-                </div>
-                <p className='text-xs text-muted-foreground mt-1'>
-                  {stat.change}
-                </p>
-              </CardContent>
-            </Card>
-          );
-        })}
+      <div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
+        {statDefs.map((stat) => (
+          <AdminStatCard
+            key={stat.key}
+            label={stat.label}
+            value={stat.value}
+            descriptor={stat.descriptor}
+            icon={stat.icon}
+            iconBgClassName={stat.iconBg}
+            loading={statLoading}
+            onClick={() => handleCardClick(stat.key)}
+          />
+        ))}
       </div>
 
-      <div className='grid gap-6 md:grid-cols-2'>
-        <Card className='border-border bg-card shadow-sm'>
-          <CardHeader>
-            <CardTitle>Recent User Activity</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className='text-sm text-muted-foreground'>Loading activity...</div>
-            ) : analytics && analytics.recentActivity.length > 0 ? (
-              <div className='space-y-3 text-sm max-h-96 overflow-y-auto'>
-                {analytics.recentActivity.map((activity, idx) => (
-                  <div
-                    key={activity.id || idx}
-                    className={`flex items-center justify-between py-2 ${
-                      idx < analytics.recentActivity.length - 1
-                        ? 'border-b border-border'
-                        : ''
-                    }`}
-                  >
-                    <div className='flex flex-col'>
-                      <span>{formatActivityAction(activity.action)}</span>
-                      {activity.userRole && (
-                        <span className='text-xs text-muted-foreground'>
-                          by {activity.userName} ({activity.userRole})
-                        </span>
-                      )}
-                    </div>
-                    <span className='text-muted-foreground'>
-                      {formatTimeAgo(activity.timestamp)}
-                    </span>
-              </div>
-                ))}
-              </div>
-            ) : (
-              <div className='text-sm text-muted-foreground'>
-                No recent activity
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className='border-border bg-card shadow-sm'>
-          <CardHeader>
-            <CardTitle>Platform Health</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className='space-y-4 max-h-96 overflow-y-auto'>
-              <div className='space-y-2'>
-                <div className='flex items-center justify-between text-sm'>
-                  <span>User Engagement</span>
-                  <span className='font-medium'>87%</span>
-                </div>
-                <div className='h-2 rounded-full bg-muted'>
-                  <div
-                    className='h-2 rounded-full bg-accent'
-                    style={{ width: '87%' }}
-                  />
-                </div>
-              </div>
-              <div className='space-y-2'>
-                <div className='flex items-center justify-between text-sm'>
-                  <span>Asset Downloads</span>
-                  <span className='font-medium'>92%</span>
-                </div>
-                <div className='h-2 rounded-full bg-muted'>
-                  <div
-                    className='h-2 rounded-full bg-accent'
-                    style={{ width: '92%' }}
-                  />
-                </div>
-              </div>
-              <div className='space-y-2'>
-                <div className='flex items-center justify-between text-sm'>
-                  <span>Photographer Connections</span>
-                  <span className='font-medium'>78%</span>
-                </div>
-                <div className='h-2 rounded-full bg-muted'>
-                  <div
-                    className='h-2 rounded-full bg-accent'
-                    style={{ width: '78%' }}
-                  />
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      <div className='grid gap-6 lg:grid-cols-2'>
+        <AdminRecentActivity
+          loading={loading}
+          activities={analytics?.recentActivity ?? []}
+        />
+        <AdminPlatformHealthCard
+          userEngagement={health.userEngagement}
+          assetDownloads={health.assetDownloads}
+          photographerConnections={health.photographerConnections}
+        />
       </div>
 
-      {/* Detailed Breakdown Modals */}
-      <Dialog open={selectedModal !== null} onOpenChange={() => setSelectedModal(null)}>
+      <AdminQuickAccessGrid />
+
+      <Dialog
+        open={selectedModal !== null}
+        onOpenChange={() => setSelectedModal(null)}
+      >
         <DialogContent className='sm:max-w-4xl max-h-[90vh] overflow-y-auto'>
           <DialogHeader>
             <DialogTitle>
@@ -443,8 +261,10 @@ export default function AdminDashboardPage() {
               {selectedModal === 'capDesigns' && 'Cap Designs'}
             </DialogTitle>
             <DialogDescription>
-              {selectedModal === 'users' && 'List of all registered users (excluding admins)'}
-              {selectedModal === 'downloads' && 'Detailed breakdown of downloads by category'}
+              {selectedModal === 'users' &&
+                'List of all registered users (excluding admins)'}
+              {selectedModal === 'downloads' &&
+                'Detailed breakdown of downloads by category'}
               {selectedModal === 'admins' && 'List of all admin accounts'}
               {selectedModal === 'photographers' && 'Photographer listings'}
               {selectedModal === 'posters' && 'All uploaded posters'}
@@ -465,19 +285,29 @@ export default function AdminDashboardPage() {
                 {modalData.map((user: any) => (
                   <div
                     key={user.id}
-                    className='p-3 border border-border rounded-lg hover:bg-accent/50'
+                    className='p-3 border border-border rounded-xl hover:bg-muted/50 transition-colors duration-200'
                   >
                     <div className='flex items-center justify-between'>
                       <div>
-                        <div className='font-medium'>{user.displayName || 'No name'}</div>
-                        <div className='text-sm text-muted-foreground'>{user.email}</div>
+                        <div className='font-medium'>
+                          {user.displayName || 'No name'}
+                        </div>
+                        <div className='text-sm text-muted-foreground'>
+                          {user.email}
+                        </div>
                         {user.createdAt && (
                           <div className='text-xs text-muted-foreground mt-1'>
                             Joined: {formatDate(user.createdAt)}
                           </div>
                         )}
                       </div>
-                      <Badge variant={user.role === 'admin' || user.role === 'super admin' ? 'default' : 'secondary'}>
+                      <Badge
+                        variant={
+                          user.role === 'admin' || user.role === 'super admin'
+                            ? 'default'
+                            : 'secondary'
+                        }
+                      >
                         {user.role || 'user'}
                       </Badge>
                     </div>
@@ -497,14 +327,18 @@ export default function AdminDashboardPage() {
                     modalData.posters.map((poster: any) => (
                       <div
                         key={poster.id}
-                        className='p-2 border border-border rounded flex items-center justify-between'
+                        className='p-2 border border-border rounded-lg flex items-center justify-between'
                       >
                         <span className='text-sm'>{poster.name}</span>
-                        <Badge variant='secondary'>{poster.downloads} downloads</Badge>
+                        <Badge variant='secondary'>
+                          {poster.downloads} downloads
+                        </Badge>
                       </div>
                     ))
                   ) : (
-                    <p className='text-sm text-muted-foreground'>No posters yet</p>
+                    <p className='text-sm text-muted-foreground'>
+                      No posters yet
+                    </p>
                   )}
                 </div>
               </div>
@@ -518,14 +352,18 @@ export default function AdminDashboardPage() {
                     modalData.ebooks.map((ebook: any) => (
                       <div
                         key={ebook.id}
-                        className='p-2 border border-border rounded flex items-center justify-between'
+                        className='p-2 border border-border rounded-lg flex items-center justify-between'
                       >
                         <span className='text-sm'>{ebook.title}</span>
-                        <Badge variant='secondary'>{ebook.downloads} downloads</Badge>
+                        <Badge variant='secondary'>
+                          {ebook.downloads} downloads
+                        </Badge>
                       </div>
                     ))
                   ) : (
-                    <p className='text-sm text-muted-foreground'>No e-books yet</p>
+                    <p className='text-sm text-muted-foreground'>
+                      No e-books yet
+                    </p>
                   )}
                 </div>
               </div>
@@ -539,14 +377,18 @@ export default function AdminDashboardPage() {
                     modalData.capDesigns.map((design: any) => (
                       <div
                         key={design.id}
-                        className='p-2 border border-border rounded flex items-center justify-between'
+                        className='p-2 border border-border rounded-lg flex items-center justify-between'
                       >
                         <span className='text-sm'>{design.name}</span>
-                        <Badge variant='secondary'>{design.downloads} downloads</Badge>
+                        <Badge variant='secondary'>
+                          {design.downloads} downloads
+                        </Badge>
                       </div>
                     ))
                   ) : (
-                    <p className='text-sm text-muted-foreground'>No cap designs yet</p>
+                    <p className='text-sm text-muted-foreground'>
+                      No cap designs yet
+                    </p>
                   )}
                 </div>
               </div>
@@ -560,19 +402,27 @@ export default function AdminDashboardPage() {
                 {modalData.map((admin: any) => (
                   <div
                     key={admin.id}
-                    className='p-3 border border-border rounded-lg hover:bg-accent/50'
+                    className='p-3 border border-border rounded-xl hover:bg-muted/50 transition-colors duration-200'
                   >
                     <div className='flex items-center justify-between'>
                       <div>
-                        <div className='font-medium'>{admin.displayName || 'No name'}</div>
-                        <div className='text-sm text-muted-foreground'>{admin.email}</div>
+                        <div className='font-medium'>
+                          {admin.displayName || 'No name'}
+                        </div>
+                        <div className='text-sm text-muted-foreground'>
+                          {admin.email}
+                        </div>
                         {admin.createdAt && (
                           <div className='text-xs text-muted-foreground mt-1'>
                             Joined: {formatDate(admin.createdAt)}
                           </div>
                         )}
                       </div>
-                      <Badge variant={admin.role === 'super admin' ? 'default' : 'secondary'}>
+                      <Badge
+                        variant={
+                          admin.role === 'super admin' ? 'default' : 'secondary'
+                        }
+                      >
                         {admin.role}
                       </Badge>
                     </div>

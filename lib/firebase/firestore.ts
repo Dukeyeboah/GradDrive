@@ -471,6 +471,14 @@ export async function deletePhotographer(id: string): Promise<boolean> {
  */
 export const postersCollection = collection(db, "posters")
 
+function sortByCreatedAtDesc<T extends { createdAt?: Timestamp }>(items: T[]): T[] {
+  return [...items].sort((a, b) => {
+    const ta = a.createdAt?.toMillis?.() ?? 0
+    const tb = b.createdAt?.toMillis?.() ?? 0
+    return tb - ta
+  })
+}
+
 export async function getPosters(): Promise<Poster[]> {
   try {
     const q = query(postersCollection, orderBy("createdAt", "desc"))
@@ -480,8 +488,19 @@ export async function getPosters(): Promise<Poster[]> {
       ...doc.data(),
     })) as Poster[]
   } catch (error) {
-    console.error("Error getting posters:", error)
-    return []
+    // Older docs may be missing createdAt; ordered query fails and returns nothing.
+    console.warn("getPosters: ordered query failed, falling back to full scan", error)
+    try {
+      const snapshot = await getDocs(postersCollection)
+      const list = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Poster[]
+      return sortByCreatedAtDesc(list)
+    } catch (e2) {
+      console.error("Error getting posters:", e2)
+      return []
+    }
   }
 }
 
@@ -559,8 +578,18 @@ export async function getCapDesigns(): Promise<Poster[]> {
       ...doc.data(),
     })) as Poster[]
   } catch (error) {
-    console.error("Error getting cap designs:", error)
-    return []
+    console.warn("getCapDesigns: ordered query failed, falling back to full scan", error)
+    try {
+      const snapshot = await getDocs(capDesignsCollection)
+      const list = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Poster[]
+      return sortByCreatedAtDesc(list)
+    } catch (e2) {
+      console.error("Error getting cap designs:", e2)
+      return []
+    }
   }
 }
 
@@ -643,8 +672,18 @@ export async function getEbooks(): Promise<Ebook[]> {
       ...doc.data(),
     })) as Ebook[]
   } catch (error) {
-    console.error("Error getting ebooks:", error)
-    return []
+    console.warn("getEbooks: ordered query failed, falling back to full scan", error)
+    try {
+      const snapshot = await getDocs(ebooksCollection)
+      const list = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Ebook[]
+      return sortByCreatedAtDesc(list)
+    } catch (e2) {
+      console.error("Error getting ebooks:", e2)
+      return []
+    }
   }
 }
 

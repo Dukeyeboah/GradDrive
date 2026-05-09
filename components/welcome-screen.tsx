@@ -16,7 +16,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { AuthModals } from '@/components/auth-modals';
-import { UserPasskeyModal } from '@/components/user-passkey-modal';
+import { HOUSE_OF_STOLE_SHOP_URL } from '@/lib/config/marketing-urls';
 import { cn } from '@/lib/utils';
 
 const HERO_IMAGE = '/images/grad.jpg';
@@ -36,7 +36,7 @@ const featureStripItems = [
   },
   {
     icon: Camera,
-    label: 'Photography Access',
+    label: 'Photography',
     boxClass: 'bg-rose-100/90 dark:bg-rose-950/40 border-rose-200/80 dark:border-rose-800/50',
     iconClass: 'text-rose-700 dark:text-rose-400',
   },
@@ -95,10 +95,6 @@ const benefitCards = [
   },
 ] as const;
 
-/** House of Stole shop (marketing link as provided). */
-const HOUSE_OF_STOLE_URL =
-  'https://houseofstole.com/collections/all';
-
 const howItWorksSteps = [
   {
     icon: ShoppingBag,
@@ -130,32 +126,17 @@ const howItWorksSteps = [
 ] as const;
 
 export function WelcomeScreen() {
-  const [passkeyModalOpen, setPasskeyModalOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('signup');
 
   const openSignup = () => {
     setAuthMode('signup');
-    if (
-      typeof window !== 'undefined' &&
-      localStorage.getItem('userPasskeyVerified') === 'true'
-    ) {
-      setAuthOpen(true);
-    } else {
-      setPasskeyModalOpen(true);
-    }
+    setAuthOpen(true);
   };
 
   const openLogin = () => {
     setAuthMode('login');
-    if (
-      typeof window !== 'undefined' &&
-      localStorage.getItem('userPasskeyVerified') === 'true'
-    ) {
-      setAuthOpen(true);
-    } else {
-      setPasskeyModalOpen(true);
-    }
+    setAuthOpen(true);
   };
 
   return (
@@ -359,7 +340,7 @@ export function WelcomeScreen() {
               asChild
             >
               <a
-                href={HOUSE_OF_STOLE_URL}
+                href={HOUSE_OF_STOLE_SHOP_URL}
                 target='_blank'
                 rel='noopener noreferrer'
               >
@@ -377,14 +358,6 @@ export function WelcomeScreen() {
         </div>
       </section>
 
-      <UserPasskeyModal
-        open={passkeyModalOpen}
-        onOpenChange={setPasskeyModalOpen}
-        onVerified={() => {
-          setPasskeyModalOpen(false);
-          setAuthOpen(true);
-        }}
-      />
       <AuthModals
         open={authOpen}
         onOpenChange={setAuthOpen}
