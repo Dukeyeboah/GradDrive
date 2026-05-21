@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { UserDashboardSidebar } from '@/components/dashboard/user-dashboard-sidebar';
 import { UserDashboardHeader } from '@/components/dashboard/user-dashboard-header';
+import { GradDriverOnboardingWizard } from '@/components/dashboard/grad-driver-onboarding-wizard';
 
 export function UserDashboardShell({
   children,
@@ -30,6 +31,7 @@ export function UserDashboardShell({
       <div className='flex min-h-screen flex-col md:pl-64'>
         <UserDashboardHeader onMenuClick={() => setMobileOpen(true)} />
         <div className='flex-1'>{children}</div>
+        <GradDriverOnboardingWizard />
       </div>
     </div>
   );

@@ -123,5 +123,17 @@ export const DASHBOARD_SEARCH_ROUTES: { keywords: string[]; href: string }[] =
     { keywords: ['alumni', 'club', 'event', 'community'], href: '/dashboard/alum-club' },
     { keywords: ['kente', 'history', 'culture'], href: '/dashboard/kente-history' },
     { keywords: ['account', 'profile', 'setting'], href: '/dashboard/account' },
+    {
+      keywords: [
+        'grad driver',
+        'drivers',
+        'directory',
+        'network',
+        'alumni',
+        'classmate',
+        'connect',
+      ],
+      href: '/dashboard/grad-drivers',
+    },
     { keywords: ['explore', 'offering'], href: '/dashboard/grad-drive' },
   ];

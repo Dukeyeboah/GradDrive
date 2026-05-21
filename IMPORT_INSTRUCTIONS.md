@@ -23,9 +23,8 @@ Server-side API routes don't have user authentication context, so they can't wri
    - Click "Publish"
 
 3. **Import the data:**
-   - Go to `/admin/photographers/import` in your app
-   - Click "Import from File"
-   - Wait for success message
+   - Run `npx tsx scripts/import-photographers.ts` from the repo root (or use your own Admin SDK import flow).
+   - Wait for success message in the terminal.
 
 4. **Restore security (IMPORTANT!):**
    - Go back to Firestore Rules

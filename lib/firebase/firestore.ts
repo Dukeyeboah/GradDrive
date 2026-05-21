@@ -16,6 +16,7 @@ import {
   Timestamp,
 } from "firebase/firestore"
 import { db } from "./config"
+import { PLATFORM_SETTINGS_DOC_ID } from "@/lib/config/platform-settings-defaults"
 
 // Type definitions
 export interface Photographer {
@@ -264,6 +265,89 @@ export async function submitTravelInterest(
   } catch (error) {
     console.error("Error submitting travel interest:", error)
     return false
+  }
+}
+
+/** Public directory row synced from `users/{uid}` (no email). */
+export interface GradDriverPublicProfile {
+  uid: string
+  displayName?: string | null
+  photoURL?: string | null
+  bannerPhotoURL?: string | null
+  collegeName?: string | null
+  collegeGroup?: string | null
+  major?: string | null
+  graduationYear?: string | null
+  bio?: string | null
+  interests?: string | null
+  directoryVisible: boolean
+  updatedAt?: Timestamp
+}
+
+export const gradDriverProfilesCollection = collection(db, "gradDriverProfiles")
+
+/**
+ * Writes `gradDriverProfiles/{uid}` from the private user document.
+ * Removes the public doc if the account is not a standard grad user role.
+ */
+export async function publishGradDriverPublicProfile(uid: string): Promise<void> {
+  const userRef = doc(db, "users", uid)
+  const snap = await getDoc(userRef)
+  if (!snap.exists()) return
+
+  const u = snap.data() as Record<string, unknown>
+  const role = (u.role as string) || "user"
+  if (role !== "user") {
+    await deleteDoc(doc(db, "gradDriverProfiles", uid)).catch(() => {})
+    return
+  }
+
+  const directoryVisible = u.directoryOptIn !== false
+
+  await setDoc(
+    doc(db, "gradDriverProfiles", uid),
+    {
+      uid,
+      displayName: u.displayName ?? null,
+      photoURL: u.photoURL ?? null,
+      bannerPhotoURL: u.bannerPhotoURL ?? null,
+      collegeName: u.collegeName ?? null,
+      collegeGroup: u.collegeGroup ?? null,
+      major: u.major ?? null,
+      graduationYear: u.graduationYear ?? null,
+      bio: u.bio ?? null,
+      interests: u.interests ?? null,
+      directoryVisible,
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true },
+  )
+}
+
+export async function listVisibleGradDriverProfiles(): Promise<GradDriverPublicProfile[]> {
+  try {
+    const q = query(gradDriverProfilesCollection, where("directoryVisible", "==", true))
+    const snapshot = await getDocs(q)
+    return snapshot.docs.map((d) => ({
+      uid: d.id,
+      ...d.data(),
+    })) as GradDriverPublicProfile[]
+  } catch (error) {
+    console.error("Error listing grad driver profiles:", error)
+    return []
+  }
+}
+
+export async function getGradDriverPublicProfile(
+  uid: string,
+): Promise<GradDriverPublicProfile | null> {
+  try {
+    const snap = await getDoc(doc(db, "gradDriverProfiles", uid))
+    if (!snap.exists()) return null
+    return { uid: snap.id, ...snap.data() } as GradDriverPublicProfile
+  } catch (error) {
+    console.error("Error loading grad driver profile:", error)
+    return null
   }
 }
 
@@ -845,7 +929,6 @@ export interface AnalyticsData {
   totalUsers: number
   totalAdmins: number
   totalDownloads: number
-  photographersListed: number
   postersUploaded: number
   capDesigns: number
   recentActivity: SystemLog[]
@@ -882,10 +965,6 @@ export async function getAnalytics(): Promise<AnalyticsData> {
       totalDownloads += doc.data().downloads || 0
     })
 
-    // Get photographers count
-    const photographersSnapshot = await getDocs(collection(db, "photographers"))
-    const photographersListed = photographersSnapshot.size
-
     // Get counts
     const postersUploaded = postersSnapshot.size
     const capDesigns = capDesignsSnapshot.size
@@ -897,7 +976,6 @@ export async function getAnalytics(): Promise<AnalyticsData> {
       totalUsers,
       totalAdmins,
       totalDownloads,
-      photographersListed,
       postersUploaded,
       capDesigns,
       recentActivity,
@@ -908,7 +986,6 @@ export async function getAnalytics(): Promise<AnalyticsData> {
       totalUsers: 0,
       totalAdmins: 0,
       totalDownloads: 0,
-      photographersListed: 0,
       postersUploaded: 0,
       capDesigns: 0,
       recentActivity: [],
@@ -963,5 +1040,101 @@ export async function getDownloadBreakdown(): Promise<{
   } catch (error) {
     console.error("Error getting download breakdown:", error)
     return { posters: [], ebooks: [], capDesigns: [] }
+  }
+}
+
+// --- Platform settings & passkey requests (admin UI) ---
+
+export interface PlatformSettings {
+  passkeyAdminNotifyEmail?: string
+  passkeyFromEmail?: string
+  updatedAt?: Timestamp
+}
+
+export type PasskeyRequestStatus = "pending" | "sent" | "rejected"
+
+export interface PasskeyRequest {
+  id: string
+  email: string
+  /** Requester's full name (required on new requests) */
+  displayName?: string
+  collegeName?: string
+  graduationYear?: string
+  status: PasskeyRequestStatus
+  createdAt?: Timestamp
+  updatedAt?: Timestamp
+  sentAt?: Timestamp
+  sentToEmail?: string
+  fromEmailUsed?: string
+  adminNotifyEmailSnapshot?: string
+  sentByUid?: string
+  rejectedAt?: Timestamp
+  rejectedByUid?: string
+  /** Admin's message emailed to the requester on decline */
+  rejectMessage?: string
+  rejectionEmailSentAt?: Timestamp
+  approvalEmailSentAt?: Timestamp
+}
+
+export async function getPlatformSettings(): Promise<PlatformSettings | null> {
+  try {
+    const snap = await getDoc(doc(db, "platformSettings", PLATFORM_SETTINGS_DOC_ID))
+    if (!snap.exists()) return null
+    return snap.data() as PlatformSettings
+  } catch (error) {
+    console.error("Error loading platform settings:", error)
+    return null
+  }
+}
+
+export async function savePlatformSettings(
+  data: Pick<PlatformSettings, "passkeyAdminNotifyEmail" | "passkeyFromEmail">,
+): Promise<boolean> {
+  try {
+    await setDoc(
+      doc(db, "platformSettings", PLATFORM_SETTINGS_DOC_ID),
+      {
+        ...data,
+        updatedAt: serverTimestamp(),
+      },
+      { merge: true },
+    )
+    return true
+  } catch (error) {
+    console.error("Error saving platform settings:", error)
+    return false
+  }
+}
+
+export async function getPasskeyRequests(): Promise<PasskeyRequest[]> {
+  try {
+    const q = query(
+      collection(db, "passkeyRequests"),
+      orderBy("createdAt", "desc"),
+      limit(200),
+    )
+    const snap = await getDocs(q)
+    return snap.docs.map((d) => {
+      const data = d.data() as Omit<PasskeyRequest, "id">
+      return { id: d.id, ...data }
+    })
+  } catch (error) {
+    console.error("Error loading passkey requests (ordered):", error)
+    try {
+      const snap = await getDocs(collection(db, "passkeyRequests"))
+      const list = snap.docs.map((d) => {
+        const data = d.data() as Omit<PasskeyRequest, "id">
+        return { id: d.id, ...data }
+      })
+      list.sort((a, b) => {
+        const ta = a.createdAt?.toMillis?.() ?? 0
+        const tb = b.createdAt?.toMillis?.() ?? 0
+        return tb - ta
+      })
+      return list.slice(0, 200)
+    } catch (e2) {
+      console.error("Error loading passkey requests:", e2)
+      return []
+    }
   }
 }

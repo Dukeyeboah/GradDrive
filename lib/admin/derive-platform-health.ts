@@ -13,16 +13,15 @@ export function derivePlatformHealthScores(
 ): {
   userEngagement: number;
   assetDownloads: number;
-  photographerConnections: number;
+  contentCatalog: number;
 } {
   if (!analytics) {
-    return { userEngagement: 0, assetDownloads: 0, photographerConnections: 0 };
+    return { userEngagement: 0, assetDownloads: 0, contentCatalog: 0 };
   }
 
   const {
     totalUsers,
     totalDownloads,
-    photographersListed,
     recentActivity,
     postersUploaded,
     capDesigns,
@@ -46,11 +45,12 @@ export function derivePlatformHealthScores(
     ),
   );
 
-  const photographerConnections = Math.round(
+  /** Posters + cap designs on Grad Drive (photography marketplace is on Fotomatic). */
+  const contentCatalog = Math.round(
     clamp(
       48 +
-        Math.min(photographersListed, 28) * 1.8 +
-        Math.min(postersUploaded + capDesigns, 20) * 0.6,
+        Math.min(postersUploaded, 24) * 2.2 +
+        Math.min(capDesigns, 24) * 2.2,
       45,
       96,
     ),
@@ -59,6 +59,6 @@ export function derivePlatformHealthScores(
   return {
     userEngagement,
     assetDownloads,
-    photographerConnections,
+    contentCatalog,
   };
 }

@@ -9,6 +9,7 @@ import {
   User,
   onAuthStateChanged,
   updateProfile,
+  deleteUser,
 } from 'firebase/auth';
 import { auth } from './config';
 import {
@@ -16,9 +17,12 @@ import {
   setDoc,
   getDoc,
   updateDoc,
+  deleteDoc,
   serverTimestamp,
 } from 'firebase/firestore';
 import { db } from './config';
+import { publishGradDriverPublicProfile } from './firestore';
+import { readGradDriveAccessUnlocked } from '@/lib/config/user';
 
 const googleProvider = new GoogleAuthProvider();
 // Add additional scopes if needed
@@ -41,6 +45,22 @@ export interface UserData {
   collegeGroup?: string | null;
   major?: string | null;
   graduationYear?: string | null;
+  /** Short bio for Grad Drivers profile */
+  bio?: string | null;
+  /** Interests, hobbies, goals (shown in directory and profile) */
+  interests?: string | null;
+  /** Header image URL for profile page */
+  bannerPhotoURL?: string | null;
+  /** When false, profile is hidden from the Grad Drivers directory */
+  directoryOptIn?: boolean | null;
+  /** User finished the Grad Drivers networking onboarding */
+  gradDriverProfileComplete?: boolean | null;
+  /** User chose “Maybe later” on the networking prompt */
+  gradDriverOnboardingDismissed?: boolean | null;
+  /** True once user completed passkey-gated sign-up (existing accounts may omit) */
+  hasGradDriveAccess?: boolean | null;
+  /** Optional second contact email (not shown on public profile) */
+  secondaryEmail?: string | null;
 }
 
 /**
@@ -87,11 +107,26 @@ export async function signUpEmailPassword(
       displayName: displayName || userCredential.user.displayName,
       photoURL: userCredential.user.photoURL,
       role: role,
+      hasGradDriveAccess: true,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     };
 
-    await setDoc(doc(db, 'users', userCredential.user.uid), userData);
+    try {
+      await setDoc(doc(db, 'users', userCredential.user.uid), userData);
+    } catch (firestoreErr: any) {
+      try {
+        await deleteUser(userCredential.user);
+      } catch {
+        /* ignore */
+      }
+      return {
+        user: null,
+        error:
+          firestoreErr?.message ||
+          'Could not save your profile. Check your connection and try again.',
+      };
+    }
 
     return { user: userCredential.user, error: null };
   } catch (error: any) {
@@ -99,12 +134,18 @@ export async function signUpEmailPassword(
   }
 }
 
+export type SignInWithGoogleOptions = {
+  /** @deprecated New Google accounts for role `user` require local passkey unlock instead */
+  rejectNewUsers?: boolean;
+};
+
 /**
  * Sign in with Google using popup (like the working example)
  * Handles user creation/update immediately
  */
 export async function signInWithGoogle(
   role: 'user' | 'admin' | 'super admin' | 'photographer-admin' = 'user',
+  _options?: SignInWithGoogleOptions,
 ) {
   try {
     // Use popup instead of redirect
@@ -138,18 +179,52 @@ export async function signInWithGoogle(
     const userDoc = await getDoc(doc(db, 'users', user.uid));
 
     const isNewUser = !userDoc.exists();
+
+    if (isNewUser && finalRole === 'user') {
+      const passkeyOk =
+        typeof window !== 'undefined' && readGradDriveAccessUnlocked();
+      if (!passkeyOk) {
+        try {
+          await deleteUser(user);
+        } catch {
+          /* ignore */
+        }
+        return {
+          user: null,
+          error:
+            'Access restricted. On the Grad Drive home page, choose Get access and enter your passkey, then sign in with Google again to create your account.',
+          isNewUser: true,
+        };
+      }
+    }
+
     if (isNewUser) {
-      // New user - create with role
       const userData: UserData = {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
         role: finalRole,
+        hasGradDriveAccess: true,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       };
-      await setDoc(doc(db, 'users', user.uid), userData);
+      try {
+        await setDoc(doc(db, 'users', user.uid), userData);
+      } catch (firestoreError: any) {
+        try {
+          await deleteUser(user);
+        } catch {
+          /* ignore */
+        }
+        return {
+          user: null,
+          error:
+            firestoreError?.message ||
+            'Could not complete registration. Please try again.',
+          isNewUser: true,
+        };
+      }
     } else {
       // Existing user - update info
       const existingData = userDoc.data() as UserData;
@@ -248,14 +323,26 @@ export async function updateUserProfile(
     collegeGroup?: string | null;
     major?: string | null;
     graduationYear?: string | null;
+    bio?: string | null;
+    interests?: string | null;
+    photoURL?: string | null;
+    bannerPhotoURL?: string | null;
+    directoryOptIn?: boolean | null;
+    gradDriverProfileComplete?: boolean | null;
+    gradDriverOnboardingDismissed?: boolean | null;
+    secondaryEmail?: string | null;
   },
 ) {
   try {
     const ref = doc(db, 'users', uid);
+    const patch = Object.fromEntries(
+      Object.entries(data).filter(([, v]) => v !== undefined),
+    );
     await updateDoc(ref, {
-      ...data,
+      ...patch,
       updatedAt: serverTimestamp(),
     });
+    await publishGradDriverPublicProfile(uid);
     return { error: null };
   } catch (error: any) {
     return { error: error.message };

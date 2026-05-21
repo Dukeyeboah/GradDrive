@@ -4,8 +4,6 @@
  * Usage:
  * 1. Make sure you have Firebase initialized
  * 2. Run: npx tsx scripts/import-photographers.ts
- * 
- * Or use the import page at /admin/photographers/import
  */
 
 import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore"
@@ -82,8 +80,8 @@ function transformPhotographerData(item: PhotographerData): Photographer | null 
   // Clean up empty strings
   Object.keys(photographer).forEach((key) => {
     const value = photographer[key as keyof Photographer]
-    if (value === "" || value === " ") {
-      photographer[key as keyof Photographer] = undefined as any
+    if (value === '' || value === ' ') {
+      ;(photographer as unknown as Record<string, unknown>)[key] = undefined
     }
   })
 

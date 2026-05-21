@@ -25,8 +25,8 @@ export const ADMIN_QUICK_ACCESS_ITEMS: AdminQuickAccessItem[] = [
   },
   {
     href: '/admin/photographers',
-    title: 'Photographers',
-    description: 'Curate photographer listings and bookings.',
+    title: 'Fotomatic (photography)',
+    description: 'Photographer marketplace and bookings are on fotomatic.app.',
     icon: Camera,
   },
   {

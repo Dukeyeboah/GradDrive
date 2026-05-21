@@ -85,3 +85,46 @@ export async function getFileURL(path: string): Promise<{ url: string | null; er
   }
 }
 
+const PROFILE_IMAGE_MIMES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+])
+
+function extensionForImage(file: File): string {
+  const mime = file.type
+  if (mime === "image/jpeg") return ".jpg"
+  if (mime === "image/png") return ".png"
+  if (mime === "image/webp") return ".webp"
+  if (mime === "image/gif") return ".gif"
+  const match = file.name.match(/\.(jpe?g|png|gif|webp)$/i)
+  if (match) return match[0].toLowerCase()
+  return ".jpg"
+}
+
+/**
+ * Upload a profile or banner image for a user. Stored under `users/{uid}/profile/…`
+ * (must match Storage security rules).
+ */
+export async function uploadUserProfileImage(
+  uid: string,
+  kind: "avatar" | "banner",
+  file: File,
+): Promise<{ url: string | null; error: string | null }> {
+  const mime = file.type || "application/octet-stream"
+  if (!PROFILE_IMAGE_MIMES.has(mime)) {
+    return {
+      url: null,
+      error: "Please choose a JPEG, PNG, WebP, or GIF image.",
+    }
+  }
+  const maxBytes = 5 * 1024 * 1024
+  if (file.size > maxBytes) {
+    return { url: null, error: "Image must be 5MB or smaller." }
+  }
+  const ext = extensionForImage(file)
+  const path = `users/${uid}/profile/${kind}_${Date.now()}${ext}`
+  return uploadFile(file, path)
+}
+

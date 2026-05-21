@@ -33,7 +33,6 @@ export function UserPasskeyGate({ onVerified }: UserPasskeyGateProps) {
 
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('userPasskeyVerified', 'true');
-      localStorage.setItem('userPasskeyVerified', 'true');
     }
     setPasskey('');
     onVerified();

@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/dialog';
 import {
   Users,
-  Camera,
   FileImage,
   BookOpen,
   Download,
@@ -95,10 +94,6 @@ export default function AdminDashboardPage() {
             setModalLoading(false);
           }
           break;
-        case 'photographers':
-          setModalData({ count: analytics?.photographersListed || 0 });
-          setModalLoading(false);
-          break;
         case 'posters':
           setModalData({ count: analytics?.postersUploaded || 0 });
           setModalLoading(false);
@@ -171,14 +166,6 @@ export default function AdminDashboardPage() {
       descriptor: 'Admin accounts',
     },
     {
-      key: 'photographers' as const,
-      label: 'Photographers Listed',
-      icon: Camera,
-      iconBg: 'bg-gradient-to-br from-rose-500 to-pink-600',
-      value: analytics ? formatNumber(analytics.photographersListed) : '…',
-      descriptor: 'Active photographers',
-    },
-    {
       key: 'posters' as const,
       label: 'Posters Uploaded',
       icon: FileImage,
@@ -240,7 +227,7 @@ export default function AdminDashboardPage() {
         <AdminPlatformHealthCard
           userEngagement={health.userEngagement}
           assetDownloads={health.assetDownloads}
-          photographerConnections={health.photographerConnections}
+          contentCatalog={health.contentCatalog}
         />
       </div>
 
@@ -256,7 +243,6 @@ export default function AdminDashboardPage() {
               {selectedModal === 'users' && 'All Users'}
               {selectedModal === 'downloads' && 'Download Breakdown'}
               {selectedModal === 'admins' && 'Admin Users'}
-              {selectedModal === 'photographers' && 'Photographers'}
               {selectedModal === 'posters' && 'Posters'}
               {selectedModal === 'capDesigns' && 'Cap Designs'}
             </DialogTitle>
@@ -266,7 +252,6 @@ export default function AdminDashboardPage() {
               {selectedModal === 'downloads' &&
                 'Detailed breakdown of downloads by category'}
               {selectedModal === 'admins' && 'List of all admin accounts'}
-              {selectedModal === 'photographers' && 'Photographer listings'}
               {selectedModal === 'posters' && 'All uploaded posters'}
               {selectedModal === 'capDesigns' && 'All cap designs'}
             </DialogDescription>

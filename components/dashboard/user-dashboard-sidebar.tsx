@@ -16,6 +16,7 @@ import {
   Calendar,
   Settings,
   LogOut,
+  UsersRound,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -30,6 +31,7 @@ const NAV: {
 }[] = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, end: true },
   { label: 'Explore', href: '/dashboard/grad-drive', icon: Compass },
+  { label: 'Grad Drivers', href: '/dashboard/grad-drivers', icon: UsersRound },
   { label: 'Photography', href: '/dashboard/photographers', icon: Camera },
   { label: 'Ebooks & Guides', href: '/dashboard/ebooks', icon: BookOpen },
   { label: 'Posters & Artworks', href: '/dashboard/posters', icon: FileImage },

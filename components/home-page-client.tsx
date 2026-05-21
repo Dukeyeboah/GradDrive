@@ -4,24 +4,25 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PublicNav } from '@/components/public-nav';
 import { WelcomeScreen } from '@/components/welcome-screen';
-import { UserPasskeyGate } from '@/components/user-passkey-gate';
+import { LandingAuthProvider } from '@/contexts/LandingAuthContext';
 import { useAuth } from '@/contexts/AuthContext';
 
 export function HomePageClient() {
   const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
+  const { user, userData, loading: authLoading } = useAuth();
   const [mounted, setMounted] = useState(false);
-  const [passkeyVerified, setPasskeyVerified] = useState(false);
 
   useEffect(() => {
-    setPasskeyVerified(localStorage.getItem('userPasskeyVerified') === 'true');
     setMounted(true);
   }, []);
 
+  // Only redirect when Firestore has a user profile. Otherwise a Google popup can
+  // briefly set `user` before our flow rolls back (no passkey), which used to send
+  // people to /dashboard and feel like a long lag before the gate appeared.
   useEffect(() => {
-    if (authLoading || !user) return;
+    if (authLoading || !user || !userData) return;
     router.replace('/dashboard');
-  }, [user, authLoading, router]);
+  }, [user, userData, authLoading, router]);
 
   if (!mounted || authLoading) {
     return (
@@ -32,7 +33,7 @@ export function HomePageClient() {
     );
   }
 
-  if (user) {
+  if (user && userData) {
     return (
       <div className='min-h-screen flex flex-col bg-background'>
         <div className='h-16 md:h-[4.25rem] border-b border-border/60 bg-background' />
@@ -43,14 +44,10 @@ export function HomePageClient() {
     );
   }
 
-  if (!passkeyVerified) {
-    return <UserPasskeyGate onVerified={() => setPasskeyVerified(true)} />;
-  }
-
   return (
-    <>
+    <LandingAuthProvider>
       <PublicNav />
       <WelcomeScreen />
-    </>
+    </LandingAuthProvider>
   );
 }

@@ -16,6 +16,7 @@ import {
   LogOut,
   GraduationCap,
   FileText,
+  Bell,
 } from 'lucide-react';
 import { signOutUser } from '@/lib/firebase/auth';
 import { useToast } from '@/hooks/use-toast';
@@ -24,12 +25,13 @@ import { useToast } from '@/hooks/use-toast';
 const navItems = [
   { href: '/admin/dashboard', label: 'Overview', icon: LayoutDashboard, end: true },
   { href: '/admin/users', label: 'Users', icon: Users },
-  { href: '/admin/photographers', label: 'Photographers', icon: Camera },
+  { href: '/admin/photographers', label: 'Fotomatic', icon: Camera },
   { href: '/admin/posters', label: 'Posters', icon: FileImage },
   { href: '/admin/cap-designs', label: 'Cap Designs', icon: GraduationCap },
   { href: '/admin/ebooks', label: 'E-books', icon: BookOpen },
   { href: '/admin/scholarship', label: 'Scholarships', icon: Award },
   // { href: '/admin/customizer', label: 'Customizer', icon: Palette },
+  { href: '/admin/notifications', label: 'Notifications', icon: Bell },
   { href: '/admin/logs', label: 'System Logs', icon: FileText },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];

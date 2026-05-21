@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,7 +14,7 @@ import {
   Unlock,
   Lock,
 } from 'lucide-react';
-import { AuthModals } from '@/components/auth-modals';
+import { useLandingAuth } from '@/contexts/LandingAuthContext';
 import { HOUSE_OF_STOLE_SHOP_URL } from '@/lib/config/marketing-urls';
 import { cn } from '@/lib/utils';
 
@@ -126,18 +125,7 @@ const howItWorksSteps = [
 ] as const;
 
 export function WelcomeScreen() {
-  const [authOpen, setAuthOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<'login' | 'signup'>('signup');
-
-  const openSignup = () => {
-    setAuthMode('signup');
-    setAuthOpen(true);
-  };
-
-  const openLogin = () => {
-    setAuthMode('login');
-    setAuthOpen(true);
-  };
+  const { openLogin, openSignup } = useLandingAuth();
 
   return (
     <main className='w-full flex flex-col bg-background'>
@@ -358,12 +346,6 @@ export function WelcomeScreen() {
         </div>
       </section>
 
-      <AuthModals
-        open={authOpen}
-        onOpenChange={setAuthOpen}
-        mode={authMode}
-        onModeChange={setAuthMode}
-      />
     </main>
   );
 }

@@ -9,7 +9,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { submitTravelInterest } from "@/lib/firebase/firestore"
 
 export default function DiscountsPage() {
   const { user, userData } = useAuth()
@@ -41,21 +40,34 @@ export default function DiscountsPage() {
         return
       }
 
-      const ok = await submitTravelInterest({
-        userId: user.uid,
-        userName: formData.name || userData?.displayName || "",
-        userEmail: formData.email || userData?.email || "",
-        graduationYear: formData.graduationYear,
-        school: formData.school,
-        interests: formData.interests,
-        preferredTiming: formData.preferredTiming,
-        budgetRange: formData.budgetRange,
-        travelExperience: formData.travelExperience,
-        additionalInfo: formData.additionalInfo,
+      const idToken = await user.getIdToken()
+      const res = await fetch("/api/travel-interest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({
+          userId: user.uid,
+          userName: formData.name || userData?.displayName || "",
+          userEmail: formData.email || userData?.email || "",
+          graduationYear: formData.graduationYear,
+          school: formData.school,
+          interests: formData.interests,
+          preferredTiming: formData.preferredTiming || undefined,
+          budgetRange: formData.budgetRange || undefined,
+          travelExperience: formData.travelExperience || undefined,
+          additionalInfo: formData.additionalInfo || undefined,
+        }),
       })
 
-      if (!ok) {
-        setError("We couldn't save your interest right now. Please try again shortly.")
+      const payload = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setError(
+          typeof payload?.error === "string"
+            ? payload.error
+            : "We couldn't save your interest right now. Please try again shortly.",
+        )
         setSubmitting(false)
         return
       }

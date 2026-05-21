@@ -8,16 +8,16 @@ import { cn } from '@/lib/utils';
 export function AdminPlatformHealthCard({
   userEngagement,
   assetDownloads,
-  photographerConnections,
+  contentCatalog,
 }: {
   userEngagement: number;
   assetDownloads: number;
-  photographerConnections: number;
+  contentCatalog: number;
 }) {
   const rows = [
     { label: 'User Engagement', value: userEngagement },
     { label: 'Asset Downloads', value: assetDownloads },
-    { label: 'Photographer Connections', value: photographerConnections },
+    { label: 'Content catalog', value: contentCatalog },
   ];
 
   return (
@@ -51,7 +51,7 @@ export function AdminPlatformHealthCard({
         <div
           className={cn(
             'rounded-xl border border-accent/25 bg-accent/10 p-4',
-            'transition-transform duration-300 ease-out hover:-translate-y-0.5',
+            'transition-transform duration-300 hover:-translate-y-0.5',
           )}
         >
           <div className='flex gap-3'>

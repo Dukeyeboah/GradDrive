@@ -110,10 +110,12 @@ export async function importPhotographersServer(jsonData: any[]): Promise<{ succ
       }
 
       // Remove empty strings and convert to undefined
-      Object.keys(photographerData).forEach(key => {
-        const value = photographerData[key as keyof typeof photographerData]
-        if (value === "" || value === " " || value === null) {
-          photographerData[key as keyof typeof photographerData] = undefined as any
+      Object.keys(photographerData).forEach((key) => {
+        const k = key as keyof typeof photographerData
+        const value = photographerData[k]
+        if (value === '' || value === ' ' || value === null) {
+          ;(photographerData as unknown as Record<string, unknown>)[key] =
+            undefined
         }
       })
 

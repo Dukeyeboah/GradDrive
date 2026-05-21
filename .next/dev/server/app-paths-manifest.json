@@ -1,11 +1,7 @@
 {
-  "/dashboard/account/page": "app/dashboard/account/page.js",
-  "/dashboard/ebooks/page": "app/dashboard/ebooks/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/dashboard/photographers/page": "app/dashboard/photographers/page.js",
-  "/page": "app/page.js",
-  "/photographer-admin/bookings/page": "app/photographer-admin/bookings/page.js",
-  "/photographer-admin/dashboard/page": "app/photographer-admin/dashboard/page.js",
-  "/photographer-admin/page": "app/photographer-admin/page.js",
-  "/photographers/page": "app/photographers/page.js"
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/admin/notifications/page": "app/admin/notifications/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/api/request-passkey/route": "app/api/request-passkey/route.js",
+  "/page": "app/page.js"
 }

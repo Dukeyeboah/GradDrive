@@ -19,7 +19,16 @@
     "afterFiles": [],
     "fallback": []
   },
-  "dynamicRoutes": [],
+  "dynamicRoutes": [
+    {
+      "page": "/dashboard/grad-drivers/[uid]",
+      "regex": "^/dashboard/grad\\-drivers/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPuid": "nxtPuid"
+      },
+      "namedRegex": "^/dashboard/grad\\-drivers/(?<nxtPuid>[^/]+?)(?:/)?$"
+    }
+  ],
   "staticRoutes": [
     {
       "page": "/",
@@ -82,16 +91,22 @@
       "namedRegex": "^/admin/logs(?:/)?$"
     },
     {
+      "page": "/admin/notifications",
+      "regex": "^/admin/notifications(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/notifications(?:/)?$"
+    },
+    {
+      "page": "/admin/passkey-requests",
+      "regex": "^/admin/passkey\\-requests(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/passkey\\-requests(?:/)?$"
+    },
+    {
       "page": "/admin/photographers",
       "regex": "^/admin/photographers(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/photographers(?:/)?$"
-    },
-    {
-      "page": "/admin/photographers/import",
-      "regex": "^/admin/photographers/import(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/admin/photographers/import(?:/)?$"
     },
     {
       "page": "/admin/posters",
@@ -124,16 +139,28 @@
       "namedRegex": "^/admin/users(?:/)?$"
     },
     {
+      "page": "/api/admin/passkey-requests",
+      "regex": "^/api/admin/passkey\\-requests(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/passkey\\-requests(?:/)?$"
+    },
+    {
       "page": "/api/download",
       "regex": "^/api/download(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/download(?:/)?$"
     },
     {
-      "page": "/api/photographers/import",
-      "regex": "^/api/photographers/import(?:/)?$",
+      "page": "/api/request-passkey",
+      "regex": "^/api/request\\-passkey(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/api/photographers/import(?:/)?$"
+      "namedRegex": "^/api/request\\-passkey(?:/)?$"
+    },
+    {
+      "page": "/api/travel-interest",
+      "regex": "^/api/travel\\-interest(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/travel\\-interest(?:/)?$"
     },
     {
       "page": "/dashboard",
@@ -152,6 +179,12 @@
       "regex": "^/dashboard/alum\\-club(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/dashboard/alum\\-club(?:/)?$"
+    },
+    {
+      "page": "/dashboard/bookmarks",
+      "regex": "^/dashboard/bookmarks(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/bookmarks(?:/)?$"
     },
     {
       "page": "/dashboard/cap-designs",
@@ -178,10 +211,22 @@
       "namedRegex": "^/dashboard/grad\\-drive(?:/)?$"
     },
     {
+      "page": "/dashboard/grad-drivers",
+      "regex": "^/dashboard/grad\\-drivers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/grad\\-drivers(?:/)?$"
+    },
+    {
       "page": "/dashboard/kente-history",
       "regex": "^/dashboard/kente\\-history(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/dashboard/kente\\-history(?:/)?$"
+    },
+    {
+      "page": "/dashboard/messages",
+      "regex": "^/dashboard/messages(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/messages(?:/)?$"
     },
     {
       "page": "/dashboard/photographers",

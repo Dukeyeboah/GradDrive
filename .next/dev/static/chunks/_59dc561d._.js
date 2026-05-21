@@ -298,11 +298,11 @@ function EbooksPage() {
                             className: "p-0 border-border bg-card shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden",
                             children: [
                                 ebook.thumbnailUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "w-full relative overflow-hidden flex-shrink-0",
+                                    className: "relative h-48 w-full flex-shrink-0 overflow-hidden bg-muted",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                         src: ebook.thumbnailUrl,
                                         alt: ebook.title,
-                                        className: "w-full h-full object-cover"
+                                        className: "h-full w-full object-cover"
                                     }, void 0, false, {
                                         fileName: "[project]/app/dashboard/ebooks/page.tsx",
                                         lineNumber: 76,

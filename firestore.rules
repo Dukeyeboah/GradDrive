@@ -115,11 +115,34 @@ service cloud.firestore {
       allow update, delete: if isAdmin(); // Only admins can update/delete submissions
     }
 
-    // Travel Interests collection (HoS Travel Experience)
+    // Platform settings (admin-editable email config, etc.)
+    match /platformSettings/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Passkey access requests — created only via Firebase Admin (API routes)
+    match /passkeyRequests/{requestId} {
+      allow read: if isAdmin();
+      allow create, update, delete: if false;
+    }
+
+    // Travel Interests collection (HoS Travel Experience) — created via Admin API only
     match /travelInterests/{interestId} {
-      allow read: if isAdmin(); // Only admins can view all travel interests
-      allow create: if isAuthenticated(); // Any authenticated user can submit interest
-      allow update, delete: if isAdmin(); // Only admins can modify/delete
+      allow read: if isAdmin();
+      allow create, update, delete: if false;
+    }
+
+    // Public grad driver directory (synced from users/{uid} by the client).
+    // Split get vs list: queries only use directoryVisible, but OR with owner caused
+    // list permission failures (rules broader than query). Owner can still get own doc.
+    match /gradDriverProfiles/{userId} {
+      allow get: if isAuthenticated() && (
+        resource.data.directoryVisible == true ||
+        request.auth.uid == userId
+      );
+      allow list: if isAuthenticated() && resource.data.directoryVisible == true;
+      allow create, update: if isOwner(userId);
+      allow delete: if isOwner(userId);
     }
 
     // Default deny
