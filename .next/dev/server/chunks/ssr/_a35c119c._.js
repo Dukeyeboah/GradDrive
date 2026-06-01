@@ -301,7 +301,7 @@ const NAV = [
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$compass$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Compass$3e$__["Compass"]
     },
     {
-        label: 'Grad Drivers',
+        label: 'Grad Community',
         href: '/dashboard/grad-drivers',
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2d$round$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UsersRound$3e$__["UsersRound"]
     },
@@ -1115,7 +1115,7 @@ const DASHBOARD_SEARCH_ROUTES = [
     },
     {
         keywords: [
-            'grad driver',
+            'grad community',
             'drivers',
             'directory',
             'network',
@@ -2238,7 +2238,7 @@ function ProfileMediaUploads({ userId, avatarUrl, bannerUrl, onAvatarUrlChange, 
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 className: "mt-3 text-center sm:text-left text-xs text-muted-foreground max-w-sm",
-                                children: "Preview of how your banner and profile photo appear on your Grad Drivers public profile. Uploads apply after you save."
+                                children: "Preview of how your banner and profile photo appear in Grad Community public profile. Uploads apply after you save."
                             }, void 0, false, {
                                 fileName: "[project]/components/dashboard/profile-media-uploads.tsx",
                                 lineNumber: 87,
@@ -2648,7 +2648,7 @@ function GradDriverOnboardingWizard() {
         await refreshUserData();
         toast({
             title: 'You are on the map',
-            description: 'Other grad drivers can find you in the directory when visibility is on.'
+            description: 'Other members can find you in the Grad Community directory when visibility is on.'
         });
         setOpen(false);
     };
@@ -2677,7 +2677,7 @@ function GradDriverOnboardingWizard() {
                                             lineNumber: 113,
                                             columnNumber: 17
                                         }, this),
-                                        "Meet other grad drivers"
+                                        "Meet the Grad Community"
                                     ]
                                 }, void 0, true),
                                 step === 1 && 'Tell your story',
@@ -2880,7 +2880,7 @@ function GradDriverOnboardingWizard() {
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
                                             htmlFor: "gdo-optin",
                                             className: "text-base font-medium cursor-pointer",
-                                            children: "List me in the Grad Drivers directory"
+                                            children: "List me in the Grad Community directory"
                                         }, void 0, false, {
                                             fileName: "[project]/components/dashboard/grad-driver-onboarding-wizard.tsx",
                                             lineNumber: 219,
@@ -3375,6 +3375,9 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
     const [passkey, setPasskey] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [requestEmail, setRequestEmail] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
+    const [requestDisplayName, setRequestDisplayName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
+    const [requestCollege, setRequestCollege] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
+    const [requestGradYear, setRequestGradYear] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     const [requestLoading, setRequestLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!open) return;
@@ -3382,6 +3385,9 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
         setPasskey('');
         setError(null);
         setRequestEmail('');
+        setRequestDisplayName('');
+        setRequestCollege('');
+        setRequestGradYear('');
     }, [
         open
     ]);
@@ -3401,10 +3407,21 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
     const handleRequestPasskey = async (e)=>{
         e.preventDefault();
         const email = requestEmail.trim().toLowerCase();
+        const displayName = requestDisplayName.trim();
+        const collegeName = requestCollege.trim();
+        const graduationYear = requestGradYear.trim();
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             toast({
                 title: 'Invalid email',
                 description: 'Enter a valid email address so we can reply.',
+                variant: 'destructive'
+            });
+            return;
+        }
+        if (!displayName || !collegeName || !graduationYear) {
+            toast({
+                title: 'Missing information',
+                description: 'Please fill in your name, school, and graduation year.',
                 variant: 'destructive'
             });
             return;
@@ -3417,23 +3434,34 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    email
+                    email,
+                    displayName,
+                    collegeName,
+                    graduationYear
                 })
             });
             const data = await res.json().catch(()=>({}));
             if (!res.ok) {
+                const description = typeof data?.error === 'string' ? data.error : 'Something went wrong. Try again later.';
                 toast({
-                    title: 'Request failed',
-                    description: typeof data?.error === 'string' ? data.error : 'Something went wrong. Try again later.',
-                    variant: 'destructive'
+                    title: res.status === 503 && data?.code === 'FIREBASE_ADMIN_NOT_CONFIGURED' ? 'Server not set up for requests' : 'Request failed',
+                    description,
+                    variant: 'destructive',
+                    duration: res.status === 503 ? 16_000 : 8_000
                 });
                 return;
             }
+            onOpenChange(false);
+            const successDescription = typeof data?.message === 'string' ? data.message : 'We received your request. After review, we will email you with next steps.';
             toast({
-                title: 'Request received',
-                description: typeof data?.message === 'string' ? data.message : 'If your email is on file, we will send access instructions.'
+                title: 'Request sent',
+                description: successDescription,
+                duration: 12_000
             });
             setRequestEmail('');
+            setRequestDisplayName('');
+            setRequestCollege('');
+            setRequestGradYear('');
             setScreen('hub');
         } catch  {
             toast({
@@ -3462,12 +3490,12 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                         strokeWidth: 1.75
                                     }, void 0, false, {
                                         fileName: "[project]/components/signup-passkey-modal.tsx",
-                                        lineNumber: 127,
+                                        lineNumber: 161,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 126,
+                                    lineNumber: 160,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogTitle"], {
@@ -3475,7 +3503,7 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                     children: "To access Grad Drive, you need an account"
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 129,
+                                    lineNumber: 163,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
@@ -3483,13 +3511,13 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                     children: "Eligible graduates unlock sign-up with an access passkey from House of Stole. Already joined? Sign in—no passkey required."
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 132,
+                                    lineNumber: 166,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                            lineNumber: 125,
+                            lineNumber: 159,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3506,7 +3534,7 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                     children: "I have an account → Log in"
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 139,
+                                    lineNumber: 173,
                                     columnNumber: 17
                                 }, this) : null,
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3516,7 +3544,7 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                     children: "Get access → Enter passkey"
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 151,
+                                    lineNumber: 185,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3527,13 +3555,13 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                     children: "No passkey? Request by email"
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 158,
+                                    lineNumber: 192,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                            lineNumber: 137,
+                            lineNumber: 171,
                             columnNumber: 13
                         }, this)
                     ]
@@ -3556,34 +3584,34 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                             className: "h-4 w-4"
                                         }, void 0, false, {
                                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                                            lineNumber: 183,
+                                            lineNumber: 217,
                                             columnNumber: 17
                                         }, this),
                                         "Back"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 173,
+                                    lineNumber: 207,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogTitle"], {
                                     children: "Enter passkey"
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 186,
+                                    lineNumber: 220,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Unlock access to create your Grad Drive account. Your unlock is saved on this device until you clear site data."
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 187,
+                                    lineNumber: 221,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                            lineNumber: 172,
+                            lineNumber: 206,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -3598,27 +3626,27 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                             className: "h-4 w-4"
                                         }, void 0, false, {
                                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                                            lineNumber: 196,
+                                            lineNumber: 230,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AlertTitle"], {
                                             children: "Incorrect passkey"
                                         }, void 0, false, {
                                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                                            lineNumber: 197,
+                                            lineNumber: 231,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AlertDescription"], {
                                             children: error
                                         }, void 0, false, {
                                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                                            lineNumber: 198,
+                                            lineNumber: 232,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 195,
+                                    lineNumber: 229,
                                     columnNumber: 17
                                 }, this) : null,
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3629,7 +3657,7 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                             children: "Passkey"
                                         }, void 0, false, {
                                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                                            lineNumber: 202,
+                                            lineNumber: 236,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -3646,13 +3674,13 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                             className: "rounded-xl"
                                         }, void 0, false, {
                                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                                            lineNumber: 203,
+                                            lineNumber: 237,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 201,
+                                    lineNumber: 235,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3661,13 +3689,13 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                     children: "Unlock access"
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 217,
+                                    lineNumber: 251,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                            lineNumber: 193,
+                            lineNumber: 227,
                             columnNumber: 13
                         }, this)
                     ]
@@ -3687,34 +3715,34 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                             className: "h-4 w-4"
                                         }, void 0, false, {
                                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                                            lineNumber: 237,
+                                            lineNumber: 271,
                                             columnNumber: 17
                                         }, this),
                                         "Back"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 230,
+                                    lineNumber: 264,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogTitle"], {
                                     children: "Request a passkey"
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 240,
+                                    lineNumber: 274,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
-                                    children: "Enter your email to request Grad Drive access. We'll notify the team (and email you when your request is approved)."
+                                    children: "Tell us who you are and where you study. We'll notify Grad Drive admins and email you if your request is approved."
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 241,
+                                    lineNumber: 275,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                            lineNumber: 229,
+                            lineNumber: 263,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -3725,11 +3753,42 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                     className: "space-y-2",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                            htmlFor: "passkey-request-email",
-                                            children: "Your email"
+                                            htmlFor: "passkey-request-name",
+                                            children: "Full name"
                                         }, void 0, false, {
                                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                                            lineNumber: 248,
+                                            lineNumber: 282,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                            id: "passkey-request-name",
+                                            type: "text",
+                                            placeholder: "Your full name",
+                                            value: requestDisplayName,
+                                            onChange: (e)=>setRequestDisplayName(e.target.value),
+                                            required: true,
+                                            className: "rounded-xl",
+                                            autoComplete: "name"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/signup-passkey-modal.tsx",
+                                            lineNumber: 283,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/signup-passkey-modal.tsx",
+                                    lineNumber: 281,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "space-y-2",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
+                                            htmlFor: "passkey-request-email",
+                                            children: "Email"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/signup-passkey-modal.tsx",
+                                            lineNumber: 295,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -3743,13 +3802,75 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                             autoComplete: "email"
                                         }, void 0, false, {
                                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                                            lineNumber: 249,
+                                            lineNumber: 296,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 247,
+                                    lineNumber: 294,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "space-y-2",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
+                                            htmlFor: "passkey-request-college",
+                                            children: "College / university"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/signup-passkey-modal.tsx",
+                                            lineNumber: 308,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                            id: "passkey-request-college",
+                                            type: "text",
+                                            placeholder: "e.g. University of Ghana",
+                                            value: requestCollege,
+                                            onChange: (e)=>setRequestCollege(e.target.value),
+                                            required: true,
+                                            className: "rounded-xl",
+                                            autoComplete: "organization"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/signup-passkey-modal.tsx",
+                                            lineNumber: 309,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/signup-passkey-modal.tsx",
+                                    lineNumber: 307,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "space-y-2",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
+                                            htmlFor: "passkey-request-year",
+                                            children: "Graduation year"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/signup-passkey-modal.tsx",
+                                            lineNumber: 321,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                            id: "passkey-request-year",
+                                            type: "text",
+                                            inputMode: "numeric",
+                                            placeholder: "e.g. 2025",
+                                            value: requestGradYear,
+                                            onChange: (e)=>setRequestGradYear(e.target.value),
+                                            required: true,
+                                            className: "rounded-xl"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/signup-passkey-modal.tsx",
+                                            lineNumber: 322,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/signup-passkey-modal.tsx",
+                                    lineNumber: 320,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3763,7 +3884,7 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                                 className: "h-4 w-4 animate-spin"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/signup-passkey-modal.tsx",
-                                                lineNumber: 268,
+                                                lineNumber: 341,
                                                 columnNumber: 21
                                             }, this),
                                             "Sending…"
@@ -3774,7 +3895,7 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                                 className: "h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/signup-passkey-modal.tsx",
-                                                lineNumber: 273,
+                                                lineNumber: 346,
                                                 columnNumber: 21
                                             }, this),
                                             "Request passkey"
@@ -3782,13 +3903,13 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
                                     }, void 0, true)
                                 }, void 0, false, {
                                     fileName: "[project]/components/signup-passkey-modal.tsx",
-                                    lineNumber: 260,
+                                    lineNumber: 333,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/signup-passkey-modal.tsx",
-                            lineNumber: 246,
+                            lineNumber: 280,
                             columnNumber: 13
                         }, this)
                     ]
@@ -3796,12 +3917,12 @@ function SignupPasskeyModal({ open, onOpenChange, onVerified, onRequestLogin }) 
             ]
         }, void 0, true, {
             fileName: "[project]/components/signup-passkey-modal.tsx",
-            lineNumber: 122,
+            lineNumber: 156,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/signup-passkey-modal.tsx",
-        lineNumber: 121,
+        lineNumber: 155,
         columnNumber: 5
     }, this);
 }

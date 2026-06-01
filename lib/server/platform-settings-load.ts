@@ -3,6 +3,9 @@ import { getAdminDb } from '@/lib/firebase/admin-server';
 import {
   CODE_DEFAULT_PASSKEY_ADMIN_NOTIFY_EMAIL,
   CODE_DEFAULT_PASSKEY_FROM_EMAIL,
+  CODE_DEFAULT_FOTOMATIC_DISCOUNT_CODE,
+  CODE_DEFAULT_FOTOMATIC_DISCOUNT_PERCENT,
+  CODE_DEFAULT_USER_PASSKEY,
   PLATFORM_SETTINGS_DOC_ID,
 } from '@/lib/config/platform-settings-defaults';
 
@@ -61,6 +64,9 @@ export async function ensurePlatformSettingsDoc(): Promise<void> {
     passkeyAdminNotifyEmail:
       envAdmin || CODE_DEFAULT_PASSKEY_ADMIN_NOTIFY_EMAIL,
     passkeyFromEmail: envFrom || CODE_DEFAULT_PASSKEY_FROM_EMAIL,
+    userPasskeyReference: CODE_DEFAULT_USER_PASSKEY,
+    fotomaticDiscountCode: CODE_DEFAULT_FOTOMATIC_DISCOUNT_CODE,
+    fotomaticDiscountPercent: CODE_DEFAULT_FOTOMATIC_DISCOUNT_PERCENT,
     updatedAt: FieldValue.serverTimestamp(),
   });
 }

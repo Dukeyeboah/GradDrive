@@ -5,6 +5,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { UserDashboardSidebar } from '@/components/dashboard/user-dashboard-sidebar';
 import { UserDashboardHeader } from '@/components/dashboard/user-dashboard-header';
 import { GradDriverOnboardingWizard } from '@/components/dashboard/grad-driver-onboarding-wizard';
+import { AdminUserPreviewBanner } from '@/components/dashboard/admin-user-preview-banner';
 
 export function UserDashboardShell({
   children,
@@ -29,6 +30,7 @@ export function UserDashboardShell({
       </Sheet>
 
       <div className='flex min-h-screen flex-col md:pl-64'>
+        <AdminUserPreviewBanner />
         <UserDashboardHeader onMenuClick={() => setMobileOpen(true)} />
         <div className='flex-1'>{children}</div>
         <GradDriverOnboardingWizard />

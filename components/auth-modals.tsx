@@ -13,7 +13,8 @@ import {
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Chrome, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
+import { GoogleIcon } from "@/components/icons/google-icon"
 import {
   signInEmailPassword,
   signUpEmailPassword,
@@ -213,13 +214,40 @@ export function AuthModals({
           </DialogTitle>
           <DialogDescription>
             {mode === "login"
-              ? "Log in with email or Google. New to Grad Drive? Use Sign up on the home page after unlocking with your passkey."
-              : "Create your account with email or Google. You already unlocked sign-up with your passkey on this device."}
+              ? "Continue with Google (recommended), or use email and password below."
+              : "Continue with Google (recommended) after unlocking with your passkey, or use email below."}
           </DialogDescription>
         </DialogHeader>
         <Card className="border-0 shadow-none">
-          <form onSubmit={handleEmailAuth}>
-            <CardContent className="space-y-4 pt-4">
+          <CardContent className="space-y-4 pt-4">
+            <Button
+              className="w-full gap-2 font-semibold"
+              size="lg"
+              variant="outline"
+              type="button"
+              onClick={() => void handleGoogleAuth()}
+              disabled={loading}
+            >
+              {loading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <GoogleIcon className="h-5 w-5 shrink-0" />
+              )}
+              Continue with Google
+            </Button>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or use email
+                </span>
+              </div>
+            </div>
+
+            <form onSubmit={handleEmailAuth} className="space-y-4">
               {mode === "signup" && (
                 <div className="space-y-2">
                   <Label htmlFor="name">Full Name</Label>
@@ -252,7 +280,7 @@ export function AuthModals({
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
-                  type="password"
+                    type="password"
                   placeholder="••••••••"
                   value={formData.password}
                   onChange={(e) =>
@@ -269,34 +297,13 @@ export function AuthModals({
                     {mode === "login" ? "Signing in..." : "Creating account..."}
                   </>
                 ) : mode === "login" ? (
-                  "Log In"
+                  "Log in with email"
                 ) : (
-                  "Create Account"
+                  "Create account with email"
                 )}
               </Button>
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">
-                    Or continue with
-                  </span>
-                </div>
-              </div>
-              <Button
-                className="w-full"
-                size="lg"
-                variant="outline"
-                type="button"
-                onClick={() => void handleGoogleAuth()}
-                disabled={loading}
-              >
-                <Chrome className="mr-2 h-4 w-4" />
-                {mode === "login" ? "Google" : "Google"}
-              </Button>
-            </CardContent>
-          </form>
+            </form>
+          </CardContent>
           <CardFooter className="flex flex-col space-y-2">
             <div className="text-sm text-muted-foreground text-center">
               {mode === "login" ? (

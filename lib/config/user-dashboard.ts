@@ -125,7 +125,7 @@ export const DASHBOARD_SEARCH_ROUTES: { keywords: string[]; href: string }[] =
     { keywords: ['account', 'profile', 'setting'], href: '/dashboard/account' },
     {
       keywords: [
-        'grad driver',
+        'grad community',
         'drivers',
         'directory',
         'network',

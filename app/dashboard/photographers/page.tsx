@@ -1,8 +1,9 @@
 'use client';
 
+import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
+import { Check, Copy, ExternalLink, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -12,12 +13,51 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { FOTOMATIC_PHOTOGRAPHERS_URL } from '@/lib/config/fotomatic';
+import { resolveMemberAccessSettings } from '@/lib/config/resolve-member-access';
+import { getPlatformSettings } from '@/lib/firebase/firestore';
+import { useToast } from '@/hooks/use-toast';
 
-/**
- * In-app photographer directory removed; bookings happen on Fotomatic.
- * Legacy implementation lived here before the Fotomatic split — see git history if needed.
- */
 export default function PhotographersPage() {
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [discountCode, setDiscountCode] = useState('');
+  const [discountPercent, setDiscountPercent] = useState(10);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const settings = await getPlatformSettings();
+      if (cancelled) return;
+      const resolved = resolveMemberAccessSettings(settings);
+      setDiscountCode(resolved.fotomaticDiscountCode);
+      setDiscountPercent(resolved.fotomaticDiscountPercent);
+      setLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const copyDiscountCode = useCallback(async () => {
+    if (!discountCode) return;
+    try {
+      await navigator.clipboard.writeText(discountCode);
+      setCopied(true);
+      toast({
+        title: 'Code copied',
+        description: 'Paste it at checkout on Fotomatic.',
+      });
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast({
+        title: 'Could not copy',
+        description: 'Select the code and copy it manually.',
+        variant: 'destructive',
+      });
+    }
+  }, [discountCode, toast]);
+
   return (
     <div className='w-full px-4 py-8 sm:px-6 lg:px-8'>
       <div className='mx-auto max-w-lg'>
@@ -48,8 +88,60 @@ export default function PhotographersPage() {
               partner network for trusted photographers. Open Fotomatic to browse
               availability, packages, and book your session.
             </CardDescription>
+            <p className='text-sm leading-relaxed text-muted-foreground text-pretty'>
+              As a Grad Drive member, you get{' '}
+              {loading ? (
+                'a member discount'
+              ) : (
+                <span className='font-medium text-foreground'>
+                  {discountPercent}% off
+                </span>
+              )}{' '}
+              on Fotomatic bookings. Use the code below at checkout.
+            </p>
           </CardHeader>
           <CardContent className='flex flex-col gap-4 pb-8'>
+            <div className='rounded-xl border border-border/80 bg-muted/40 p-4'>
+              <p className='text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2'>
+                Member discount code
+                {!loading && discountPercent > 0 ? (
+                  <span className='normal-case font-normal ml-1'>
+                    · {discountPercent}% off
+                  </span>
+                ) : null}
+              </p>
+              {loading ? (
+                <div className='flex justify-center py-3'>
+                  <Loader2 className='h-5 w-5 animate-spin text-muted-foreground' />
+                </div>
+              ) : (
+                <div className='flex items-center gap-2'>
+                  <code className='flex-1 truncate rounded-lg bg-background px-3 py-2 text-sm font-semibold tracking-wide text-foreground border border-border/60'>
+                    {discountCode}
+                  </code>
+                  <Button
+                    type='button'
+                    variant='outline'
+                    size='sm'
+                    className='shrink-0 gap-1.5 rounded-lg'
+                    onClick={() => void copyDiscountCode()}
+                    aria-label='Copy discount code'
+                  >
+                    {copied ? (
+                      <>
+                        <Check className='h-4 w-4' />
+                        Copied
+                      </>
+                    ) : (
+                      <>
+                        <Copy className='h-4 w-4' />
+                        Copy
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
+            </div>
             <Button
               asChild
               size='lg'

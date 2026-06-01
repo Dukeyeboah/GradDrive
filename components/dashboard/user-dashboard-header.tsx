@@ -112,7 +112,7 @@ export function UserDashboardHeader({
         className='shrink-0 rounded-full'
         asChild
       >
-        <Link href='/dashboard/messages' aria-label='Notifications'>
+        <Link href='/dashboard/notifications' aria-label='Notifications'>
           <Bell className='h-5 w-5' />
         </Link>
       </Button>

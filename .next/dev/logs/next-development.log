@@ -1,15 +1,25 @@
-[00:00:00.738] Server  WARN     ⚠ Minimum recommended TypeScript version is v5.1.0, older versions can potentially be incompatible with Next.js. Detected: 5.0.2
-[00:00:00.880] Server  LOG      ✓ Ready in 613ms
-[00:00:23.514] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:23.648] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:23.648] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin","route":"/admin"}
-[00:00:23.648] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/admin color: rgb(120, 120, 120) color: inherit {"dp":"/admin","o":"http://localhost:3003/admin","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1778701325425} /_vercel/insights/view
-[00:00:25.153] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1778701326925} /_vercel/insights/view
-[00:00:32.444] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/admin/notifications color: rgb(120, 120, 120) color: inherit {"dp":"/admin/notifications","o":"http://localhost:3003/admin/notifications","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1778701334155} /_vercel/insights/view
-[00:00:47.443] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:47.593] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:47.593] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:00:47.593] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3003/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1778701349365} /_vercel/insights/view
-[00:01:40.168] Server  ERROR   (node:10496) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[00:00:01.090] Server  WARN     ⚠ Minimum recommended TypeScript version is v5.1.0, older versions can potentially be incompatible with Next.js. Detected: 5.0.2
+[00:00:01.383] Server  LOG      ✓ Ready in 986ms
+[00:00:06.253] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:06.738] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:06.739] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/settings","route":"/admin/settings"}
+[00:00:06.739] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/admin/settings color: rgb(120, 120, 120) color: inherit {"dp":"/admin/settings","o":"http://localhost:3003/admin/settings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1780342454017} /_vercel/insights/view
+[00:00:08.737] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1780342455514} /_vercel/insights/view
+[00:00:08.737] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1780342456137} /_vercel/insights/view
+[00:01:41.726] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/admin/notifications color: rgb(120, 120, 120) color: inherit {"dp":"/admin/notifications","o":"http://localhost:3003/admin/notifications","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1780342549178} /_vercel/insights/view
+[00:01:42.586] Server  ERROR   (node:43377) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
-[00:06:09.552] Server  LOG      ✓ Compiled in 271ms
+[00:01:51.399] Server  INFO    [resend] passkey approval sent "ead08264-ae55-470d-9737-4496d37b5ce7" "to" "judithbanquist@gmail.com"
+[00:05:07.694] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/admin/settings color: rgb(120, 120, 120) color: inherit {"dp":"/admin/settings","o":"http://localhost:3003/admin/settings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1780342755145} /_vercel/insights/view
+[00:12:29.154] Server  LOG      ✓ Compiled in 702ms
+[00:12:29.169] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./lib/config/platform-settings-defaults.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:12:30.808] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:12:31.766] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:12:31.766] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/settings","route":"/admin/settings"}
+[00:12:31.766] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/admin/settings color: rgb(120, 120, 120) color: inherit {"dp":"/admin/settings","o":"http://localhost:3003/admin/settings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1780343198648} /_vercel/insights/view
+[00:12:32.744] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3003/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1780343199536} /_vercel/insights/view
+[00:12:34.775] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:3003/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1780343201230} /_vercel/insights/view
+[00:12:56.142] Server  LOG      ✓ Compiled in 232ms
+[00:13:05.033] Server  LOG      ✓ Compiled in 244ms
+[00:13:06.966] Server  LOG      ✓ Compiled in 157ms
+[00:13:16.673] Server  LOG      ✓ Compiled in 133ms

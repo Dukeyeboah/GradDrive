@@ -139,13 +139,13 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$
 ;
 ;
 const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyANOxmLGz-PNCDTYKVUv_tomcFroqLVA8A",
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "graddrive-e3695.firebaseapp.com",
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "graddrive-e3695",
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "graddrive-e3695.firebasestorage.app",
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "721935097812",
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:721935097812:web:eece464983d41da455c041",
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-FLDCT8LMJX"
+    apiKey: ("TURBOPACK compile-time value", "AIzaSyANOxmLGz-PNCDTYKVUv_tomcFroqLVA8A") || "AIzaSyANOxmLGz-PNCDTYKVUv_tomcFroqLVA8A",
+    authDomain: ("TURBOPACK compile-time value", "graddrive-e3695.firebaseapp.com") || "graddrive-e3695.firebaseapp.com",
+    projectId: ("TURBOPACK compile-time value", "graddrive-e3695") || "graddrive-e3695",
+    storageBucket: ("TURBOPACK compile-time value", "graddrive-e3695.firebasestorage.app") || "graddrive-e3695.firebasestorage.app",
+    messagingSenderId: ("TURBOPACK compile-time value", "721935097812") || "721935097812",
+    appId: ("TURBOPACK compile-time value", "1:721935097812:web:eece464983d41da455c041") || "1:721935097812:web:eece464983d41da455c041",
+    measurementId: ("TURBOPACK compile-time value", "G-FLDCT8LMJX") || "G-FLDCT8LMJX"
 };
 // Initialize Firebase
 let app;
@@ -166,16 +166,25 @@ const __TURBOPACK__default__export__ = app;
  * Fallback values when `platformSettings/main` has not been saved yet.
  * Override in Firestore via Admin → Settings (recommended) or edit these constants.
  */ __turbopack_context__.s([
+    "CODE_DEFAULT_FOTOMATIC_DISCOUNT_CODE",
+    ()=>CODE_DEFAULT_FOTOMATIC_DISCOUNT_CODE,
+    "CODE_DEFAULT_FOTOMATIC_DISCOUNT_PERCENT",
+    ()=>CODE_DEFAULT_FOTOMATIC_DISCOUNT_PERCENT,
     "CODE_DEFAULT_PASSKEY_ADMIN_NOTIFY_EMAIL",
     ()=>CODE_DEFAULT_PASSKEY_ADMIN_NOTIFY_EMAIL,
     "CODE_DEFAULT_PASSKEY_FROM_EMAIL",
     ()=>CODE_DEFAULT_PASSKEY_FROM_EMAIL,
+    "CODE_DEFAULT_USER_PASSKEY",
+    ()=>CODE_DEFAULT_USER_PASSKEY,
     "PLATFORM_SETTINGS_DOC_ID",
     ()=>PLATFORM_SETTINGS_DOC_ID
 ]);
 const PLATFORM_SETTINGS_DOC_ID = 'main';
 const CODE_DEFAULT_PASSKEY_ADMIN_NOTIFY_EMAIL = 'admin@example.com';
 const CODE_DEFAULT_PASSKEY_FROM_EMAIL = 'Grad Drive <onboarding@resend.dev>';
+const CODE_DEFAULT_USER_PASSKEY = 'ConGr@d$!';
+const CODE_DEFAULT_FOTOMATIC_DISCOUNT_CODE = 'Gr@d$@ve!';
+const CODE_DEFAULT_FOTOMATIC_DISCOUNT_PERCENT = 10;
 }),
 "[project]/lib/firebase/firestore.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";

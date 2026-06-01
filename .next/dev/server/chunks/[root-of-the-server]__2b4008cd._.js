@@ -449,56 +449,67 @@ async function POST(req) {
         db = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$firebase$2f$admin$2d$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getAdminDb"])();
     } catch  {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'Server is not configured for passkey requests (missing FIREBASE_SERVICE_ACCOUNT_JSON).'
+            code: 'FIREBASE_ADMIN_NOT_CONFIGURED',
+            error: 'Passkey requests are not enabled on this server. For local development, set FIREBASE_SERVICE_ACCOUNT_JSON in .env.local (single-line service account JSON — see .env.example). Production needs the same variable in your host (e.g. Vercel) environment.'
         }, {
             status: 503
         });
     }
-    await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$server$2f$platform$2d$settings$2d$load$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ensurePlatformSettingsDoc"])();
-    const settings = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$server$2f$platform$2d$settings$2d$load$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getResolvedEmailSettings"])();
-    const docRef = await db.collection('passkeyRequests').add({
-        email,
-        displayName,
-        collegeName,
-        graduationYear,
-        status: 'pending',
-        createdAt: __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2d$admin$2f$firestore__$5b$external$5d$__$28$firebase$2d$admin$2f$firestore$2c$__esm_import$29$__["FieldValue"].serverTimestamp(),
-        updatedAt: __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2d$admin$2f$firestore__$5b$external$5d$__$28$firebase$2d$admin$2f$firestore$2c$__esm_import$29$__["FieldValue"].serverTimestamp()
-    });
-    const webhook = process.env.PASSKEY_REQUEST_WEBHOOK_URL;
-    if (webhook) {
-        try {
-            await fetch(webhook, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email,
-                    displayName,
-                    collegeName,
-                    graduationYear,
-                    requestId: docRef.id,
-                    source: 'graddrive-passkey-request',
-                    at: new Date().toISOString()
-                })
-            });
-        } catch  {
-        /* non-fatal */ }
+    let docRef;
+    try {
+        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$server$2f$platform$2d$settings$2d$load$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ensurePlatformSettingsDoc"])();
+        const settings = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$server$2f$platform$2d$settings$2d$load$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getResolvedEmailSettings"])();
+        docRef = await db.collection('passkeyRequests').add({
+            email,
+            displayName,
+            collegeName,
+            graduationYear,
+            status: 'pending',
+            createdAt: __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2d$admin$2f$firestore__$5b$external$5d$__$28$firebase$2d$admin$2f$firestore$2c$__esm_import$29$__["FieldValue"].serverTimestamp(),
+            updatedAt: __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2d$admin$2f$firestore__$5b$external$5d$__$28$firebase$2d$admin$2f$firestore$2c$__esm_import$29$__["FieldValue"].serverTimestamp()
+        });
+        const webhook = process.env.PASSKEY_REQUEST_WEBHOOK_URL;
+        if (webhook) {
+            try {
+                await fetch(webhook, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        displayName,
+                        collegeName,
+                        graduationYear,
+                        requestId: docRef.id,
+                        source: 'graddrive-passkey-request',
+                        at: new Date().toISOString()
+                    })
+                });
+            } catch  {
+            /* non-fatal */ }
+        }
+        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$server$2f$resend$2d$passkey$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["notifyAdminNewPasskeyRequest"])({
+            to: settings.passkeyAdminNotifyEmail,
+            from: settings.passkeyFromEmail,
+            requesterEmail: email,
+            requestId: docRef.id,
+            displayName,
+            collegeName,
+            graduationYear
+        });
+    } catch (e) {
+        console.error('[request-passkey] Firestore or notify failed', e);
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            error: 'We could not save your request right now. Please try again in a few minutes or contact support.'
+        }, {
+            status: 500
+        });
     }
-    await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$server$2f$resend$2d$passkey$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["notifyAdminNewPasskeyRequest"])({
-        to: settings.passkeyAdminNotifyEmail,
-        from: settings.passkeyFromEmail,
-        requesterEmail: email,
-        requestId: docRef.id,
-        displayName,
-        collegeName,
-        graduationYear
-    });
     console.info('[request-passkey]', email, docRef.id);
     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
         ok: true,
-        message: 'Thanks. If your email matches our records, we will send your access passkey and instructions shortly.'
+        message: 'Thanks — your request was received. Our team will review it; if you are approved, you will get an email with your access passkey and sign-up instructions.'
     });
 }
 __turbopack_async_result__();

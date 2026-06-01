@@ -17,6 +17,8 @@ import {
   getGradDriverPublicProfile,
   type GradDriverPublicProfile,
 } from '@/lib/firebase/firestore';
+import { GRAD_COMMUNITY_LABEL } from '@/lib/config/grad-community';
+import { GradCommunityConnectActions } from '@/components/grad-community/connect-actions';
 
 export default function GradDriverProfilePage() {
   const params = useParams();
@@ -69,7 +71,7 @@ export default function GradDriverProfilePage() {
             </CardHeader>
             <CardContent>
               <Button asChild variant='secondary' className='rounded-xl'>
-                <Link href='/dashboard/grad-drivers'>Back to directory</Link>
+                <Link href='/dashboard/grad-drivers'>Back to {GRAD_COMMUNITY_LABEL}</Link>
               </Button>
             </CardContent>
           </Card>
@@ -119,7 +121,7 @@ export default function GradDriverProfilePage() {
             </div>
             <div className='space-y-1 pb-1'>
               <h1 className='text-2xl sm:text-3xl font-bold tracking-tight'>
-                {profile.displayName || 'Grad Driver'}
+                {profile.displayName || 'Member'}
               </h1>
               <p className='text-muted-foreground'>
                 {[profile.collegeName, profile.graduationYear && `Class of ${profile.graduationYear}`]
@@ -131,11 +133,18 @@ export default function GradDriverProfilePage() {
               )}
             </div>
           </div>
-          {isSelf && (
-            <Button asChild variant='outline' className='rounded-xl shrink-0'>
-              <Link href='/dashboard/account'>Edit profile</Link>
-            </Button>
-          )}
+          <div className='flex flex-wrap gap-2 shrink-0'>
+            {isSelf ? (
+              <Button asChild variant='outline' className='rounded-xl'>
+                <Link href='/dashboard/account'>Edit profile</Link>
+              </Button>
+            ) : (
+              <GradCommunityConnectActions
+                otherUid={uid}
+                otherDisplayName={profile.displayName}
+              />
+            )}
+          </div>
         </div>
 
         <div className='mt-10 grid gap-6 lg:grid-cols-3'>

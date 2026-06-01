@@ -17,6 +17,8 @@ import {
   Settings,
   LogOut,
   UsersRound,
+  Bell,
+  MessageSquare,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -31,7 +33,9 @@ const NAV: {
 }[] = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, end: true },
   { label: 'Explore', href: '/dashboard/grad-drive', icon: Compass },
-  { label: 'Grad Drivers', href: '/dashboard/grad-drivers', icon: UsersRound },
+  { label: 'Grad Community', href: '/dashboard/grad-drivers', icon: UsersRound },
+  { label: 'Notifications', href: '/dashboard/notifications', icon: Bell },
+  { label: 'Messages', href: '/dashboard/messages', icon: MessageSquare },
   { label: 'Photography', href: '/dashboard/photographers', icon: Camera },
   { label: 'Ebooks & Guides', href: '/dashboard/ebooks', icon: BookOpen },
   { label: 'Posters & Artworks', href: '/dashboard/posters', icon: FileImage },

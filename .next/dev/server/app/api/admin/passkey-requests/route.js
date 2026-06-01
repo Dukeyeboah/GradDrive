@@ -1,0 +1,11 @@
+var R=require("../../../../chunks/[turbopack]_runtime.js")("server/app/api/admin/passkey-requests/route.js")
+R.c("server/chunks/d9014_next_c64c24db._.js")
+R.c("server/chunks/5e5d0_@opentelemetry_api_build_esm_76aca315._.js")
+R.c("server/chunks/518ff_zod_v3_825cc854._.js")
+R.c("server/chunks/ffd65_postal-mime_src_8e7dc4b1._.js")
+R.c("server/chunks/35758_svix_dist_cd075071._.js")
+R.c("server/chunks/node_modules__pnpm_fa7e1072._.js")
+R.c("server/chunks/[root-of-the-server]__a607d9c3._.js")
+R.c("server/chunks/_next-internal_server_app_api_admin_passkey-requests_route_actions_d15005c1.js")
+R.m("[project]/node_modules/.pnpm/next@16.0.10_react-dom@19.2.0_react@19.2.0/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/admin/passkey-requests/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/node_modules/.pnpm/next@16.0.10_react-dom@19.2.0_react@19.2.0/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/admin/passkey-requests/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

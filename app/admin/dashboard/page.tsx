@@ -40,7 +40,6 @@ export default function AdminDashboardPage() {
   const [modalLoading, setModalLoading] = useState(false);
   const role = userData?.role || 'admin';
   const roleDisplay = role === 'super admin' ? 'Super Admin' : 'Admin';
-  const displayName = userData?.displayName?.split(' ')[0] || 'there';
 
   const formatNumber = (num: number) => num.toLocaleString();
 
@@ -190,7 +189,7 @@ export default function AdminDashboardPage() {
       <div className='space-y-2'>
         <div className='flex flex-wrap items-center gap-3'>
           <h1 className='text-3xl font-bold tracking-tight text-foreground md:text-4xl'>
-            Welcome back, {displayName}! 👋
+            Admin dashboard
           </h1>
           <Badge
             variant='secondary'
@@ -200,7 +199,7 @@ export default function AdminDashboardPage() {
           </Badge>
         </div>
         <p className='max-w-2xl text-muted-foreground text-pretty leading-relaxed'>
-          Here&apos;s what&apos;s happening with your Grad Drive platform.
+          Platform overview and quick access to management tools.
         </p>
       </div>
 

@@ -1,7 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { AlertCircle, ArrowLeft, Loader2, Lock, Mail } from 'lucide-react';
+import {
+  AlertCircle,
+  ArrowLeft,
+  CheckCircle2,
+  Loader2,
+  Lock,
+  Mail,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,7 +24,7 @@ import { USER_PASSKEY, setGradDriveAccessUnlocked } from '@/lib/config/user';
 import { useToast } from '@/hooks/use-toast';
 import { notifyGradDriveAccessChanged } from '@/hooks/use-grad-drive-access';
 
-type Screen = 'hub' | 'passkey' | 'request';
+type Screen = 'hub' | 'passkey' | 'request' | 'request-success';
 
 export type SignupPasskeyModalProps = {
   open: boolean;
@@ -42,6 +49,7 @@ export function SignupPasskeyModal({
   const [requestCollege, setRequestCollege] = useState('');
   const [requestGradYear, setRequestGradYear] = useState('');
   const [requestLoading, setRequestLoading] = useState(false);
+  const [requestSuccessEmail, setRequestSuccessEmail] = useState('');
 
   useEffect(() => {
     if (!open) return;
@@ -52,6 +60,7 @@ export function SignupPasskeyModal({
     setRequestDisplayName('');
     setRequestCollege('');
     setRequestGradYear('');
+    setRequestSuccessEmail('');
   }, [open]);
 
   const handlePasskeySubmit = (e: React.FormEvent) => {
@@ -125,21 +134,12 @@ export function SignupPasskeyModal({
         });
         return;
       }
-      onOpenChange(false);
-      const successDescription =
-        typeof data?.message === 'string'
-          ? data.message
-          : 'We received your request. After review, we will email you with next steps.';
-      toast({
-        title: 'Request sent',
-        description: successDescription,
-        duration: 12_000,
-      });
+      setRequestSuccessEmail(email);
       setRequestEmail('');
       setRequestDisplayName('');
       setRequestCollege('');
       setRequestGradYear('');
-      setScreen('hub');
+      setScreen('request-success');
     } catch {
       toast({
         title: 'Network error',
@@ -255,6 +255,33 @@ export function SignupPasskeyModal({
                 Unlock access
               </Button>
             </form>
+          </>
+        )}
+
+        {screen === 'request-success' && (
+          <>
+            <DialogHeader className='text-center sm:text-center'>
+              <div className='mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'>
+                <CheckCircle2 className='h-9 w-9' strokeWidth={1.75} />
+              </div>
+              <DialogTitle className='text-xl'>Request submitted</DialogTitle>
+              <DialogDescription className='text-base leading-relaxed'>
+                Thank you! Your passkey request has been sent for review. If you
+                are approved, we will email you at{' '}
+                <span className='font-medium text-foreground'>
+                  {requestSuccessEmail}
+                </span>{' '}
+                with your access passkey and sign-up instructions. Please check
+                your inbox and spam folder in the next few days.
+              </DialogDescription>
+            </DialogHeader>
+            <Button
+              type='button'
+              className='w-full rounded-xl font-semibold bg-accent text-accent-foreground hover:bg-accent/90'
+              onClick={() => onOpenChange(false)}
+            >
+              Done
+            </Button>
           </>
         )}
 

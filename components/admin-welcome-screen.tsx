@@ -15,11 +15,13 @@ import { signInEmailPassword, signUpEmailPassword, signInWithGoogle } from '@/li
 import { getUserRole, setUserRole } from '@/lib/firebase/firestore'
 import { useToast } from '@/hooks/use-toast'
 import { useAuth } from '@/contexts/AuthContext'
+import { useViewMode } from '@/contexts/ViewModeContext'
 
 export function AdminWelcomeScreen() {
   const router = useRouter()
   const { toast } = useToast()
   const { user, userData } = useAuth()
+  const { setViewMode } = useViewMode()
   const [passkey, setPasskey] = useState('')
   const [passkeyVerified, setPasskeyVerified] = useState(false)
   const [isLogin, setIsLogin] = useState(true) // Toggle between login and signup
@@ -46,6 +48,7 @@ export function AdminWelcomeScreen() {
 
     // If user is already logged in and is admin, redirect to dashboard
     if (user && (userData?.role === 'admin' || userData?.role === 'super admin')) {
+      setViewMode('admin')
       router.push('/admin/dashboard')
     }
   }, [user, userData, router])

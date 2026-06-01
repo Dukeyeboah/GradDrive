@@ -6,6 +6,7 @@ import { PublicNav } from '@/components/public-nav';
 import { WelcomeScreen } from '@/components/welcome-screen';
 import { LandingAuthProvider } from '@/contexts/LandingAuthContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { getDefaultAppHome } from '@/lib/auth/roles';
 
 export function HomePageClient() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export function HomePageClient() {
   // people to /dashboard and feel like a long lag before the gate appeared.
   useEffect(() => {
     if (authLoading || !user || !userData) return;
-    router.replace('/dashboard');
+    router.replace(getDefaultAppHome(userData.role));
   }, [user, userData, authLoading, router]);
 
   if (!mounted || authLoading) {

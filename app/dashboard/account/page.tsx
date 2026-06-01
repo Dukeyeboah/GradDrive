@@ -119,7 +119,7 @@ export default function AccountPage() {
         <div className='space-y-2 text-center'>
           <h1 className='font-bold text-3xl md:text-4xl text-balance'>My Account</h1>
           <p className='text-lg text-muted-foreground text-balance'>
-            Manage your profile and Grad Drivers directory presence
+            Manage your profile and Grad Community directory presence
           </p>
         </div>
 
@@ -157,7 +157,7 @@ export default function AccountPage() {
                     className='font-medium text-accent hover:underline inline-flex items-center gap-1'
                   >
                     <UsersRound className='h-3.5 w-3.5' />
-                    Grad Drivers
+                    Grad Community
                   </Link>{' '}
                   card when directory visibility is on.
                 </CardDescription>
@@ -272,7 +272,7 @@ export default function AccountPage() {
                       setForm((f) => ({ ...f, bannerPhotoURL: url }))
                     }
                     showCombinedHeroPreview
-                    persistHint='Uploaded files are stored in your account. Click Save changes below to update your Grad Drivers profile.'
+                    persistHint='Uploaded files are stored in your account. Click Save changes below to update your Grad Community profile.'
                   />
                 ) : null}
               </div>
@@ -287,7 +287,7 @@ export default function AccountPage() {
                 />
                 <div className='space-y-1'>
                   <Label htmlFor='directoryOptIn' className='text-base cursor-pointer'>
-                    Show me in the Grad Drivers directory
+                    Show me in the Grad Community directory
                   </Label>
                   <p className='text-sm text-muted-foreground'>
                     Other signed-in members can see your card and profile. Your email is

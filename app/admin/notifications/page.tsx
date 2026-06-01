@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import {
   Bell,
   ChevronDown,
@@ -9,12 +9,9 @@ import {
   RefreshCw,
   CheckCircle2,
   XCircle,
+  KeyRound,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import {
-  getPasskeyRequests,
-  type PasskeyRequest,
-} from '@/lib/firebase/firestore';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -35,10 +32,22 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
-function formatTs(t: PasskeyRequest['createdAt']) {
-  if (!t?.toDate) return '—';
+export type PasskeyRequestRow = {
+  id: string;
+  email: string;
+  displayName: string;
+  collegeName: string;
+  graduationYear: string;
+  status: string;
+  rejectMessage?: string;
+  createdAt: string | null;
+  updatedAt: string | null;
+};
+
+function formatTs(iso: string | null | undefined) {
+  if (!iso) return '—';
   try {
-    return format(t.toDate(), 'MMM d, yyyy h:mm a');
+    return format(parseISO(iso), 'MMM d, yyyy h:mm a');
   } catch {
     return '—';
   }
@@ -47,8 +56,9 @@ function formatTs(t: PasskeyRequest['createdAt']) {
 export default function AdminNotificationsPage() {
   const { user, userData, loading: authLoading } = useAuth();
   const { toast } = useToast();
-  const [rows, setRows] = useState<PasskeyRequest[]>([]);
+  const [rows, setRows] = useState<PasskeyRequestRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [rejectOpen, setRejectOpen] = useState(false);
   const [rejectTargetId, setRejectTargetId] = useState<string | null>(null);
@@ -60,21 +70,34 @@ export default function AdminNotificationsPage() {
   const pendingCount = rows.filter((r) => r.status === 'pending').length;
 
   const load = useCallback(async () => {
-    if (!isAdmin) return;
+    if (!user || !isAdmin) return;
     setLoading(true);
+    setLoadError(null);
     try {
-      const data = await getPasskeyRequests();
-      setRows(data);
-    } catch {
-      toast({
-        title: 'Error',
-        description: 'Could not load notifications.',
-        variant: 'destructive',
+      const token = await user.getIdToken();
+      const res = await fetch('/api/admin/passkey-requests', {
+        headers: { Authorization: `Bearer ${token}` },
       });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const msg =
+          typeof data?.error === 'string'
+            ? data.error
+            : 'Could not load passkey requests.';
+        setLoadError(msg);
+        setRows([]);
+        return;
+      }
+      setRows(
+        Array.isArray(data.requests) ? (data.requests as PasskeyRequestRow[]) : [],
+      );
+    } catch {
+      setLoadError('Network error while loading requests.');
+      setRows([]);
     } finally {
       setLoading(false);
     }
-  }, [isAdmin, toast]);
+  }, [user, isAdmin]);
 
   useEffect(() => {
     if (authLoading) return;
@@ -85,7 +108,10 @@ export default function AdminNotificationsPage() {
     void load();
   }, [authLoading, isAdmin, load]);
 
-  const callApprove = async (requestId: string) => {
+  const callApprove = async (
+    requestId: string,
+    action: 'approve' | 'resend_approval' = 'approve',
+  ) => {
     if (!user) return;
     setBusyId(requestId);
     try {
@@ -96,7 +122,7 @@ export default function AdminNotificationsPage() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ action: 'approve', requestId }),
+        body: JSON.stringify({ action, requestId }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -108,10 +134,12 @@ export default function AdminNotificationsPage() {
         });
         return;
       }
+      const emailedTo =
+        typeof data?.emailedTo === 'string' ? data.emailedTo : 'the requester';
       toast({
         title: 'Approved',
-        description:
-          'The requester was emailed their passkey and sign-up instructions.',
+        description: `Passkey email sent to ${emailedTo}. If they do not see it, check Resend → Emails and verify your sending domain (trial accounts may only deliver to certain addresses).`,
+        duration: 14_000,
       });
       await load();
     } catch {
@@ -212,10 +240,9 @@ export default function AdminNotificationsPage() {
             ) : null}
           </div>
           <p className='text-muted-foreground mt-2 max-w-xl'>
-            Passkey access requests from the public site. Each thread shows who
-            asked, where they study, and their graduation year. Approve to email
-            the passkey and instructions, or decline with a message they will
-            receive by email.
+            Passkey access requests from the public site. Expand a thread to review
+            details, then approve to email the passkey or decline with a message
+            the requester will receive.
           </p>
         </div>
         <Button
@@ -229,8 +256,14 @@ export default function AdminNotificationsPage() {
         </Button>
       </div>
 
+      {loadError ? (
+        <div className='rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive'>
+          {loadError}
+        </div>
+      ) : null}
+
       <div className='space-y-3'>
-        {rows.length === 0 ? (
+        {rows.length === 0 && !loadError ? (
           <div className='rounded-xl border border-dashed border-border bg-muted/30 px-6 py-14 text-center text-muted-foreground text-sm'>
             No passkey requests yet.
           </div>
@@ -238,21 +271,24 @@ export default function AdminNotificationsPage() {
           rows.map((r) => (
             <Collapsible
               key={r.id}
-              defaultOpen={r.status === 'pending'}
+              defaultOpen={false}
               className='group rounded-xl border border-border bg-card shadow-sm overflow-hidden'
             >
               <CollapsibleTrigger className='flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-muted/40 transition-colors'>
                 <ChevronDown className='h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180' />
+                <div className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent'>
+                  <KeyRound className='h-4 w-4' />
+                </div>
                 <div className='min-w-0 flex-1'>
                   <p className='font-medium truncate'>
-                    {r.displayName || r.email}{' '}
-                    <span className='text-muted-foreground font-normal'>
-                      · {r.email}
+                    <span className='text-muted-foreground font-normal text-xs uppercase tracking-wide mr-2'>
+                      Passkey request
                     </span>
+                    {r.displayName || r.email}
                   </p>
                   <p className='text-xs text-muted-foreground truncate'>
-                    {r.collegeName || '—'} · Class of {r.graduationYear || '—'} ·{' '}
-                    {formatTs(r.createdAt)}
+                    {r.email} · {r.collegeName || '—'} · Class of{' '}
+                    {r.graduationYear || '—'} · {formatTs(r.createdAt)}
                   </p>
                 </div>
                 <Badge
@@ -295,6 +331,12 @@ export default function AdminNotificationsPage() {
                       </dt>
                       <dd>{r.graduationYear || '—'}</dd>
                     </div>
+                    <div className='sm:col-span-2'>
+                      <dt className='text-muted-foreground text-xs uppercase tracking-wide'>
+                        Request ID
+                      </dt>
+                      <dd className='font-mono text-xs break-all'>{r.id}</dd>
+                    </div>
                   </dl>
                   {r.status === 'rejected' && r.rejectMessage ? (
                     <div className='rounded-lg bg-muted/50 p-3 text-xs'>
@@ -334,11 +376,29 @@ export default function AdminNotificationsPage() {
                         Decline &amp; email
                       </Button>
                     </div>
+                  ) : r.status === 'sent' ? (
+                    <div className='space-y-2'>
+                      <p className='text-xs text-muted-foreground'>
+                        Marked approved. If the requester did not receive the email,
+                        resend below (check Resend dashboard and spam).
+                      </p>
+                      <Button
+                        type='button'
+                        size='sm'
+                        variant='outline'
+                        className='gap-1.5'
+                        disabled={busyId === r.id}
+                        onClick={() => void callApprove(r.id, 'resend_approval')}
+                      >
+                        {busyId === r.id ? (
+                          <Loader2 className='h-4 w-4 animate-spin' />
+                        ) : null}
+                        Resend approval email
+                      </Button>
+                    </div>
                   ) : (
                     <p className='text-xs text-muted-foreground'>
-                      {r.status === 'sent'
-                        ? 'Passkey and instructions were emailed to the requester.'
-                        : 'This request was declined.'}
+                      This request was declined.
                     </p>
                   )}
                 </div>
@@ -353,8 +413,9 @@ export default function AdminNotificationsPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Decline this request?</AlertDialogTitle>
             <AlertDialogDescription>
-              The requester will receive an email with the message below. Be
-              clear and professional (minimum 10 characters).
+              The requester will receive an email with your message plus common
+              reasons we could not approve. Be clear and professional (minimum
+              10 characters).
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className='space-y-2 py-2'>

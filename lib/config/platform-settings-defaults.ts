@@ -10,7 +10,14 @@ export const CODE_DEFAULT_PASSKEY_ADMIN_NOTIFY_EMAIL =
 
 /**
  * Outbound: Resend “from” (must be a verified sender in Resend for production).
- * `onboarding@resend.dev` works for Resend trial without a custom domain.
  */
 export const CODE_DEFAULT_PASSKEY_FROM_EMAIL =
   'Grad Drive <onboarding@resend.dev>';
+
+/** Member access passkey (code source of truth — not editable in admin UI). */
+export const CODE_DEFAULT_USER_PASSKEY = 'ConGr@d$!';
+
+/** Fotomatic partner discount for Grad Drive members. */
+export const CODE_DEFAULT_FOTOMATIC_DISCOUNT_CODE = 'Gr@d$@ve!';
+
+export const CODE_DEFAULT_FOTOMATIC_DISCOUNT_PERCENT = 10;

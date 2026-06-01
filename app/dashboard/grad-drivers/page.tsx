@@ -16,6 +16,7 @@ import {
   listVisibleGradDriverProfiles,
   type GradDriverPublicProfile,
 } from '@/lib/firebase/firestore';
+import { GRAD_COMMUNITY_LABEL } from '@/lib/config/grad-community';
 
 function interestSnippet(text: string | null | undefined, max = 72) {
   if (!text?.trim()) return null;
@@ -68,7 +69,7 @@ export default function GradDriversDirectoryPage() {
       <div className='mx-auto max-w-6xl space-y-8'>
         <div className='space-y-3 text-center sm:text-left'>
           <h1 className='text-3xl font-bold tracking-tight text-balance md:text-4xl'>
-            Grad Drivers
+            {GRAD_COMMUNITY_LABEL}
           </h1>
           <p className='text-lg text-muted-foreground text-pretty max-w-2xl mx-auto sm:mx-0'>
             Discover other members by school, graduation year, and interests. Open a
@@ -84,7 +85,7 @@ export default function GradDriversDirectoryPage() {
             className='pl-9 rounded-xl border-border'
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            aria-label='Search grad drivers'
+            aria-label={`Search ${GRAD_COMMUNITY_LABEL}`}
           />
         </div>
 
@@ -123,7 +124,7 @@ export default function GradDriversDirectoryPage() {
                         </div>
                         <div className='min-w-0 flex-1 space-y-1'>
                           <p className='font-semibold text-foreground truncate'>
-                            {p.displayName || 'Grad Driver'}
+                            {p.displayName || 'Member'}
                           </p>
                           <p className='text-sm text-muted-foreground line-clamp-2'>
                             {[p.collegeName, p.graduationYear && `’${String(p.graduationYear).slice(-2)}`]

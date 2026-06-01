@@ -85,7 +85,7 @@ export function ProfileMediaUploads({
               )}
             </div>
             <p className='mt-3 text-center sm:text-left text-xs text-muted-foreground max-w-sm'>
-              Preview of how your banner and profile photo appear on your Grad Drivers
+              Preview of how your banner and profile photo appear in Grad Community
               public profile. Uploads apply after you save.
             </p>
           </div>

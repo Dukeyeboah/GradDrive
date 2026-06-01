@@ -7,6 +7,7 @@ import {
   BookOpen,
   Award,
   FileText,
+  Bell,
 } from 'lucide-react';
 
 export type AdminQuickAccessItem = {
@@ -59,6 +60,12 @@ export const ADMIN_QUICK_ACCESS_ITEMS: AdminQuickAccessItem[] = [
   //   description: 'Configure product customizer experiences.',
   //   icon: Palette,
   // },
+  {
+    href: '/admin/notifications',
+    title: 'Notifications',
+    description: 'Review passkey requests; approve or decline and email users.',
+    icon: Bell,
+  },
   {
     href: '/admin/logs',
     title: 'System Logs',

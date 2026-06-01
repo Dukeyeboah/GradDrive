@@ -91,7 +91,7 @@ export function GradDriverOnboardingWizard() {
     await refreshUserData();
     toast({
       title: 'You are on the map',
-      description: 'Other grad drivers can find you in the directory when visibility is on.',
+      description: 'Other members can find you in the Grad Community directory when visibility is on.',
     });
     setOpen(false);
   };
@@ -111,7 +111,7 @@ export function GradDriverOnboardingWizard() {
             {step === 0 && (
               <>
                 <Users className='h-5 w-5 text-accent' strokeWidth={1.75} />
-                Meet other grad drivers
+                Meet the Grad Community
               </>
             )}
             {step === 1 && 'Tell your story'}
@@ -217,7 +217,7 @@ export function GradDriverOnboardingWizard() {
               />
               <div className='space-y-1'>
                 <Label htmlFor='gdo-optin' className='text-base font-medium cursor-pointer'>
-                  List me in the Grad Drivers directory
+                  List me in the Grad Community directory
                 </Label>
                 <p className='text-sm text-muted-foreground leading-relaxed'>
                   Other signed-in members can browse your card and open your full profile.

@@ -1048,6 +1048,10 @@ export async function getDownloadBreakdown(): Promise<{
 export interface PlatformSettings {
   passkeyAdminNotifyEmail?: string
   passkeyFromEmail?: string
+  /** Mirror of code default — stored for admin visibility; not editable in UI */
+  userPasskeyReference?: string
+  fotomaticDiscountCode?: string
+  fotomaticDiscountPercent?: number
   updatedAt?: Timestamp
 }
 
@@ -1088,7 +1092,14 @@ export async function getPlatformSettings(): Promise<PlatformSettings | null> {
 }
 
 export async function savePlatformSettings(
-  data: Pick<PlatformSettings, "passkeyAdminNotifyEmail" | "passkeyFromEmail">,
+  data: Pick<
+    PlatformSettings,
+    | "passkeyAdminNotifyEmail"
+    | "passkeyFromEmail"
+    | "fotomaticDiscountCode"
+    | "fotomaticDiscountPercent"
+    | "userPasskeyReference"
+  >,
 ): Promise<boolean> {
   try {
     await setDoc(

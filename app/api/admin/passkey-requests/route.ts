@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { FieldValue } from 'firebase-admin/firestore';
+import { FieldValue, type DocumentData } from 'firebase-admin/firestore';
 import { z } from 'zod';
 import { getAdminDb } from '@/lib/firebase/admin-server';
 import { verifyAdminBearer } from '@/lib/server/verify-admin';
@@ -20,11 +20,77 @@ const bodySchema = z.discriminatedUnion('action', [
     requestId: z.string().min(1),
   }),
   z.object({
+    action: z.literal('resend_approval'),
+    requestId: z.string().min(1),
+  }),
+  z.object({
     action: z.literal('reject'),
     requestId: z.string().min(1),
     rejectMessage: z.string().min(10).max(4000),
   }),
 ]);
+
+function serializePasskeyRequest(id: string, data: DocumentData) {
+  const createdAt = data.createdAt;
+  const updatedAt = data.updatedAt;
+  return {
+    id,
+    email: data.email ?? '',
+    displayName: data.displayName ?? '',
+    collegeName: data.collegeName ?? '',
+    graduationYear: data.graduationYear ?? '',
+    status: data.status ?? 'pending',
+    rejectMessage: data.rejectMessage ?? undefined,
+    createdAt:
+      createdAt && typeof createdAt.toDate === 'function'
+        ? createdAt.toDate().toISOString()
+        : null,
+    updatedAt:
+      updatedAt && typeof updatedAt.toDate === 'function'
+        ? updatedAt.toDate().toISOString()
+        : null,
+  };
+}
+
+/** List passkey requests for admin Notifications UI. */
+export async function GET(req: Request) {
+  const admin = await verifyAdminBearer(req);
+  if (!admin.ok) {
+    return NextResponse.json(
+      { error: admin.message },
+      { status: admin.status },
+    );
+  }
+
+  let db;
+  try {
+    db = getAdminDb();
+  } catch {
+    return NextResponse.json(
+      { error: 'Server missing FIREBASE_SERVICE_ACCOUNT_JSON' },
+      { status: 503 },
+    );
+  }
+
+  try {
+    const snap = await db
+      .collection('passkeyRequests')
+      .orderBy('createdAt', 'desc')
+      .limit(200)
+      .get();
+
+    const requests = snap.docs.map((d) =>
+      serializePasskeyRequest(d.id, d.data()),
+    );
+    return NextResponse.json({ requests });
+  } catch (e) {
+    console.error('[passkey-requests] list failed', e);
+    return NextResponse.json(
+      { error: 'Could not load passkey requests.' },
+      { status: 500 },
+    );
+  }
+}
 
 export async function POST(req: Request) {
   const admin = await verifyAdminBearer(req);
@@ -45,7 +111,10 @@ export async function POST(req: Request) {
   const parsed = bodySchema.safeParse(json);
   if (!parsed.success) {
     return NextResponse.json(
-      { error: 'Invalid body. Decline requires a message (at least 10 characters).' },
+      {
+        error:
+          'Invalid body. Decline requires a message (at least 10 characters).',
+      },
       { status: 400 },
     );
   }
@@ -112,8 +181,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  // approve or legacy send
-  if (row.status === 'sent') {
+  if (row.status === 'sent' && payload.action !== 'resend_approval') {
     return NextResponse.json(
       { error: 'Passkey was already sent for this request.' },
       { status: 400 },
@@ -129,10 +197,16 @@ export async function POST(req: Request) {
   });
 
   if (!sendResult.sent) {
+    const detail =
+      'message' in sendResult && sendResult.message
+        ? sendResult.message
+        : undefined;
     const msg =
       sendResult.reason === 'no_api_key'
         ? 'RESEND_API_KEY is not set. Configure Resend, then try again.'
-        : 'Resend rejected the email. Check the from-address and Resend dashboard.';
+        : detail
+          ? `Resend could not send the approval email: ${detail}`
+          : 'Resend could not send the approval email. Verify your domain and from-address in Resend (trial accounts can only email limited addresses).';
     return NextResponse.json({ error: msg }, { status: 502 });
   }
 
@@ -145,7 +219,12 @@ export async function POST(req: Request) {
     adminNotifyEmailSnapshot: settings.passkeyAdminNotifyEmail,
     sentByUid: admin.uid,
     approvalEmailSentAt: FieldValue.serverTimestamp(),
+    resendMessageId: sendResult.id,
   });
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({
+    ok: true,
+    emailedTo: requesterEmail,
+    resendMessageId: sendResult.id,
+  });
 }

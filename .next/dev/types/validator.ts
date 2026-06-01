@@ -272,10 +272,28 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../app/dashboard/messages/[conversationId]/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/dashboard/messages/[conversationId]">> = Specific
+  const handler = {} as typeof import("../../../app/dashboard/messages/[conversationId]/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../app/dashboard/messages/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/dashboard/messages">> = Specific
   const handler = {} as typeof import("../../../app/dashboard/messages/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/dashboard/notifications/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/dashboard/notifications">> = Specific
+  const handler = {} as typeof import("../../../app/dashboard/notifications/page.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check
