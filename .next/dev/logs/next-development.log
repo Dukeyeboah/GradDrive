@@ -23,3 +23,10 @@
 [00:13:05.033] Server  LOG      ✓ Compiled in 244ms
 [00:13:06.966] Server  LOG      ✓ Compiled in 157ms
 [00:13:16.673] Server  LOG      ✓ Compiled in 133ms
+[00:16:38.952] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3003/admin/settings color: rgb(120, 120, 120) color: inherit {"dp":"/admin/settings","o":"http://localhost:3003/admin/settings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1780343446415} /_vercel/insights/view
+[00:20:23.698] Server  LOG      ✓ Compiled in 1116ms
+[00:20:24.201] Server  LOG      ✓ Compiled in 114ms
+[00:20:26.096] Server  LOG      ✓ Compiled in 111ms
+[00:20:29.416] Server  LOG      ✓ Compiled in 227ms
+[00:20:29.800] Server  LOG      ✓ Compiled in 93ms
+[00:20:31.013] Server  LOG      ✓ Compiled in 139ms

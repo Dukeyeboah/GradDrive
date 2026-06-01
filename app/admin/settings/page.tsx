@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Loader2, Lock, Percent, Tag } from 'lucide-react';
+import { Loader2, Lock, Percent, Sparkles, Tag } from 'lucide-react';
+import { generateSecureDiscountCode } from '@/lib/utils/generate-discount-code';
 import { useAuth } from '@/contexts/AuthContext';
 import {
   getPlatformSettings,
@@ -88,10 +89,10 @@ export default function AdminSettingsPage() {
   const handleSaveDiscount = async () => {
     const code = fotomaticDiscountCode.trim();
     const percent = Number.parseInt(fotomaticDiscountPercent, 10);
-    if (!code || code.length < 2) {
+    if (!code || code.length < 7 || code.length > 32) {
       toast({
         title: 'Invalid code',
-        description: 'Enter a discount code (at least 2 characters).',
+        description: 'Use 7–32 characters (letters, numbers, and symbols).',
         variant: 'destructive',
       });
       return;
@@ -158,11 +159,7 @@ export default function AdminSettingsPage() {
             Member access passkey
           </CardTitle>
           <CardDescription>
-            Shown to eligible graduates before sign-up. Defined in{' '}
-            <code className='text-xs bg-muted px-1 py-0.5 rounded'>
-              lib/config/user.ts
-            </code>{' '}
-            and mirrored in Firestore for reference. Not editable here yet.
+            Used when graduates unlock sign-up and in approval emails.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -174,10 +171,6 @@ export default function AdminSettingsPage() {
               value={CODE_DEFAULT_USER_PASSKEY}
               className='font-mono text-sm bg-muted/50'
             />
-            <p className='text-xs text-muted-foreground'>
-              Approval emails and the public unlock flow use this value. To
-              change it later, update code and redeploy.
-            </p>
           </div>
         </CardContent>
       </Card>
@@ -189,28 +182,39 @@ export default function AdminSettingsPage() {
             Fotomatic discount
           </CardTitle>
           <CardDescription>
-            Members see this on Photography → Fotomatic. Stored in Firestore{' '}
-            <code className='text-xs bg-muted px-1 py-0.5 rounded'>
-              platformSettings/main
-            </code>{' '}
-            with defaults in{' '}
-            <code className='text-xs bg-muted px-1 py-0.5 rounded'>
-              lib/config/platform-settings-defaults.ts
-            </code>
-            .
+            Shown to members on the Photography page. Match the same code and
+            percentage in your Fotomatic admin.
           </CardDescription>
         </CardHeader>
         <CardContent className='space-y-4'>
           <div className='grid gap-4 sm:grid-cols-2'>
-            <div className='space-y-2'>
+            <div className='space-y-2 sm:col-span-2'>
               <Label htmlFor='fotomatic-code'>Discount code</Label>
-              <Input
-                id='fotomatic-code'
-                value={fotomaticDiscountCode}
-                onChange={(e) => setFotomaticDiscountCode(e.target.value)}
-                placeholder={CODE_DEFAULT_FOTOMATIC_DISCOUNT_CODE}
-                className='font-mono text-sm'
-              />
+              <div className='flex gap-2'>
+                <Input
+                  id='fotomatic-code'
+                  value={fotomaticDiscountCode}
+                  onChange={(e) => setFotomaticDiscountCode(e.target.value)}
+                  placeholder={CODE_DEFAULT_FOTOMATIC_DISCOUNT_CODE}
+                  className='font-mono text-sm flex-1'
+                />
+                <Button
+                  type='button'
+                  variant='outline'
+                  className='shrink-0 gap-1.5'
+                  onClick={() => {
+                    setFotomaticDiscountCode(generateSecureDiscountCode());
+                    toast({
+                      title: 'Code generated',
+                      description:
+                        'Save when ready, then add the same code on Fotomatic.',
+                    });
+                  }}
+                >
+                  <Sparkles className='h-4 w-4' />
+                  Generate
+                </Button>
+              </div>
             </div>
             <div className='space-y-2'>
               <Label htmlFor='fotomatic-percent' className='flex items-center gap-1'>
@@ -228,11 +232,6 @@ export default function AdminSettingsPage() {
               />
             </div>
           </div>
-          <p className='text-xs text-muted-foreground'>
-            Default: {CODE_DEFAULT_FOTOMATIC_DISCOUNT_CODE} at{' '}
-            {CODE_DEFAULT_FOTOMATIC_DISCOUNT_PERCENT}% off. Enter the same
-            percentage you configure on Fotomatic for this code.
-          </p>
           <Button
             type='button'
             onClick={() => void handleSaveDiscount()}
@@ -283,12 +282,6 @@ export default function AdminSettingsPage() {
               placeholder={CODE_DEFAULT_PASSKEY_FROM_EMAIL}
               className='font-mono text-sm'
             />
-            <p className='text-xs text-muted-foreground'>
-              Use a verified domain sender, e.g.{' '}
-              <code className='bg-muted px-1 rounded'>
-                Grad Drive &lt;contact@houseofstole.com&gt;
-              </code>
-            </p>
           </div>
           <Button
             type='button'
