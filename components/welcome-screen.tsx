@@ -2,152 +2,151 @@
 
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import {
-  GraduationCap,
-  BookOpen,
-  Camera,
-  Award,
-  FileImage,
-  Landmark,
-  ShoppingBag,
-  Mail,
-  Unlock,
-  Lock,
-} from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { useLandingAuth } from '@/contexts/LandingAuthContext';
 import { HOUSE_OF_STOLE_SHOP_URL } from '@/lib/config/marketing-urls';
 import { cn } from '@/lib/utils';
 
 const HERO_IMAGE = '/images/grad.jpg';
 
+/** Matches dashboard app-launcher tiles. */
 const featureStripItems = [
   {
-    icon: FileImage,
-    label: 'Posters & Artwork',
-    boxClass: 'bg-amber-100/90 dark:bg-amber-950/40 border-amber-200/80 dark:border-amber-800/50',
-    iconClass: 'text-amber-700 dark:text-amber-400',
+    label: 'Artworks',
+    imageSrc: '/images/app-icons/posters.jpg',
   },
   {
-    icon: GraduationCap,
     label: 'Cap Designs',
-    boxClass: 'bg-orange-100/90 dark:bg-orange-950/40 border-orange-200/80 dark:border-orange-800/50',
-    iconClass: 'text-orange-700 dark:text-orange-400',
+    imageSrc: '/images/app-icons/caps.jpg',
   },
   {
-    icon: Camera,
     label: 'Photography',
-    boxClass: 'bg-rose-100/90 dark:bg-rose-950/40 border-rose-200/80 dark:border-rose-800/50',
-    iconClass: 'text-rose-700 dark:text-rose-400',
+    imageSrc: '/images/app-icons/photography.jpg',
   },
   {
-    icon: BookOpen,
-    label: 'eBooks & Guides',
-    boxClass: 'bg-sky-100/90 dark:bg-sky-950/40 border-sky-200/80 dark:border-sky-800/50',
-    iconClass: 'text-sky-700 dark:text-sky-400',
+    label: 'E-book Guides',
+    imageSrc: '/images/app-icons/ebooks.jpg',
   },
   {
-    icon: Award,
-    label: 'Scholarships & Opportunities',
-    boxClass: 'bg-emerald-100/90 dark:bg-emerald-950/40 border-emerald-200/80 dark:border-emerald-800/50',
-    iconClass: 'text-emerald-700 dark:text-emerald-400',
+    label: 'Scholarships',
+    imageSrc: '/images/app-icons/scholarships.jpg',
   },
   {
-    icon: Landmark,
-    label: 'Cultural Content',
-    boxClass: 'bg-violet-100/90 dark:bg-violet-950/40 border-violet-200/80 dark:border-violet-800/50',
-    iconClass: 'text-violet-700 dark:text-violet-400',
+    label: 'Cultural',
+    imageSrc: '/images/app-icons/culture.jpg',
   },
 ] as const;
 
 const benefitCards = [
   {
-    icon: FileImage,
     title: 'Posters & Cap Designs',
     description:
       'Download polished posters, cap mockups, and creative assets to celebrate your milestone.',
     imageSrc: '/images/capDesign.jpg',
-    imageAlt: 'Graduation design resources',
+    iconSrc: '/images/app-icons/posters.jpg',
+    imageAlt: 'Graduation posters and artwork',
   },
   {
-    icon: Landmark,
     title: 'Cultural & Educational Content',
     description:
       'Explore stories, heritage, and learning that connect you to culture beyond the ceremony.',
     imageSrc: '/images/culture.jpg',
+    iconSrc: '/images/app-icons/culture.jpg',
     imageAlt: 'Cultural and educational content',
   },
   {
-    icon: Award,
     title: 'Opportunities & Scholarships',
     description:
       'Discover tours, scholarships, and experiences designed for grads ready for what’s next.',
     imageSrc: '/images/scholarship.jpg',
+    iconSrc: '/images/app-icons/scholarships.jpg',
     imageAlt: 'Opportunities for graduates',
   },
   {
-    icon: BookOpen,
     title: 'Tools & Practical Resources',
     description:
       'Guides, checklists, and digital tools that help you plan, share, and enjoy graduation week.',
     imageSrc: '/images/tools.jpg',
+    iconSrc: '/images/app-icons/tools.jpg',
     imageAlt: 'Practical grad tools',
   },
 ] as const;
 
 const howItWorksSteps = [
   {
-    icon: ShoppingBag,
     step: 1,
     title: 'You order your stole',
-    description: 'Complete your House of Stole order and unlock Grad Drive as part of your package.',
-    boxClass:
-      'bg-amber-100/90 dark:bg-amber-950/40 border-amber-200/80 dark:border-amber-800/50',
-    iconClass: 'text-amber-700 dark:text-amber-400',
+    description:
+      'Complete your House of Stole order and unlock Grad Drive as part of your package.',
+    imageSrc: '/images/app-icons/shop.jpg',
   },
   {
-    icon: Mail,
     step: 2,
     title: 'Get your access details',
-    description: 'Receive instructions and credentials so you can sign in and start exploring.',
-    boxClass:
-      'bg-sky-100/90 dark:bg-sky-950/40 border-sky-200/80 dark:border-sky-800/50',
-    iconClass: 'text-sky-700 dark:text-sky-400',
+    description:
+      'Receive instructions and credentials so you can sign in and start exploring.',
+    // Temporary stand-in — see note below for preferred asset
+    imageSrc: '/images/app-icons/messages.jpg',
   },
   {
-    icon: Unlock,
     step: 3,
     title: 'Unlock and explore',
     description: 'Use downloads, perks, and opportunities whenever you need them.',
-    boxClass:
-      'bg-emerald-100/90 dark:bg-emerald-950/40 border-emerald-200/80 dark:border-emerald-800/50',
-    iconClass: 'text-emerald-700 dark:text-emerald-400',
+    imageSrc: '/images/app-icons/explore.jpg',
   },
 ] as const;
+
+function AppIconFace({
+  src,
+  alt = '',
+  size = 'md',
+}: {
+  src: string;
+  alt?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+}) {
+  const dim =
+    size === 'lg'
+      ? 'h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] rounded-[1.15rem]'
+      : size === 'md'
+        ? 'h-14 w-14 md:h-16 md:w-16 rounded-[1.05rem] md:rounded-[1.15rem]'
+        : size === 'sm'
+          ? 'h-10 w-10 rounded-[0.8rem]'
+          : 'h-8 w-8 shrink-0 rounded-[0.65rem]';
+
+  return (
+    <span
+      className={cn(
+        'relative block overflow-hidden shadow-md shadow-black/10',
+        dim,
+      )}
+    >
+      <Image src={src} alt={alt} fill className='object-cover' sizes='72px' />
+    </span>
+  );
+}
 
 export function WelcomeScreen() {
   const { openLogin, openSignup } = useLandingAuth();
 
   return (
-    <main className='w-full flex flex-col bg-background'>
-      {/* Hero */}
+    <main className='flex w-full flex-col bg-background'>
+      {/* Hero — compact so the next section enters the first viewport */}
       <section className='border-b border-border/60 bg-background'>
-        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-4 pb-14 sm:pt-6 sm:pb-16 md:pt-8 md:pb-20 lg:pt-10 lg:pb-24'>
-          <div className='grid gap-12 lg:gap-16 lg:grid-cols-2 lg:items-center'>
-            <div className='space-y-8 text-center lg:text-left'>
-              <div className='inline-flex items-center rounded-full border border-border bg-secondary/80 px-4 py-1.5 text-sm font-medium text-secondary-foreground'>
-                🎓 Celebrate Your Achievement!
-              </div>
-              <h1 className='text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl text-balance'>
+        <div className='mx-auto max-w-7xl px-4 pb-8 pt-3 sm:px-6 sm:pb-10 sm:pt-4 lg:px-8 lg:pb-12 lg:pt-5'>
+          <div className='grid items-center gap-6 lg:grid-cols-2 lg:gap-10'>
+            <div className='space-y-4 text-center lg:space-y-5 lg:text-left'>
+              <h1 className='text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-[2.75rem] lg:leading-tight'>
                 Graduate with more than a stole.
               </h1>
-              <p className='text-lg text-muted-foreground md:text-xl max-w-xl mx-auto lg:mx-0 text-pretty leading-relaxed'>
+              <p className='mx-auto max-w-xl text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base lg:mx-0'>
                 Unlock Grad Drive — a platform of tools, downloads, and
                 opportunities included with your House of Stole order.
               </p>
-              <div className='flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2'>
+              <div className='flex flex-col justify-center gap-2.5 pt-1 sm:flex-row sm:gap-3 lg:justify-start'>
                 <Button
                   size='lg'
-                  className='cursor-pointer rounded-xl px-8 py-6 text-base font-semibold bg-accent text-accent-foreground shadow-sm hover:bg-accent/90'
+                  className='cursor-pointer rounded-xl bg-accent px-7 py-5 text-sm font-semibold text-accent-foreground shadow-sm hover:bg-accent/90 sm:text-base'
                   onClick={openSignup}
                 >
                   Get Grad Drive Access
@@ -155,21 +154,21 @@ export function WelcomeScreen() {
                 <Button
                   size='lg'
                   variant='secondary'
-                  className='cursor-pointer rounded-xl px-8 py-6 text-base font-semibold bg-primary text-primary-foreground hover:bg-primary/90'
+                  className='cursor-pointer rounded-xl bg-primary px-7 py-5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 sm:text-base'
                   onClick={openLogin}
                 >
                   Already a Member? Login
                 </Button>
               </div>
             </div>
-            <div className='relative w-full aspect-[4/5] max-h-[560px] mx-auto lg:max-h-none lg:aspect-[3/4]'>
-              <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/10 to-primary/10 -z-10 scale-[1.02] blur-sm' />
+            <div className='relative mx-auto aspect-[16/10] w-full max-h-[220px] sm:max-h-[260px] lg:max-h-[300px] lg:aspect-[16/11]'>
+              <div className='absolute inset-0 -z-10 scale-[1.02] rounded-2xl bg-gradient-to-br from-accent/10 to-primary/10 blur-sm' />
               <div className='relative h-full w-full overflow-hidden rounded-2xl shadow-lg ring-1 ring-border/40'>
                 <Image
                   src={HERO_IMAGE}
                   alt='Graduate wearing a custom House of Stole'
                   fill
-                  className='object-cover'
+                  className='object-cover object-center'
                   sizes='(max-width: 1024px) 100vw, 50vw'
                   priority
                 />
@@ -179,36 +178,26 @@ export function WelcomeScreen() {
         </div>
       </section>
 
-      {/* Icon feature strip */}
+      {/* Everything unlocked — app button icons */}
       <section className='border-b border-border/60 bg-muted/30'>
-        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-20'>
-          <div className='text-center max-w-3xl mx-auto space-y-4 mb-12 md:mb-16'>
-            <h2 className='text-3xl font-bold tracking-tight text-foreground md:text-4xl text-balance'>
+        <div className='mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-12 lg:px-8'>
+          <div className='mx-auto mb-8 max-w-3xl space-y-2 text-center md:mb-10'>
+            <h2 className='text-balance text-2xl font-bold tracking-tight text-foreground md:text-3xl'>
               Everything unlocked with your stole
             </h2>
-            <p className='text-lg text-muted-foreground text-pretty'>
+            <p className='text-pretty text-sm text-muted-foreground sm:text-base'>
               A curated set of tools, downloads, and opportunities designed to
               support you beyond graduation.
             </p>
           </div>
-          <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8'>
-            {featureStripItems.map(({ icon: Icon, label, boxClass, iconClass }) => (
+          <div className='grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-6 lg:gap-8'>
+            {featureStripItems.map(({ label, imageSrc }) => (
               <div
                 key={label}
-                className='flex flex-col items-center text-center gap-3'
+                className='flex flex-col items-center gap-2.5 text-center'
               >
-                <div
-                  className={cn(
-                    'flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-2xl border shadow-sm',
-                    boxClass
-                  )}
-                >
-                  <Icon
-                    className={cn('h-7 w-7 md:h-8 md:w-8', iconClass)}
-                    strokeWidth={1.75}
-                  />
-                </div>
-                <span className='text-sm font-semibold text-foreground leading-snug max-w-[140px]'>
+                <AppIconFace src={imageSrc} alt='' size='md' />
+                <span className='max-w-[7.5rem] text-xs font-semibold leading-snug text-foreground sm:text-sm'>
                   {label}
                 </span>
               </div>
@@ -217,57 +206,46 @@ export function WelcomeScreen() {
         </div>
       </section>
 
-      {/* Benefits cards */}
+      {/* Benefits — rounded image on top, copy underneath */}
       <section className='border-b border-border/60 bg-background'>
-        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24'>
-          <div className='text-center max-w-3xl mx-auto space-y-4 mb-12 md:mb-16'>
-            <h2 className='text-3xl font-bold tracking-tight text-foreground md:text-4xl text-balance'>
+        <div className='mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8'>
+          <div className='mx-auto mb-8 max-w-3xl space-y-2 text-center md:mb-10'>
+            <h2 className='text-balance text-2xl font-bold tracking-tight text-foreground md:text-3xl'>
               Everything you need for what’s next
             </h2>
-            <p className='text-lg text-muted-foreground text-pretty'>
+            <p className='text-pretty text-sm text-muted-foreground sm:text-base'>
               Grad Drive brings together practical tools, creative resources,
               and real opportunities — all included when you order your stole.
             </p>
           </div>
-          <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-4'>
-            {benefitCards.map((card) => {
-              const Icon = card.icon;
-              return (
-                <div
-                  key={card.title}
-                  className={cn(
-                    'group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card',
-                    'shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5'
-                  )}
-                >
-                  <div className='p-6 flex flex-col gap-3 flex-1'>
-                    <div className='flex items-start gap-3'>
-                      <div className='flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/15'>
-                        <Icon className='h-5 w-5 text-accent' strokeWidth={2} />
-                      </div>
-                      <h3 className='font-bold text-lg text-foreground leading-snug pt-1.5'>
-                        {card.title}
-                      </h3>
-                    </div>
-                    <p className='text-sm text-muted-foreground leading-relaxed flex-1'>
-                      {card.description}
-                    </p>
-                  </div>
-                  <div className='relative h-36 w-full mt-auto'>
-                    <Image
-                      src={card.imageSrc}
-                      alt={card.imageAlt}
-                      fill
-                      className='object-cover transition-transform duration-300 group-hover:scale-[1.02]'
-                      sizes='(max-width: 640px) 100vw, 25vw'
-                    />
-                  </div>
+          <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6'>
+            {benefitCards.map((card) => (
+              <div key={card.title} className='flex flex-col gap-3'>
+                <div className='relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-md shadow-black/10 ring-1 ring-border/30'>
+                  <Image
+                    src={card.imageSrc}
+                    alt={card.imageAlt}
+                    fill
+                    className='object-cover transition-transform duration-300 hover:scale-[1.03]'
+                    sizes='(max-width: 640px) 100vw, 25vw'
+                  />
                 </div>
-              );
-            })}
+                <div className='space-y-1.5 px-0.5'>
+                  <div className='flex items-center gap-2.5'>
+                    <AppIconFace src={card.iconSrc} size='xs' />
+                    <h3 className='text-base font-bold leading-snug text-foreground'>
+                      {card.title}
+                    </h3>
+                  </div>
+                  <p className='text-sm leading-relaxed text-muted-foreground'>
+                    {card.description}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-          <p className='mt-12 md:mt-16 flex items-center justify-center gap-2 text-sm text-muted-foreground'>
-            <Lock className='h-4 w-4 text-primary shrink-0' />
+          <p className='mt-10 flex items-center justify-center gap-2 text-sm text-muted-foreground md:mt-12'>
+            <Lock className='h-4 w-4 shrink-0 text-primary' />
             <span>Included with every House of Stole order.</span>
           </p>
         </div>
@@ -275,56 +253,43 @@ export function WelcomeScreen() {
 
       {/* How it works */}
       <section className='bg-muted/30'>
-        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24'>
-          <div className='text-center max-w-3xl mx-auto space-y-4 mb-12 md:mb-16'>
-            <h2 className='text-3xl font-bold tracking-tight text-foreground md:text-4xl text-balance'>
+        <div className='mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8'>
+          <div className='mx-auto mb-8 max-w-3xl space-y-2 text-center md:mb-10'>
+            <h2 className='text-balance text-2xl font-bold tracking-tight text-foreground md:text-3xl'>
               How Grad Drive Works
             </h2>
-            <p className='text-lg text-muted-foreground text-pretty'>
+            <p className='text-pretty text-sm text-muted-foreground sm:text-base'>
               Simple steps. Instant access. Lasting impact.
             </p>
           </div>
-          <div className='grid gap-10 md:gap-8 md:grid-cols-3 max-w-5xl mx-auto'>
-            {howItWorksSteps.map((step) => {
-              const Icon = step.icon;
-              return (
-                <div
-                  key={step.step}
-                  className='relative flex flex-col items-center text-center'
-                >
-                  <div className='mb-4 flex justify-center w-full'>
-                    <div className='relative inline-flex'>
-                      <div
-                        className={cn(
-                          'flex h-16 w-16 items-center justify-center rounded-2xl border shadow-sm',
-                          step.boxClass
-                        )}
-                      >
-                        <Icon
-                          className={cn('h-7 w-7', step.iconClass)}
-                          strokeWidth={1.75}
-                        />
-                      </div>
-                      <span className='absolute -top-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-sm'>
-                        {step.step}
-                      </span>
-                    </div>
+          <div className='mx-auto grid max-w-5xl gap-10 md:grid-cols-3 md:gap-8'>
+            {howItWorksSteps.map((step) => (
+              <div
+                key={step.step}
+                className='relative flex flex-col items-center text-center'
+              >
+                <div className='mb-4 flex w-full justify-center'>
+                  <div className='relative inline-flex'>
+                    <AppIconFace src={step.imageSrc} size='lg' />
+                    <span className='absolute -right-1 -top-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm'>
+                      {step.step}
+                    </span>
                   </div>
-                  <h3 className='font-bold text-lg text-foreground mb-2'>
-                    {step.title}
-                  </h3>
-                  <p className='text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto'>
-                    {step.description}
-                  </p>
                 </div>
-              );
-            })}
+                <h3 className='mb-2 text-lg font-bold text-foreground'>
+                  {step.title}
+                </h3>
+                <p className='mx-auto max-w-xs text-sm leading-relaxed text-muted-foreground'>
+                  {step.description}
+                </p>
+              </div>
+            ))}
           </div>
-          <div className='mt-12 md:mt-16 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center'>
+          <div className='mt-10 flex flex-col items-center justify-center gap-3 sm:mt-12 sm:flex-row sm:gap-4'>
             <Button
               size='lg'
               variant='secondary'
-              className='cursor-pointer rounded-xl px-8 py-6 text-base font-semibold bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto'
+              className='w-full cursor-pointer rounded-xl bg-primary px-8 py-6 text-base font-semibold text-primary-foreground hover:bg-primary/90 sm:w-auto'
               asChild
             >
               <a
@@ -337,7 +302,7 @@ export function WelcomeScreen() {
             </Button>
             <Button
               size='lg'
-              className='cursor-pointer rounded-xl px-8 py-6 text-base font-semibold bg-accent text-accent-foreground shadow-sm hover:bg-accent/90 w-full sm:w-auto'
+              className='w-full cursor-pointer rounded-xl bg-accent px-8 py-6 text-base font-semibold text-accent-foreground shadow-sm hover:bg-accent/90 sm:w-auto'
               onClick={openSignup}
             >
               Get Grad Drive Access
@@ -345,7 +310,6 @@ export function WelcomeScreen() {
           </div>
         </div>
       </section>
-
     </main>
   );
 }
