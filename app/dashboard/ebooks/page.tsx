@@ -45,13 +45,13 @@ export default function EbooksPage() {
   }
 
   return (
-    <div className='flex flex-col justify-start items-center w-full py-4'>
-      <div className='container max-w-6xl space-y-8'>
-        <div className='space-y-2 text-center'>
-          <h1 className='font-bold text-3xl md:text-4xl text-balance'>
+    <div className='flex w-full flex-col items-center justify-start pb-8 pt-4'>
+      <div className='container max-w-6xl space-y-6'>
+        <div className='space-y-1.5 text-center'>
+          <h1 className='text-balance text-3xl font-bold md:text-4xl'>
             E-book Library
           </h1>
-          <p className='text-lg text-muted-foreground text-balance'>
+          <p className='text-balance text-sm text-muted-foreground'>
             Access exclusive guides and resources for your post-graduation
             journey
           </p>

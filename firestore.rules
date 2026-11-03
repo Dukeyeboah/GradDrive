@@ -137,18 +137,22 @@ service cloud.firestore {
     // Split get vs list: queries only use directoryVisible, but OR with owner caused
     // list permission failures (rules broader than query). Owner can still get own doc.
     match /gradDriverProfiles/{userId} {
-      allow get: if isAuthenticated() && (
-        resource.data.directoryVisible == true ||
-        request.auth.uid == userId
-      );
+      // Authenticated members may read a single profile (for connection request names).
+      // Directory listing still requires directoryVisible.
+      allow get: if isAuthenticated();
       allow list: if isAuthenticated() && resource.data.directoryVisible == true;
       allow create, update: if isOwner(userId);
       allow delete: if isOwner(userId);
     }
 
     // Grad Community: connection requests between members
+    // Split get/list so list queries on toUid/fromUid are valid under rules.
     match /connectionRequests/{requestId} {
-      allow read: if isAuthenticated() && (
+      allow get: if isAuthenticated() && (
+        resource.data.fromUid == request.auth.uid ||
+        resource.data.toUid == request.auth.uid
+      );
+      allow list: if isAuthenticated() && (
         resource.data.fromUid == request.auth.uid ||
         resource.data.toUid == request.auth.uid
       );

@@ -3,11 +3,11 @@ import { History } from "lucide-react"
 
 export default function KenteHistoryPage() {
   return (
-    <div className="flex flex-col justify-center items-center w-full py-12">
-      <div className="container max-w-4xl space-y-8">
-        <div className="space-y-2 text-center">
-          <h1 className="font-bold text-3xl md:text-4xl text-balance">Kente & Graduation History</h1>
-          <p className="text-lg text-muted-foreground text-balance">Learn about Kente traditions and graduation history</p>
+    <div className="flex w-full flex-col items-center justify-start pb-8 pt-4">
+      <div className="container max-w-4xl space-y-6">
+        <div className="space-y-1.5 text-center">
+          <h1 className="text-balance text-3xl font-bold md:text-4xl">Kente & Graduation History</h1>
+          <p className="text-balance text-sm text-muted-foreground">Learn about Kente traditions and graduation history</p>
         </div>
 
         <EmptyState

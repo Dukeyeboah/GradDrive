@@ -114,11 +114,11 @@ export default function AccountPage() {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center w-full py-12'>
-      <div className='container max-w-3xl space-y-8'>
-        <div className='space-y-2 text-center'>
-          <h1 className='font-bold text-3xl md:text-4xl text-balance'>My Account</h1>
-          <p className='text-lg text-muted-foreground text-balance'>
+    <div className='flex w-full flex-col items-center justify-start pb-8 pt-4'>
+      <div className='container max-w-3xl space-y-6'>
+        <div className='space-y-1.5 text-center'>
+          <h1 className='text-balance text-3xl font-bold md:text-4xl'>My Account</h1>
+          <p className='text-balance text-sm text-muted-foreground'>
             Manage your profile and Grad Community directory presence
           </p>
         </div>

@@ -172,31 +172,41 @@ export async function respondConnectionRequest(
 export async function listIncomingConnectionRequests(
   toUid: string,
 ): Promise<ConnectionRequest[]> {
-  const q = query(
-    collection(db, 'connectionRequests'),
-    where('toUid', '==', toUid),
-    where('status', '==', 'pending'),
-    orderBy('createdAt', 'desc'),
-    limit(50),
-  );
-  try {
-    const snap = await getDocs(q);
-    return snap.docs.map((d) => ({
+  const mapDocs = (snap: Awaited<ReturnType<typeof getDocs>>) =>
+    snap.docs.map((d) => ({
       id: d.id,
       ...(d.data() as Omit<ConnectionRequest, 'id'>),
     }));
-  } catch {
+
+  try {
     const snap = await getDocs(
       query(
         collection(db, 'connectionRequests'),
         where('toUid', '==', toUid),
         where('status', '==', 'pending'),
+        orderBy('createdAt', 'desc'),
+        limit(50),
       ),
     );
-    return snap.docs.map((d) => ({
-      id: d.id,
-      ...(d.data() as Omit<ConnectionRequest, 'id'>),
-    }));
+    return mapDocs(snap);
+  } catch (primaryError) {
+    try {
+      const snap = await getDocs(
+        query(
+          collection(db, 'connectionRequests'),
+          where('toUid', '==', toUid),
+          where('status', '==', 'pending'),
+        ),
+      );
+      return mapDocs(snap);
+    } catch (fallbackError) {
+      console.error(
+        'listIncomingConnectionRequests failed:',
+        primaryError,
+        fallbackError,
+      );
+      return [];
+    }
   }
 }
 

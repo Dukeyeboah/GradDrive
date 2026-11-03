@@ -65,13 +65,13 @@ export default function GradDriversDirectoryPage() {
   }, [profiles, q]);
 
   return (
-    <div className='w-full px-4 py-8 sm:px-6 lg:px-8 lg:py-10'>
-      <div className='mx-auto max-w-6xl space-y-8'>
-        <div className='space-y-3 text-center sm:text-left'>
+    <div className='w-full px-4 pb-8 pt-4 sm:px-6 lg:px-8 lg:pb-10 lg:pt-5'>
+      <div className='mx-auto max-w-6xl space-y-6'>
+        <div className='space-y-1.5 text-center sm:text-left'>
           <h1 className='text-3xl font-bold tracking-tight text-balance md:text-4xl'>
             {GRAD_COMMUNITY_LABEL}
           </h1>
-          <p className='text-lg text-muted-foreground text-pretty max-w-2xl mx-auto sm:mx-0'>
+          <p className='max-w-2xl text-pretty text-sm text-muted-foreground mx-auto sm:mx-0'>
             Discover other members by school, graduation year, and interests. Open a
             profile to learn more and connect.
           </p>

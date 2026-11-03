@@ -7,37 +7,38 @@ import { useLandingAuth } from '@/contexts/LandingAuthContext';
 
 /**
  * Navbar brand assets (on disk):
- * - Logo mark: public/images/logo.png
- * - Wordmark:   public/images/graddrive.png
- * Adjust display size via the `className` on each <Image> (h-9 w-9, max-w-[...], etc.).
+ * - Mark:     public/images/logo.png (legacy: logo-legacy.png)
+ * - Full logo: public/images/graddrive.png (legacy: graddrive-legacy.png)
  */
 
 export function PublicNav() {
   const { openLogin, openSignup } = useLandingAuth();
 
   return (
-    <nav className='sticky top-0 z-50 flex justify-center items-center w-full border-b border-border bg-background'>
-      <div className='container flex h-16 md:h-[4.25rem] items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl'>
+    <nav className='sticky top-0 z-50 flex w-full items-center justify-center bg-background'>
+      <div className='container flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 md:h-16 lg:px-8'>
         <Link
           href='/'
-          className='flex items-center gap-2 sm:gap-3 shrink-0'
+          className='flex shrink-0 items-center overflow-visible'
           aria-label='Grad Drive home'
         >
           <Image
             src='/images/logo.png'
-            alt=''
-            width={44}
-            height={44}
-            className='h-9 w-9 sm:h-10 sm:w-10 object-contain'
+            alt='Grad Drive'
+            width={64}
+            height={36}
+            className='h-8 w-auto bg-transparent object-contain object-left sm:hidden'
             priority
+            unoptimized
           />
           <Image
-            src='/images/graddrive.png'
+            src='/images/graddrive-update.png'
             alt='Grad Drive'
-            width={160}
-            height={40}
-            className='h-7 sm:h-8 w-auto max-w-[140px] sm:max-w-[180px] object-contain object-left'
+            width={280}
+            height={52}
+            className='hidden h-9 w-auto max-w-[min(58vw,280px)] bg-transparent object-contain object-left sm:block'
             priority
+            unoptimized
           />
         </Link>
 

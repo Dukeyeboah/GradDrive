@@ -1,40 +1,62 @@
 'use client';
 
-import { useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { UserDashboardSidebar } from '@/components/dashboard/user-dashboard-sidebar';
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { UserDashboardHeader } from '@/components/dashboard/user-dashboard-header';
+import { DashboardSearchBar } from '@/components/dashboard/dashboard-search-bar';
+import { DashboardPageChrome } from '@/components/dashboard/dashboard-page-chrome';
+import { LaunchpadOverlay } from '@/components/dashboard/launchpad-overlay';
 import { GradDriverOnboardingWizard } from '@/components/dashboard/grad-driver-onboarding-wizard';
 import { AdminUserPreviewBanner } from '@/components/dashboard/admin-user-preview-banner';
+import { DashboardSearchProvider } from '@/contexts/DashboardSearchContext';
+import { LaunchpadProvider } from '@/contexts/LaunchpadContext';
+
+function DashboardShellInner({ children }: { children: React.ReactNode }) {
+  const searchParams = useSearchParams();
+  const embed = searchParams.get('embed') === '1';
+
+  // Hover previews load pages with ?embed=1 — content only, no chrome.
+  if (embed) {
+    return (
+      <div className='min-h-screen bg-muted/35'>
+        <div className='flex min-h-screen flex-col'>{children}</div>
+      </div>
+    );
+  }
+
+  return (
+    <DashboardSearchProvider>
+      <LaunchpadProvider>
+        <div className='min-h-screen bg-muted/35'>
+          <div className='flex min-h-screen flex-col'>
+            <AdminUserPreviewBanner />
+            <div className='sticky top-0 z-20'>
+              <UserDashboardHeader />
+              <DashboardSearchBar />
+              <DashboardPageChrome />
+            </div>
+            <div className='flex flex-1 flex-col'>{children}</div>
+            <GradDriverOnboardingWizard />
+          </div>
+          <LaunchpadOverlay />
+        </div>
+      </LaunchpadProvider>
+    </DashboardSearchProvider>
+  );
+}
 
 export function UserDashboardShell({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
   return (
-    <div className='min-h-screen bg-muted/35'>
-      <aside className='hidden md:fixed md:inset-y-0 md:left-0 md:z-30 md:flex md:w-64 md:flex-col md:border-r md:border-border'>
-        <UserDashboardSidebar className='h-full w-64' />
-      </aside>
-
-      <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side='left' className='w-72 p-0 flex flex-col'>
-          <UserDashboardSidebar
-            className='h-full border-0'
-            onNavigate={() => setMobileOpen(false)}
-          />
-        </SheetContent>
-      </Sheet>
-
-      <div className='flex min-h-screen flex-col md:pl-64'>
-        <AdminUserPreviewBanner />
-        <UserDashboardHeader onMenuClick={() => setMobileOpen(true)} />
-        <div className='flex-1'>{children}</div>
-        <GradDriverOnboardingWizard />
-      </div>
-    </div>
+    <Suspense
+      fallback={
+        <div className='flex min-h-screen flex-col bg-muted/35'>{children}</div>
+      }
+    >
+      <DashboardShellInner>{children}</DashboardShellInner>
+    </Suspense>
   );
 }

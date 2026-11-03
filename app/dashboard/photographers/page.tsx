@@ -59,7 +59,7 @@ export default function PhotographersPage() {
   }, [discountCode, toast]);
 
   return (
-    <div className='w-full px-4 py-8 sm:px-6 lg:px-8'>
+    <div className='w-full px-4 pb-8 pt-4 sm:px-6 lg:px-8 lg:pt-5'>
       <div className='mx-auto max-w-lg'>
         <Card className='overflow-hidden rounded-2xl border-border/80 shadow-md transition-all duration-300 hover:shadow-lg'>
           <CardHeader className='space-y-4 text-center pb-2'>

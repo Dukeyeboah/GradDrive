@@ -81,11 +81,11 @@ export default function DiscountsPage() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center w-full py-12">
-      <div className="container max-w-4xl space-y-10">
-        <div className="space-y-3 text-center">
-          <h1 className="font-bold text-3xl md:text-4xl text-balance">The HoS Travel Experience</h1>
-          <p className="text-lg text-muted-foreground text-balance">
+    <div className="flex w-full flex-col items-center justify-start pb-8 pt-4">
+      <div className="container max-w-4xl space-y-6">
+        <div className="space-y-1.5 text-center">
+          <h1 className="text-balance text-3xl font-bold md:text-4xl">The HoS Travel Experience</h1>
+          <p className="text-balance text-sm leading-relaxed text-muted-foreground">
             Immerse yourself in Ghana&apos;s rich Kente heritage, food, art, and educational experiences with House of
             Stole. A curated journey for recent graduates who want to explore life after college at the intersection of
             culture and education.

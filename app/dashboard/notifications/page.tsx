@@ -37,18 +37,31 @@ export default function UserNotificationsPage() {
       const requests = await listIncomingConnectionRequests(user.uid);
       const enriched = await Promise.all(
         requests.map(async (r) => {
-          const profile = await getGradDriverPublicProfile(r.fromUid);
-          return {
-            ...r,
-            fromDisplayName: profile?.displayName || undefined,
-          };
+          try {
+            const profile = await getGradDriverPublicProfile(r.fromUid);
+            return {
+              ...r,
+              fromDisplayName: profile?.displayName || undefined,
+            };
+          } catch {
+            return { ...r };
+          }
         }),
       );
       setRows(enriched);
+    } catch (error) {
+      console.error('Failed to load notifications:', error);
+      setRows([]);
+      toast({
+        title: 'Could not load notifications',
+        description:
+          'Check that Firestore rules for connectionRequests are deployed.',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
     }
-  }, [user?.uid]);
+  }, [user?.uid, toast]);
 
   useEffect(() => {
     void load();
@@ -88,13 +101,13 @@ export default function UserNotificationsPage() {
   }
 
   return (
-    <div className='w-full px-4 py-8 sm:px-6 lg:px-8 max-w-2xl mx-auto space-y-6'>
-      <div className='space-y-2'>
+    <div className='mx-auto w-full max-w-2xl space-y-5 px-4 pb-8 pt-4 sm:px-6 lg:px-8 lg:pt-5'>
+      <div className='space-y-1.5'>
         <div className='flex items-center gap-2'>
           <Bell className='h-6 w-6 text-accent' />
           <h1 className='text-2xl font-bold tracking-tight'>Notifications</h1>
         </div>
-        <p className='text-muted-foreground text-sm'>
+        <p className='text-sm text-muted-foreground'>
           Connection requests from other Grad Community members. Approve to open
           messaging; decline if you do not know them.
         </p>
