@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Bell, Search, User, LogOut, Shield, LayoutGrid } from 'lucide-react';
+import { Bell, Search, User, LogOut, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -16,7 +16,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { useViewMode } from '@/contexts/ViewModeContext';
 import { useDashboardSearch } from '@/contexts/DashboardSearchContext';
-import { useLaunchpad } from '@/contexts/LaunchpadContext';
+// import { useLaunchpad } from '@/contexts/LaunchpadContext';
 import { signOutUser } from '@/lib/firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -27,7 +27,7 @@ export function UserDashboardHeader() {
   const { userData } = useAuth();
   const { setViewMode, isAdminViewingAsUser } = useViewMode();
   const { searchForcedOpen, toggleSearch } = useDashboardSearch();
-  const { openLaunchpad } = useLaunchpad();
+  // const { openLaunchpad } = useLaunchpad();
   const [avatarMenuMounted, setAvatarMenuMounted] = useState(false);
 
   useEffect(() => {
@@ -123,6 +123,7 @@ export function UserDashboardHeader() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-56'>
+              {/* Launchpad temporarily hidden — restore when ready
               <DropdownMenuItem
                 className='flex cursor-pointer items-center gap-2'
                 onSelect={() => openLaunchpad()}
@@ -131,6 +132,7 @@ export function UserDashboardHeader() {
                 Launchpad
               </DropdownMenuItem>
               <DropdownMenuSeparator />
+              */}
               <DropdownMenuItem asChild>
                 <Link href='/dashboard/account' className='flex items-center gap-2'>
                   <User className='h-4 w-4' />

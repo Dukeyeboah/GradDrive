@@ -12,7 +12,6 @@ export default function DashboardPage() {
           </h1>
           <p className='text-pretty text-sm leading-relaxed text-muted-foreground'>
             Tap any app to open it. Hover for a quick preview of the page.
-            Use the avatar menu → Launchpad anytime for the same shortcuts.
           </p>
         </div>
         <div className='flex flex-1 flex-col justify-center pb-6'>

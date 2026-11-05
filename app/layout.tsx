@@ -15,25 +15,39 @@ export async function generateMetadata(): Promise<Metadata> {
     title: 'Grad Drive - Your Graduation Journey Partner',
     description:
       'Access exclusive graduation perks, digital assets, photographer network, and scholarship opportunities.',
-    generator: 'v0.app',
+    metadataBase: new URL('https://graddrive.com'),
     icons: {
       icon: [
         { url: '/favicon.ico', sizes: 'any' },
-        {
-          url: '/icon-light-32x32.png',
-          type: 'image/png',
-          sizes: '32x32',
-          media: '(prefers-color-scheme: light)',
-        },
-        {
-          url: '/icon-dark-32x32.png',
-          type: 'image/png',
-          sizes: '32x32',
-          media: '(prefers-color-scheme: dark)',
-        },
-        { url: '/icon.svg', type: 'image/svg+xml' },
+        { url: '/icon.png', type: 'image/png', sizes: '32x32' },
+        { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
+        { url: '/icon-512.png', type: 'image/png', sizes: '512x512' },
       ],
       apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
+      shortcut: ['/favicon.ico'],
+    },
+    openGraph: {
+      title: 'Grad Drive - Your Graduation Journey Partner',
+      description:
+        'Access exclusive graduation perks, digital assets, photographer network, and scholarship opportunities.',
+      url: 'https://graddrive.com',
+      siteName: 'Grad Drive',
+      type: 'website',
+      images: [
+        {
+          url: '/icon-512.png',
+          width: 512,
+          height: 512,
+          alt: 'Grad Drive',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary',
+      title: 'Grad Drive - Your Graduation Journey Partner',
+      description:
+        'Access exclusive graduation perks, digital assets, photographer network, and scholarship opportunities.',
+      images: ['/icon-512.png'],
     },
   };
 }
