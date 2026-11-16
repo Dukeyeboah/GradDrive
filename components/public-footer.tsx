@@ -45,12 +45,12 @@ export function PublicFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard/scholarship" className="hover:text-foreground transition-colors">
+                <Link href="/dashboard/grad-drivers" className="hover:text-foreground transition-colors">
                   Scholarship
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard/discounts" className="hover:text-foreground transition-colors">
+                <Link href="/dashboard/ebooks" className="hover:text-foreground transition-colors">
                   Discounts
                 </Link>
               </li>

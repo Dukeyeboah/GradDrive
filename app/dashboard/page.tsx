@@ -1,5 +1,6 @@
 'use client';
 
+import { NextStepCard } from '@/components/dashboard/next-step-card';
 import { DashboardAppLauncher } from '@/components/dashboard/dashboard-app-launcher';
 
 export default function DashboardPage() {
@@ -11,9 +12,10 @@ export default function DashboardPage() {
             Your Grad Drive
           </h1>
           <p className='text-pretty text-sm leading-relaxed text-muted-foreground'>
-            Tap any app to open it. Hover for a quick preview of the page.
+            Connect with graduates, find useful guides, and take your next step.
           </p>
         </div>
+        <NextStepCard />
         <div className='flex flex-1 flex-col justify-center pb-6'>
           <DashboardAppLauncher showPreview />
         </div>

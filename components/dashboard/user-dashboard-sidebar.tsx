@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { isPausedPath } from '@/lib/config/launch-scope';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -91,7 +92,7 @@ export function UserDashboardSidebar({
       </div>
 
       <nav className='flex-1 space-y-0.5 overflow-y-auto p-3'>
-        {NAV.map(({ label, href, icon: Icon, end }) => {
+        {NAV.filter(item => !isPausedPath(item.href)).map(({ label, href, icon: Icon, end }) => {
           const active = isActive(pathname, href, end);
           return (
             <Link key={`${href}-${label}`} href={href} onClick={onNavigate}>

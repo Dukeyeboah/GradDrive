@@ -29,6 +29,7 @@ export type DashboardAppAction = 'navigate' | 'logout' | 'soon';
 export type DashboardAppItem = {
   id: string;
   label: string;
+  description?: string;
   href?: string;
   action: DashboardAppAction;
   icon: LucideIcon;
@@ -38,7 +39,7 @@ export type DashboardAppItem = {
 };
 
 /** 3×7 app launcher — Dashboard first; Settings / Help / Logout last. */
-export const DASHBOARD_APP_LAUNCHER: DashboardAppItem[] = [
+const ALL_DASHBOARD_APPS: DashboardAppItem[] = [
   {
     id: 'dashboard',
     label: 'Dashboard',
@@ -224,3 +225,17 @@ export const DASHBOARD_APP_LAUNCHER: DashboardAppItem[] = [
     gradient: { from: 'hsla(0, 55%, 90%, 0.9)', to: 'hsla(15, 50%, 84%, 0.85)' },
   },
 ];
+
+// A focused first release. Secondary celebration resources remain in Explore.
+const LAUNCH_IDS = ['community', 'messages', 'ebooks', 'posters', 'culture', 'explore', 'notifications', 'bookmarks', 'settings', 'shop', 'logout'];
+const DESCRIPTIONS: Record<string, string> = {
+  community: 'Meet graduates in your field.', messages: 'Continue your conversations.',
+  ebooks: 'Plan your next chapter.', posters: 'Celebrate your achievement.',
+  culture: 'Explore culture and heritage.', explore: 'Discover more resources.',
+  notifications: 'See your connection requests.', bookmarks: 'Return to saved resources.',
+  settings: 'Update your profile and preferences.', shop: 'Visit House of Stole.', logout: 'Sign out of your account.',
+};
+export const DASHBOARD_APP_LAUNCHER = LAUNCH_IDS.map(id => {
+  const app = ALL_DASHBOARD_APPS.find(item => item.id === id)!;
+  return { ...app, description: DESCRIPTIONS[id] };
+});

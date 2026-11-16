@@ -302,7 +302,7 @@ export async function publishGradDriverPublicProfile(uid: string): Promise<void>
     return
   }
 
-  const directoryVisible = u.directoryOptIn !== false
+  const directoryVisible = u.directoryOptIn === true
 
   await setDoc(
     doc(db, "gradDriverProfiles", uid),

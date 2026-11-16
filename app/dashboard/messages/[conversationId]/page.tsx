@@ -53,7 +53,7 @@ export default function ConversationPage() {
         setOtherName(profile?.displayName || 'Member');
         setAllowed(true);
       }
-    })();
+    })().catch(() => { if (!cancelled) setAllowed(false); });
     return () => {
       cancelled = true;
     };
@@ -73,7 +73,7 @@ export default function ConversationPage() {
     e.preventDefault();
     if (!user?.uid || !conversationId) return;
     setSending(true);
-    const result = await sendChatMessage(conversationId, user.uid, text);
+    const result = await sendChatMessage(conversationId, user.uid, text).catch(() => ({ ok: false as const, error: 'Your message could not be sent. Please try again.' }));
     setSending(false);
     if (!result.ok) {
       toast({
@@ -117,6 +117,7 @@ export default function ConversationPage() {
       </div>
 
       <div className='flex-1 overflow-y-auto px-4 py-4 space-y-3'>
+        {messages.length >= 200 && <p className='text-center text-xs text-muted-foreground'>Showing the latest 200 messages.</p>}
         {messages.length === 0 ? (
           <p className='text-center text-sm text-muted-foreground py-8'>
             Say hello — your messages stay between you and {otherName}.
@@ -162,6 +163,7 @@ export default function ConversationPage() {
           placeholder='Type a message…'
           className='rounded-xl'
           autoComplete='off'
+          maxLength={4000}
         />
         <Button
           type='submit'

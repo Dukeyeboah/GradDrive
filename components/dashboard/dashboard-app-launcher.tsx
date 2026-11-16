@@ -182,6 +182,8 @@ function AppTile({
     <>
       {face}
       {label}
+      {app.action === 'soon' && <span className='rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground'>Coming soon</span>}
+      {size === 'lg' && app.description && <span className='max-w-[9rem] text-center text-[11px] leading-relaxed text-muted-foreground'>{app.description}</span>}
     </>
   );
 
@@ -262,7 +264,7 @@ function AppTile({
         />
         <div className='border-t border-border/60 px-3 py-2'>
           <p className='text-sm font-semibold text-foreground'>{app.label}</p>
-          <p className='text-[11px] text-muted-foreground'>Page preview</p>
+          <p className='text-[11px] text-muted-foreground'>{app.description || 'Page preview'}</p>
         </div>
       </HoverCardContent>
     </HoverCard>
@@ -307,7 +309,7 @@ export function DashboardAppLauncher({
         className={cn(
           'mx-auto grid justify-items-center',
           columns === 'home'
-            ? 'max-w-5xl grid-cols-3 gap-x-6 gap-y-8 sm:grid-cols-4 sm:gap-x-8 sm:gap-y-9 md:grid-cols-7 md:gap-x-9 md:gap-y-10'
+            ? 'max-w-5xl grid-cols-3 gap-x-6 gap-y-8 sm:grid-cols-4 sm:gap-x-8 sm:gap-y-9 md:grid-cols-6 md:gap-x-9 md:gap-y-10'
             : 'grid-cols-3 gap-x-3 gap-y-4',
         )}
       >

@@ -9,7 +9,8 @@ import {
   orderBy,
   query,
   serverTimestamp,
-  setDoc,
+  writeBatch,
+  limitToLast,
   updateDoc,
   where,
   type Unsubscribe,
@@ -52,16 +53,15 @@ export async function getConnectionRequestBetween(
     collection(db, 'connectionRequests'),
     where('fromUid', '==', uidA),
     where('toUid', '==', uidB),
-    limit(1),
   );
   const q2 = query(
     collection(db, 'connectionRequests'),
     where('fromUid', '==', uidB),
     where('toUid', '==', uidA),
-    limit(1),
   );
   const [s1, s2] = await Promise.all([getDocs(q1), getDocs(q2)]);
-  const snap = s1.docs[0] ?? s2.docs[0];
+  const candidates = [...s1.docs, ...s2.docs];
+  const snap = candidates.find(d => d.data().status === 'accepted') ?? candidates.find(d => d.data().status === 'pending') ?? candidates[0];
   if (!snap) return null;
   return { id: snap.id, ...(snap.data() as Omit<ConnectionRequest, 'id'>) };
 }
@@ -70,9 +70,8 @@ export async function getAcceptedConnection(
   myUid: string,
   otherUid: string,
 ): Promise<boolean> {
-  const ref = doc(db, 'connections', connectionPairId(myUid, otherUid));
-  const snap = await getDoc(ref);
-  return snap.exists();
+  const snap = await getDocs(query(collection(db, 'connections'), where('memberUids', 'array-contains', myUid)));
+  return snap.docs.some(d => d.id === connectionPairId(myUid, otherUid));
 }
 
 export type ConnectUiState =
@@ -143,29 +142,16 @@ export async function respondConnectionRequest(
   }
 
   const pairId = connectionPairId(data.fromUid, data.toUid);
-  await updateDoc(ref, {
-    status: 'accepted',
-    updatedAt: serverTimestamp(),
+  const batch = writeBatch(db);
+  batch.update(ref, { status: 'accepted', updatedAt: serverTimestamp() });
+  batch.set(doc(db, 'connections', pairId), {
+    memberUids: [data.fromUid, data.toUid], requestId, createdAt: serverTimestamp(),
   });
-  const connRef = doc(db, 'connections', pairId);
-  const connSnap = await getDoc(connRef);
-  if (!connSnap.exists()) {
-    await setDoc(connRef, {
-      memberUids: [data.fromUid, data.toUid],
-      createdAt: serverTimestamp(),
-    });
-  }
-
-  const convRef = doc(db, 'conversations', pairId);
-  const convSnap = await getDoc(convRef);
-  if (!convSnap.exists()) {
-    await setDoc(convRef, {
-      participantUids: [data.fromUid, data.toUid],
-      createdAt: serverTimestamp(),
-      lastMessageAt: serverTimestamp(),
-      lastMessageText: '',
-    });
-  }
+  batch.set(doc(db, 'conversations', pairId), {
+    participantUids: [data.fromUid, data.toUid], requestId,
+    createdAt: serverTimestamp(), lastMessageAt: serverTimestamp(), lastMessageText: '',
+  });
+  await batch.commit();
   return { ok: true, conversationId: pairId };
 }
 
@@ -252,6 +238,7 @@ export async function sendChatMessage(
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   const trimmed = text.trim();
   if (!trimmed) return { ok: false, error: 'Message cannot be empty.' };
+  if (trimmed.length > 4000) return { ok: false, error: 'Keep messages under 4,000 characters.' };
 
   const convRef = doc(db, 'conversations', conversationId);
   const convSnap = await getDoc(convRef);
@@ -261,15 +248,17 @@ export async function sendChatMessage(
     return { ok: false, error: 'Not a participant.' };
   }
 
-  await addDoc(collection(db, 'conversations', conversationId, 'messages'), {
+  const batch = writeBatch(db);
+  batch.set(doc(collection(db, 'conversations', conversationId, 'messages')), {
     senderUid,
     text: trimmed,
     createdAt: serverTimestamp(),
   });
-  await updateDoc(convRef, {
+  batch.update(convRef, {
     lastMessageText: trimmed.slice(0, 200),
     lastMessageAt: serverTimestamp(),
   });
+  await batch.commit();
   return { ok: true };
 }
 
@@ -280,7 +269,7 @@ export function subscribeChatMessages(
   const q = query(
     collection(db, 'conversations', conversationId, 'messages'),
     orderBy('createdAt', 'asc'),
-    limit(200),
+    limitToLast(200),
   );
   return onSnapshot(q, (snap) => {
     onMessages(

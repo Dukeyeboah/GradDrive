@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { CuratedResources } from '@/components/dashboard/curated-resources';
 import {
   Card,
   CardContent,
@@ -57,6 +58,7 @@ export default function EbooksPage() {
           </p>
         </div>
 
+        <CuratedResources />
         {ebooks.length === 0 ? (
           <div className='text-center py-12'>
             <BookOpen className='h-16 w-16 text-muted-foreground mx-auto mb-4' />
@@ -138,7 +140,7 @@ export default function EbooksPage() {
                         Download
                       </>
                     ) : (
-                      'Notify Me'
+                      'Coming Soon'
                     )}
                   </Button>
                 </CardFooter>

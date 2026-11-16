@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Grad Drive - Your Graduation Journey Partner',
     description:
-      'Access exclusive graduation perks, digital assets, photographer network, and scholarship opportunities.',
+      'Connect with graduates, explore practical guides, and celebrate your next chapter with Grad Drive.',
     metadataBase: new URL('https://graddrive.com'),
     icons: {
       icon: [
@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: 'Grad Drive - Your Graduation Journey Partner',
       description:
-        'Access exclusive graduation perks, digital assets, photographer network, and scholarship opportunities.',
+        'Connect with graduates, explore practical guides, and celebrate your next chapter with Grad Drive.',
       url: 'https://graddrive.com',
       siteName: 'Grad Drive',
       type: 'website',
@@ -46,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary',
       title: 'Grad Drive - Your Graduation Journey Partner',
       description:
-        'Access exclusive graduation perks, digital assets, photographer network, and scholarship opportunities.',
+        'Connect with graduates, explore practical guides, and celebrate your next chapter with Grad Drive.',
       images: ['/icon-512.png'],
     },
   };

@@ -32,7 +32,7 @@ export function GradDriverOnboardingWizard() {
   const [interests, setInterests] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [bannerPhotoURL, setBannerPhotoURL] = useState('');
-  const [directoryOptIn, setDirectoryOptIn] = useState(true);
+  const [directoryOptIn, setDirectoryOptIn] = useState(false);
 
   useEffect(() => {
     if (loading || !user || !userData) return;
@@ -53,7 +53,7 @@ export function GradDriverOnboardingWizard() {
     setInterests(userData.interests?.trim() || '');
     setPhotoURL(userData.photoURL?.trim() || '');
     setBannerPhotoURL(userData.bannerPhotoURL?.trim() || '');
-    setDirectoryOptIn(userData.directoryOptIn !== false);
+    setDirectoryOptIn(userData.directoryOptIn === true);
   }, [userData, open]);
 
   const dismissOnly = async () => {

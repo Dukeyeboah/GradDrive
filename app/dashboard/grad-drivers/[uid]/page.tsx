@@ -141,7 +141,7 @@ export default function GradDriverProfilePage() {
             ) : (
               <GradCommunityConnectActions
                 otherUid={uid}
-                otherDisplayName={profile.displayName}
+                otherDisplayName={profile.displayName ?? undefined}
               />
             )}
           </div>

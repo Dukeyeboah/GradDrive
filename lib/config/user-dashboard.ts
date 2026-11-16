@@ -1,3 +1,4 @@
+import { isPausedPath } from './launch-scope';
 export type CategoryCardConfig = {
   title: string;
   description: string;
@@ -7,7 +8,7 @@ export type CategoryCardConfig = {
 };
 
 /** Offerings hub on /dashboard/grad-drive (Tools & Resources temporarily omitted). */
-export const DASHBOARD_CATEGORY_CARDS: CategoryCardConfig[] = [
+const CATEGORY_CARDS: CategoryCardConfig[] = [
   {
     title: 'Photography',
     description: 'Book photographers on Fotomatic.',
@@ -60,7 +61,7 @@ export const DASHBOARD_CATEGORY_CARDS: CategoryCardConfig[] = [
 ];
 
 /** Featured row on home: Ebooks, Posters, Photography, Travel Opportunities. */
-export const DASHBOARD_HOME_OFFERING_CARDS: CategoryCardConfig[] = [
+const HOME_OFFERING_CARDS: CategoryCardConfig[] = [
   {
     title: 'Ebooks & Guides',
     description: 'Guides and reads for life after graduation.',
@@ -103,7 +104,7 @@ export type DashboardEventItem = {
 
 export const DASHBOARD_UPCOMING_EVENTS: DashboardEventItem[] = [];
 
-export const DASHBOARD_SEARCH_ROUTES: { keywords: string[]; href: string }[] =
+const SEARCH_ROUTES: { keywords: string[]; href: string }[] =
   [
     {
       keywords: ['photo', 'photograph', 'camera', 'book', 'shoot'],
@@ -120,11 +121,12 @@ export const DASHBOARD_SEARCH_ROUTES: { keywords: string[]; href: string }[] =
       keywords: ['travel', 'ghana', 'tour', 'trip', 'hos', 'opportunity'],
       href: '/dashboard/discounts',
     },
-    { keywords: ['alumni', 'club', 'event', 'community'], href: '/dashboard/alum-club' },
+    { keywords: ['alumni', 'club', 'event'], href: '/dashboard/alum-club' },
     { keywords: ['kente', 'history', 'culture'], href: '/dashboard/kente-history' },
     { keywords: ['account', 'profile', 'setting'], href: '/dashboard/account' },
     {
       keywords: [
+        'community',
         'grad community',
         'drivers',
         'directory',
@@ -137,3 +139,7 @@ export const DASHBOARD_SEARCH_ROUTES: { keywords: string[]; href: string }[] =
     },
     { keywords: ['explore', 'offering'], href: '/dashboard/grad-drive' },
   ];
+
+export const DASHBOARD_CATEGORY_CARDS = CATEGORY_CARDS.filter(card => !isPausedPath(card.href));
+export const DASHBOARD_HOME_OFFERING_CARDS = HOME_OFFERING_CARDS.filter(card => !isPausedPath(card.href));
+export const DASHBOARD_SEARCH_ROUTES = SEARCH_ROUTES.filter(route => !isPausedPath(route.href));

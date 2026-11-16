@@ -34,7 +34,7 @@ export default function AccountPage() {
     interests: '',
     photoURL: '',
     bannerPhotoURL: '',
-    directoryOptIn: true,
+    directoryOptIn: false,
     secondaryEmail: '',
   });
 
@@ -50,7 +50,7 @@ export default function AccountPage() {
       interests: userData.interests?.trim() || '',
       photoURL: userData.photoURL?.trim() || '',
       bannerPhotoURL: userData.bannerPhotoURL?.trim() || '',
-      directoryOptIn: userData.directoryOptIn !== false,
+      directoryOptIn: userData.directoryOptIn === true,
       secondaryEmail: userData.secondaryEmail?.trim() || '',
     });
   }, [userData]);
@@ -291,7 +291,7 @@ export default function AccountPage() {
                   </Label>
                   <p className='text-sm text-muted-foreground'>
                     Other signed-in members can see your card and profile. Your email is
-                    never listed publicly.
+                    never listed publicly. Turning this off also hides your profile from direct links; existing conversations remain available.
                   </p>
                 </div>
               </div>

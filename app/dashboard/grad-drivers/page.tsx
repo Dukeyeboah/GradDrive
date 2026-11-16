@@ -77,6 +77,12 @@ export default function GradDriversDirectoryPage() {
           </p>
         </div>
 
+        <div className='rounded-2xl border border-border bg-card p-4 text-sm space-y-2'>
+          <p className='font-semibold'>Give your introduction a purpose</p>
+          <p className='text-muted-foreground'>Try: “I’m working toward my first role in your field. Would you like to practise interview questions together for 20 minutes?”</p>
+          <p className='text-muted-foreground'>You can also exchange CV feedback, share a useful resource, or find a project partner. Add what you can offer and what you’re looking for to your profile.</p>
+          <Link href='/dashboard/account' className='inline-block font-medium underline underline-offset-4'>Update your profile</Link>
+        </div>
         <div className='relative max-w-md'>
           <Search className='absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground' />
           <Input

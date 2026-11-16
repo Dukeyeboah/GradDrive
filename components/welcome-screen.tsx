@@ -28,8 +28,8 @@ const featureStripItems = [
     imageSrc: '/images/app-icons/ebooks.jpg',
   },
   {
-    label: 'Scholarships',
-    imageSrc: '/images/app-icons/scholarships.jpg',
+    label: 'Community',
+    imageSrc: '/images/app-icons/community.jpg',
   },
   {
     label: 'Cultural',
@@ -55,17 +55,17 @@ const benefitCards = [
     imageAlt: 'Cultural and educational content',
   },
   {
-    title: 'Opportunities & Scholarships',
+    title: 'Graduate Community',
     description:
-      'Discover tours, scholarships, and experiences designed for grads ready for what’s next.',
+      'Find graduates by school, field, and interests. Connect and support each other through your next chapter.',
     imageSrc: '/images/scholarship.jpg',
-    iconSrc: '/images/app-icons/scholarships.jpg',
+    iconSrc: '/images/app-icons/community.jpg',
     imageAlt: 'Opportunities for graduates',
   },
   {
-    title: 'Tools & Practical Resources',
+    title: 'Guides & Practical Resources',
     description:
-      'Guides, checklists, and digital tools that help you plan, share, and enjoy graduation week.',
+      'Explore downloadable guides to help you take practical steps into life after graduation.',
     imageSrc: '/images/tools.jpg',
     iconSrc: '/images/app-icons/tools.jpg',
     imageAlt: 'Practical grad tools',
@@ -91,7 +91,7 @@ const howItWorksSteps = [
   {
     step: 3,
     title: 'Unlock and explore',
-    description: 'Use downloads, perks, and opportunities whenever you need them.',
+    description: 'Explore your resources and connect with other graduates.',
     imageSrc: '/images/app-icons/explore.jpg',
   },
 ] as const;
@@ -140,8 +140,8 @@ export function WelcomeScreen() {
                 Graduate with more than a stole.
               </h1>
               <p className='mx-auto max-w-xl text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base lg:mx-0'>
-                Unlock Grad Drive — a platform of tools, downloads, and
-                opportunities included with your House of Stole order.
+                Unlock Grad Drive — a community with practical guides, downloads, and
+                cultural resources included with your House of Stole order.
               </p>
               <div className='flex flex-col justify-center gap-2.5 pt-1 sm:flex-row sm:gap-3 lg:justify-start'>
                 <Button
@@ -186,7 +186,7 @@ export function WelcomeScreen() {
               Everything unlocked with your stole
             </h2>
             <p className='text-pretty text-sm text-muted-foreground sm:text-base'>
-              A curated set of tools, downloads, and opportunities designed to
+              A focused collection of guides, downloads, and connections designed to
               support you beyond graduation.
             </p>
           </div>
@@ -214,8 +214,8 @@ export function WelcomeScreen() {
               Everything you need for what’s next
             </h2>
             <p className='text-pretty text-sm text-muted-foreground sm:text-base'>
-              Grad Drive brings together practical tools, creative resources,
-              and real opportunities — all included when you order your stole.
+              Grad Drive brings together practical guides, creative resources,
+              and graduate connections — all included when you order your stole.
             </p>
           </div>
           <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6'>

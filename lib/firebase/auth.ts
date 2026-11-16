@@ -106,7 +106,7 @@ export async function signUpEmailPassword(
       email: userCredential.user.email,
       displayName: displayName || userCredential.user.displayName,
       photoURL: userCredential.user.photoURL,
-      role: role,
+      role: 'user',
       hasGradDriveAccess: true,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -204,7 +204,7 @@ export async function signInWithGoogle(
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
-        role: finalRole,
+        role: 'user',
         hasGradDriveAccess: true,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
@@ -235,17 +235,7 @@ export async function signInWithGoogle(
         photoURL: user.photoURL,
       };
 
-      // Only update role if upgrading to admin/photographer, or if current role is user/null
-      if (
-        finalRole === 'admin' ||
-        finalRole === 'super admin' ||
-        finalRole === 'photographer-admin'
-      ) {
-        updateData.role = finalRole;
-      } else if (!existingData.role || existingData.role === 'user') {
-        updateData.role = 'user';
-      }
-      // Otherwise keep existing role (don't downgrade admins)
+      // Privileged roles are assigned by trusted administrators, never browser state.
 
       try {
         await setDoc(doc(db, 'users', user.uid), updateData, { merge: true });
